@@ -1,7 +1,6 @@
 <footer>
-    <div>
-        <?php get_template_part('template-parts/contact-modal'); ?>
-    </div>
+
+    <?php get_template_part('template-parts/popup-contact'); ?>
 
     <?php wp_nav_menu( array(
         'theme_location' => 'mota-footer'
