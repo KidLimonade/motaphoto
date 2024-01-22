@@ -43,8 +43,8 @@ add_filter('wp_nav_menu_items', 'add_last_motaphoto_item', 10, 2);
 
 function motaphoto_prefix_setup() {
     add_theme_support('custom-logo', array(
-        'height' => 100,
-        'width' => 200,
+        'height' => 14,
+        'width' => 216,
         'flex-height' => true,
         'flex-width'  => true
     ));
