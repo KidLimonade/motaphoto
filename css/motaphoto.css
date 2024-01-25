@@ -5,7 +5,15 @@ General settings
 :root {
     --main-color: #000;
     --main-bg-color: #FFF;
-    --overlay-color: rgba(0, 0, 0, 0.8);
+    --overlay-bg-color: rgba(0, 0, 0, 0.6);
+    --input-field-border-color: #B8BBC2;
+    --primary-red-color: #E00000;
+    --secondary-red-color: #FE5858;
+    --tertiary-red-color: #FFD6D6;
+    --blue-color: #313144;
+    --dark-gray-color: #C4C4C4;
+    --medium-gray-color: #D8D8D8;
+    --light-gray-color: #E5E5E5;
 }
 
 body {
@@ -61,6 +69,7 @@ footer li {
     list-style: none;
 }
 
+.contact-btn,
 header a,
 footer a {
     color: var(--main-color);
@@ -70,6 +79,7 @@ footer a {
 .contact-btn:hover,
 header a:hover,
 footer a:hover {
+    cursor: pointer;
     font-weight: 700;
 }
 
@@ -83,20 +93,20 @@ Popup Contact
 
 .modal {
     visibility: hidden;
+    opacity: 0;
     position: fixed;
     z-index: 10;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
+    top: 0; right: 0; bottom: 0; left: 0;
     overflow: auto;
     display: flex;
     align-items: center;
-    background-color: var(--overlay-color);
+    background-color: var(--overlay-bg-color);
+    transition: all 500ms;
 }
 
 .open-modal {
     visibility: visible;
+    opacity: 1;
 }
 
 .modal-content {
@@ -105,6 +115,7 @@ Popup Contact
     width: 597px;
     height: 769px;
     overflow: hidden;
+    box-sizing: border-box;
     background-color: var(--main-bg-color);
     border: 5px solid var(--main-color);
 }
@@ -112,12 +123,73 @@ Popup Contact
 .modal-content::before {
     content: '';
     position: absolute;
-    width: 100%;
+    width: 886px;
     height: 106px;
-    top: 18px;
+    top: 13px;
     left: 50%;
     transform: translate(-50%);
     background-image: url('../images/contact-head-desktop.png');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
+}
+
+.contact-form {
+    margin-top: 170px;
+    display: flex;
+    justify-content: center;
+    font-family: 'Poppins', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--blue-color);
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 263px;
+    padding: 0 12px;
+    border: 1px solid var(--input-field-border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.contact-form p {
+    margin: 0 0 25px 0;
+}
+
+.contact-form input,
+.contact-form textarea {
+    margin-top: 3px;
+}
+
+.contact-form input {
+    height: 40px;    
+}
+
+.contact-form textarea {
+    height: 210px;   
+}
+
+.contact-form input[type=submit] {
+    margin-top: -9px;
+    height: 50px;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--main-color);
+    background-color: var(--medium-gray-color);
+    transition: all 400ms;
+}
+
+.contact-form input[type=submit]:hover {
+    cursor: pointer;
+    color: var(--main-bg-color);
+    background-color: var(--main-color);
+}
+
+.contact-form .wpcf7-spinner,
+.contact-form .wpcf7-response-output {
+    display: none;
 }

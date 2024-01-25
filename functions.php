@@ -30,7 +30,7 @@ function motaphoto_scripts_styles() {
     // Main MotaPhoto css style file
     wp_enqueue_style(
         'motaphoto-main-style',
-        get_template_directory_uri() . '/css/main.css',
+        get_template_directory_uri() . '/css/motaphoto.css',
         array('motaphoto-fonts-style'),
         _S_VERSION
     );
