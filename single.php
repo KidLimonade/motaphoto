@@ -12,39 +12,27 @@
 get_header();
 
 /* Start the Loop */
-while ( have_posts() ) :
-	the_post();
+while ( have_posts() ) : the_post();
 
-	get_template_part( 'template-parts/content/content-single' );
+    echo 'the_title:' . the_title() . '<br>';
+    echo 'reference:' . get_post_meta(get_the_ID(), 'reference')[0] . '<br>';
+    echo 'type: ' . get_post_meta(get_the_ID(), 'type')[0] . '<br>';
+    echo 'the_date: ' . the_date() . ' ' . the_time() . '<br>';
+    echo 'url: ' . get_the_post_thumbnail_url();
+    // echo get_the_terms( $post->ID , 'categorie' )[0] . ' <- categorie' . '<br>';
+    // echo get_the_terms( $post->ID , 'format' )[0] . ' <- format' . '<br>';
+    echo previous_post_link() . ' <- previous_post_link' . '<br>';
+    echo next_post_link() . ' <- next_post_link' . '<br>';
+    echo the_ID() . ' <- the_ID' . '<br>';
 
-	if ( is_attachment() ) {
-		// Parent post navigation.
-		the_post_navigation(
-			array(
-				/* translators: %s: Parent post link. */
-				'prev_text' => sprintf( __( '<span class="meta-nav">Published in</span><span class="post-title">%s</span>', 'twentytwentyone' ), '%title' ),
-			)
-		);
-	}
+    echo '<br>------------------------------<br>';
+    $categorie = get_the_terms( $post->ID , 'categorie' );
+    var_dump($categorie);
+    echo '<br>------------------------------<br>';
+    $format = get_the_terms( $post->ID , 'format' );
+    var_dump($format);
+    echo '<br>------------------------------<br>';
 
-	// If comments are open or there is at least one comment, load up the comment template.
-	if ( comments_open() || get_comments_number() ) {
-		comments_template();
-	}
-
-	// Previous/next post navigation.
-	$twentytwentyone_next = is_rtl() ? twenty_twenty_one_get_icon_svg( 'ui', 'arrow_left' ) : twenty_twenty_one_get_icon_svg( 'ui', 'arrow_right' );
-	$twentytwentyone_prev = is_rtl() ? twenty_twenty_one_get_icon_svg( 'ui', 'arrow_right' ) : twenty_twenty_one_get_icon_svg( 'ui', 'arrow_left' );
-
-	$twentytwentyone_next_label     = esc_html__( 'Next post', 'twentytwentyone' );
-	$twentytwentyone_previous_label = esc_html__( 'Previous post', 'twentytwentyone' );
-
-	the_post_navigation(
-		array(
-			'next_text' => '<p class="meta-nav">' . $twentytwentyone_next_label . $twentytwentyone_next . '</p><p class="post-title">%title</p>',
-			'prev_text' => '<p class="meta-nav">' . $twentytwentyone_prev . $twentytwentyone_previous_label . '</p><p class="post-title">%title</p>',
-		)
-	);
 endwhile; // End of the loop.
 
 get_footer();

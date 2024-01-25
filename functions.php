@@ -10,13 +10,18 @@ if ( ! defined( '_S_VERSION' ) ) {
 */
 function motaphoto_scripts_styles() {
 
-    // Javascript & JQuery
+    // Javascript, JQuery and Ajax URL
     wp_enqueue_script(
         'motaphoto-scripts-js',
         get_template_directory_uri() . '/js/scripts.js',
-        array(),
+        array('jquery'),
         _S_VERSION,
         true
+    );
+    wp_localize_script(
+        'motaphoto-scripts-js',
+        'motaphoto_js',
+        array('ajax_url' => admin_url('admin-ajax.php'))
     );
 
     // @font-face css style file for locally loaded font files
@@ -69,6 +74,7 @@ add_filter('wp_nav_menu_items', 'add_last_menu_item', 10, 2);
 
 /**
 * Add 'custom-logo' feature to WordPress MotaPhoto theme.
+* Add 'post-thumbnails' feature to WordPress MotaPhoto theme.
 */
 function add_motaphoto_wordpress_features() {
     
@@ -78,5 +84,30 @@ function add_motaphoto_wordpress_features() {
         'flex-height' => true,
         'flex-width'  => true
     ));
+    
+    add_theme_support('post-thumbnails');
 }
 add_action('after_setup_theme', 'add_motaphoto_wordpress_features');
+
+/**
+* WP query getting all the photos stored into the
+* MotaPhoto site as Custom Post Type posts.
+*/
+function request_motaphoto_photos() {
+    $args = [
+        'post_type'         => 'photo',
+        'posts_per_page'    => 4
+    ];
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        $response = $query;
+    } else {
+        $response = false;
+    }
+
+    wp_send_json($response);
+    wp_die();
+}
+add_action('wp_ajax_request_photos', 'request_motaphoto_photos');
+add_action('wp_ajax_nopriv_request_photos', 'request_motaphoto_photos');
