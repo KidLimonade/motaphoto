@@ -12,7 +12,36 @@
 get_header();
 
 if ( is_front_page() ) {
-    echo 'Page d\'accueil';    
+
+    $query = new WP_Query( array(
+        'post_type'         => 'photo',
+        'posts_per_page'    => -1
+    ));
+
+    if ( $query->have_posts() ) {
+
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            the_title('<p>', '</p>');
+            echo get_the_post_thumbnail(null,'thumbnail');
+            echo get_the_post_thumbnail(null,'medium');
+            echo get_the_post_thumbnail(null,'medium_large');
+            echo get_the_post_thumbnail(null,'large');
+            echo get_the_post_thumbnail(null,'full');
+        }
+    } else {
+
+        esc_html_e('Aucune photo publiée');
+    }
+
+    wp_reset_postdata();
+
+    // Récupérer les termes d'une taxonomie
+    $terms = get_terms( array(
+        'taxonomy' => 'categorie',
+        'hide_empty' => false
+    ));
+    var_dump($terms);
 }
 
 /* Start the Loop */

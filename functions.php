@@ -85,7 +85,7 @@ function add_motaphoto_wordpress_features() {
         'flex-width'  => true
     ));
     
-    add_theme_support('post-thumbnails');
+    // add_theme_support('post-thumbnails');
 }
 add_action('after_setup_theme', 'add_motaphoto_wordpress_features');
 

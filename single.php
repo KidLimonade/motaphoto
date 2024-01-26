@@ -1,12 +1,6 @@
 <?php
 /**
- * The template for displaying all single posts
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
- *
- * @package WordPress
- * @subpackage Twenty_Twenty_One
- * @since Twenty Twenty-One 1.0
+ * The template for displaying all photo
  */
 
 get_header();
@@ -14,24 +8,80 @@ get_header();
 /* Start the Loop */
 while ( have_posts() ) : the_post();
 
-    echo 'the_title:' . the_title() . '<br>';
-    echo 'reference:' . get_post_meta(get_the_ID(), 'reference')[0] . '<br>';
-    echo 'type: ' . get_post_meta(get_the_ID(), 'type')[0] . '<br>';
-    echo 'the_date: ' . the_date() . ' ' . the_time() . '<br>';
-    echo 'url: ' . get_the_post_thumbnail_url();
-    // echo get_the_terms( $post->ID , 'categorie' )[0] . ' <- categorie' . '<br>';
-    // echo get_the_terms( $post->ID , 'format' )[0] . ' <- format' . '<br>';
-    echo previous_post_link() . ' <- previous_post_link' . '<br>';
-    echo next_post_link() . ' <- next_post_link' . '<br>';
-    echo the_ID() . ' <- the_ID' . '<br>';
+    $post_ID = get_the_ID();
 
-    echo '<br>------------------------------<br>';
-    $categorie = get_the_terms( $post->ID , 'categorie' );
-    var_dump($categorie);
-    echo '<br>------------------------------<br>';
-    $format = get_the_terms( $post->ID , 'format' );
-    var_dump($format);
-    echo '<br>------------------------------<br>';
+    the_title();
+    echo '<br>';
+
+    $reference = get_field_object('field_65af94c95d70a');
+    echo $reference['label'];
+    echo ' : ';
+    echo $reference['value'];
+    echo '<br>';
+    ?>
+
+    <script>
+        jQuery( $ => {
+            $(document).ready( () => {
+                $("#reference-photo").val("<?php echo $reference['value']?>");
+            });
+        });
+    </script>
+
+    <?php
+    $categories = get_the_terms($post->ID , 'categorie');
+    $value = '';
+    foreach ($categories as $categorie) {
+        $value .= ' ' . $categorie->name;
+    }
+    echo 'Catégorie';
+    echo ' :';
+    echo $value;
+    echo '<br>';
+
+    $formats = get_the_terms($post->ID , 'format');
+    $value = '';
+    foreach ($formats as $format) {
+        $value .= ' ' . $format->name;
+    }
+    echo 'Format';
+    echo ' :';
+    echo $value;
+    echo '<br>';
+
+    $type = get_field_object('field_65afcce1a71e0');
+    echo $type['label'];
+    echo ' : ';
+    echo ($type['value'])['value'];
+    echo '<br>';
+
+    echo 'Année';
+    echo ' : ';
+    echo get_the_date('Y');
+    echo '<br>';
+
+    echo get_the_post_thumbnail($post->ID, 'thumbnail');
+    echo get_the_post_thumbnail_url();
+    echo '<br>';
+
+    echo previous_post_link(
+        '%link', 
+        'before'
+    );
+    echo next_post_link(
+        '%link', 
+        'after'
+    );
+    ?>
+
+    <button class="contact-btn">Contact</button>
+
+    <?php
+    $terms = get_terms( array(
+        'taxonomy' => 'categorie',
+        'hide_empty' => false
+    ));
+    var_dump($terms);
 
 endwhile; // End of the loop.
 
