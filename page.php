@@ -1,81 +1,21 @@
 <?php
 /**
- * The template for displaying all single posts
+ * The template for displaying all single photo
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
- *
- * @package WordPress
- * @subpackage Twenty_Twenty_One
- * @since Twenty Twenty-One 1.0
- */
+*/
 
 get_header();
 
-if ( is_front_page() ) {
-
-    $query = new WP_Query( array(
-        'post_type'         => 'photo',
-        'posts_per_page'    => -1
-    ));
-
-    if ( $query->have_posts() ) {
-
-        while ( $query->have_posts() ) {
-            $query->the_post();
-            the_title('<p>', '</p>');
-            echo get_the_post_thumbnail(null,'thumbnail');
-            // echo get_the_post_thumbnail(null,'medium');
-            // echo get_the_post_thumbnail(null,'medium_large');
-            // echo get_the_post_thumbnail(null,'large');
-            // echo get_the_post_thumbnail(null,'full');
-        }
-    } else {
-
-        esc_html_e('Aucune photo publiée');
-    }
-
-    wp_reset_postdata();
-
-    echo '--------------<br>';
-
-    // Récupérer les termes d'une taxonomie
-    // $terms = get_terms( array(
-    //     'taxonomy' => 'categorie',
-    //     'hide_empty' => false
-    // ));
-    // var_dump($terms);
-
-    echo '--------------<br>';
-
-    $args = array(
-        'post_type' => 'photo',
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'categorie',
-                'field' => 'slug',
-                'terms' => 'mariage',    
-            ),
-        ),
-        'posts_per_page' => -1,
-    );
-
-    $query_format = new WP_Query($args);
-    if ($query_format->have_posts()) {
-        while ($query_format->have_posts()) {
-            $query_format->the_post();
-            the_title('<p>', '</p>');
-        }
-    }
-} else {
-
 /* Start the Loop */
-    while ( have_posts() ) {
+while ( have_posts() ) :
+	the_post();
+	get_template_part( 'template-parts/content/content-page' );
 
-        the_post();
-
-	    get_template_part( 'template-parts/content/content-page' );
-    }
-    
-}
+	// If comments are open or there is at least one comment, load up the comment template.
+	if ( comments_open() || get_comments_number() ) {
+		comments_template();
+	}
+endwhile; // End of the loop.
 
 get_footer();

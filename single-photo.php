@@ -29,25 +29,31 @@ while ( have_posts() ) : the_post();
     </script>
 
     <?php
-    $categories = get_the_terms($post->ID , 'categorie');
+    // À reprendre pour ne prendre que le premier
+    $categories = get_the_terms($post->ID, 'categorie');
     $value = '';
     foreach ($categories as $categorie) {
         $value .= ' ' . $categorie->name;
     }
-    echo 'Catégorie';
-    echo ' :';
-    echo $value;
-    echo '<br>';
+    echo 'Catégorie : ';
+    echo implode(
+        ', ', 
+        wp_get_post_terms(
+            get_the_ID(), 
+            'categorie', 
+            array('fields' => 'names')
+        )
+    ) . '<br>';
 
-    $formats = get_the_terms($post->ID , 'format');
-    $value = '';
-    foreach ($formats as $format) {
-        $value .= ' ' . $format->name;
-    }
-    echo 'Format';
-    echo ' :';
-    echo $value;
-    echo '<br>';
+    echo 'Format : ';
+    echo implode(
+        ', ', 
+        wp_get_post_terms(
+            get_the_ID(), 
+            'format', 
+            array('fields' => 'names')
+        )
+    ) . '<br>';
 
     $type = get_field_object('field_65afcce1a71e0');
     echo $type['label'];
@@ -77,11 +83,29 @@ while ( have_posts() ) : the_post();
     <button class="contact-btn">Contact</button>
 
     <?php
-    $terms = get_terms( array(
-        'taxonomy' => 'categorie',
-        'hide_empty' => false
-    ));
-    var_dump($terms);
+    $args = array(
+        'post_type' => 'photo',
+        'tax_query' => array(
+            array(
+                'taxonomy'  => 'categorie',
+                'field'     => 'slug',
+                'terms'     => $categories[0]
+            )
+        ),
+        'post__not_in'      => array($post_ID),
+        'orderby'           => 'rand',
+        'posts_per_page'    => -1,
+    );
+
+    $my_query = new WP_Query($args);
+    if ($my_query->have_posts()) {
+        while ($my_query->have_posts()) {
+            $my_query->the_post();
+            the_title('<p>', '</p>');
+            the_post_thumbnail('thumbnail');
+        }
+    }
+    wp_reset_postdata();
 
 endwhile; // End of the loop.
 
