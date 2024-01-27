@@ -24,10 +24,10 @@ if ( is_front_page() ) {
             $query->the_post();
             the_title('<p>', '</p>');
             echo get_the_post_thumbnail(null,'thumbnail');
-            echo get_the_post_thumbnail(null,'medium');
-            echo get_the_post_thumbnail(null,'medium_large');
-            echo get_the_post_thumbnail(null,'large');
-            echo get_the_post_thumbnail(null,'full');
+            // echo get_the_post_thumbnail(null,'medium');
+            // echo get_the_post_thumbnail(null,'medium_large');
+            // echo get_the_post_thumbnail(null,'large');
+            // echo get_the_post_thumbnail(null,'full');
         }
     } else {
 
@@ -36,20 +36,46 @@ if ( is_front_page() ) {
 
     wp_reset_postdata();
 
+    echo '--------------<br>';
+
     // Récupérer les termes d'une taxonomie
-    $terms = get_terms( array(
-        'taxonomy' => 'categorie',
-        'hide_empty' => false
-    ));
-    var_dump($terms);
-}
+    // $terms = get_terms( array(
+    //     'taxonomy' => 'categorie',
+    //     'hide_empty' => false
+    // ));
+    // var_dump($terms);
+
+    echo '--------------<br>';
+
+    $args = array(
+        'post_type' => 'photo',
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'categorie',
+                'field' => 'slug',
+                'terms' => 'mariage',    
+            ),
+        ),
+        'posts_per_page' => -1,
+    );
+
+    $query_format = new WP_Query($args);
+    if ($query_format->have_posts()) {
+        while ($query_format->have_posts()) {
+            $query_format->the_post();
+            the_title('<p>', '</p>');
+        }
+    }
+} else {
 
 /* Start the Loop */
-while ( have_posts() ) :
-	the_post();
+    while ( have_posts() ) {
 
-	get_template_part( 'template-parts/content/content-page' );
+        the_post();
 
-endwhile; // End of the loop.
+	    get_template_part( 'template-parts/content/content-page' );
+    }
+    
+}
 
 get_footer();
