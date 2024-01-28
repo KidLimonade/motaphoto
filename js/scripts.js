@@ -27,26 +27,27 @@ document.addEventListener("wpcf7submit", event => {
 /**
  * Request all photos
  */
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
 
-    console.log(event);
+    document.querySelector('#ajax_call').addEventListener('click', () => {
+
+        let formData = new FormData();
+        formData.append('action', 'request_photos');
     
-    let formData = new FormData();
-    formData.append('action', 'request_photos');
-
-    fetch(motaphoto_js.ajax_url, {
-        method: 'POST',
-        body: formData
-    }).then( response => {
-        if (!response.ok) {
-            throw new Error('Network response error.');
-        }
-        return response.json();
-    }).then( data => {
-        data.posts.forEach( post => {
-            console.log(post.post_title);
-        });
-    }).catch( error => {
-        console.error('There was a problem with the fetch operation', error)
+        fetch(motaphoto_js.ajax_url, {
+            method: 'POST',
+            body: formData
+        }).then( response => {
+            if (!response.ok) {
+                throw new Error('Network response error.');
+            }
+            return response.json();
+        }).then( data => {
+            data.posts.forEach( post => {
+                document.querySelector('#ajax_return').insertAdjacentHTML('beforeend', '<div>' + post.post_title + '</div>');
+            });
+        }).catch( error => {
+            console.error('There was a problem with the fetch operation', error)
+        });    
     });
 });

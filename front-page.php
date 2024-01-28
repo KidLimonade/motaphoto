@@ -65,7 +65,12 @@ if ($query->have_posts()) {
         ) . '<br>';
     }
 }
+?>
 
+<button id="ajax_call">Ajax</button>
+<div id="ajax_return"><p>Résultat :</p></div>
+
+<?php
 wp_reset_postdata();
     
 get_footer();

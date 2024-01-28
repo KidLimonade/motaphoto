@@ -75,7 +75,7 @@ function add_motaphoto_wordpress_features() {
 function request_motaphoto_photos() {
     $args = [
         'post_type'         => 'photo',
-        'posts_per_page'    => 8
+        'posts_per_page'    => 2
     ];
     $query = new WP_Query($args);
 
