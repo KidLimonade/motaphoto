@@ -2,12 +2,14 @@
  * Open-Close the modal popup contact form
  */
 
+// Open popup contact form on click on all contact buttons
 document.querySelectorAll('.contact-btn').forEach(button => {
     button.addEventListener('click', () => {
         document.getElementById('popup-contact').classList.add('open-modal');
     });
 });
 
+// Close popup contact form on click outside the form
 document.querySelector('.modal').addEventListener('click', event => {
     const modal = document.getElementById('popup-contact');
     if (event.target === modal) {
@@ -15,6 +17,7 @@ document.querySelector('.modal').addEventListener('click', event => {
     }
 });
 
+// Close popup contact form on click on form submit button if no error
 document.addEventListener("wpcf7submit", event => {
     if (event.detail.status === 'mail_sent') {
         document.getElementById('popup-contact').classList.remove('open-modal');

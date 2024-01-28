@@ -10,11 +10,13 @@
 
 <body>
     <header>
+        
         <?php if (function_exists('the_custom_logo')) {
             the_custom_logo();
-        }
-        ?>
+        }?>
+
         <?php wp_nav_menu( array(
-            'theme_location' => 'mota-header'
+            'theme_location'    => 'mota-header',
+            'container'         => 'nav'
         )); ?>
     </header>

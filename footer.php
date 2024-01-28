@@ -3,7 +3,7 @@
     <?php get_template_part('template-parts/popup-contact'); ?>
 
     <?php wp_nav_menu( array(
-        'theme_location' => 'mota-footer'
+        'theme_location'  => 'mota-footer'
     )); ?>
 </footer>
 

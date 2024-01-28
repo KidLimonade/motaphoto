@@ -31,36 +31,42 @@ Header & footer
 ***********************************************************************/
 
 header {
-    padding-left: 146px;
-    padding-right: 146px;
+    height: 80px;
+    padding: 0 146px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-header img {
+.custom-logo-link img {
     display: inline-block;
     width: 216px;
     height: 14px;
 }
 
-ul {
+footer {
+    height: 40px;
+    margin-top: auto;
+}
+
+#menu-top-menu,
+#menu-bottom-menu {
     display: flex;
     padding-left: 0;
 }
 
-header ul {
+#menu-top-menu {
     gap: 45px;
 }
 
-footer ul {
+#menu-bottom-menu {
     justify-content: center;
     gap: 86px;
     border-top: 2px solid var(--main-color);
 }
 
-header li,
-footer li {
+#menu-top-menu li,
+#menu-bottom-menu li {
     margin: 0;
     padding: 0;
     display: inline-block;
@@ -69,22 +75,18 @@ footer li {
     list-style: none;
 }
 
-.contact-btn,
-header a,
-footer a {
+.popup-link,
+#menu-top-menu a,
+#menu-bottom-menu a {
     color: var(--main-color);
     text-decoration: none;
 }
 
-.contact-btn:hover,
-header a:hover,
-footer a:hover {
+.popup-link:hover,
+#menu-top-menu a:hover,
+#menu-bottom-menu a:hover {
     cursor: pointer;
     font-weight: 700;
-}
-
-footer {
-    margin-top: auto;
 }
 
 /***********************************************************************

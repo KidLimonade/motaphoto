@@ -97,7 +97,7 @@ function request_motaphoto_photos() {
 function add_item_to_motaphoto_menus($items, $args) {
     
     if ($args->theme_location === 'mota-header') {
-        $items .= '<li><span class="contact-btn">Contact</span></li>';
+        $items .= '<li><span class="contact-btn popup-link">Contact</span></li>';
     } else if ($args->theme_location === 'mota-footer') {
         $items .= '<li>Tous droits réservés</li>';
     }
