@@ -51,18 +51,8 @@ if ($query->have_posts()) {
 
         $query->the_post();
 
-        the_title('<p>', '</p>');
-        echo get_the_post_thumbnail(null, 'thumbnail');
-        the_field('field_65af94c95d70a');
-        echo '<br>';
-        echo implode(
-            ', ', 
-            wp_get_post_terms(
-                get_the_ID(), 
-                'categorie', 
-                array('fields' => 'names')
-            )
-        ) . '<br>';
+        // Composant photo individuelle
+        get_template_part('template-parts/photo-block');
     }
 }
 ?>

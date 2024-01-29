@@ -32,12 +32,14 @@ while ( have_posts() ) : the_post();
     <?php
     // Maping taxonomie Catégorie du post dans tableau 
     $categories = wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names']);
-    echo 'Catégorie : ';
+    _e('Catégorie', 'motaphoto');
+    echo ' : ';
     echo implode(' ',  $categories);
     echo '<br>';
 
     // Maping taxonomie Format du post dans tableau 
-    echo 'Format : ';
+    _e('Format', 'motaphoto');
+    echo ' : ';
     echo implode( ', ',  wp_get_post_terms( $post->ID,  'format',  ['fields' => 'names']));
     echo '<br>';
 
@@ -45,11 +47,11 @@ while ( have_posts() ) : the_post();
     $type = get_field_object('field_65afcce1a71e0');
     echo $type['label'];
     echo ' : ';
-    echo ($type['value'])['value'];
+    echo $type['value']['value'];
     echo '<br>';
 
     // L'année de la photo depuis sa date WP
-    echo 'Année';
+    _e('Année', 'motaphoto');
     echo ' : ';
     echo get_the_date('Y');
     echo '<br>';
@@ -75,43 +77,39 @@ while ( have_posts() ) : the_post();
     echo next_post_link('%link', 'after');
 
     // Bouton d'affichagz de la popup Contact
-    echo 'Cette photo vous intéresse ?';
+    _e( 'Cette photo vous intéresse ?', 'motaphoto');
     echo '<br>';
     ?>
     <button class="contact-btn">Contact</button>
     <?php
 
     // Arguments de la requête "Vous aumerez aussi"
-    $others_args = [
+    $others_args = array(
         'post_type' => 'photo',
-        'tax_query' => [
-            [
+        'tax_query' => array(
+            array(
                 'taxonomy'  => 'categorie',
                 'field'     => 'slug',
                 'terms'     => $categories
-            ]
-        ],
+            )
+        ),
         'post__not_in'      => [$post->ID],
         'orderby'           => 'rand',
         'posts_per_page'    => 2,
-    ];
+    );
 
     // Requête avec boucle locale
-    echo '<br>';
     $others_query = new WP_Query($others_args);
     if  ($others_query->have_posts()) {
 
-        echo 'VOUS AIMEREZ AYSSI';
+        _e('Vous aimerez aussi', 'motaphoto');
+
         while ($others_query->have_posts()) {
 
             $others_query->the_post();
-            if (has_post_thumbnail()) {
-                the_post_thumbnail('medium');
-            }
-            echo get_field_object('field_65af94c95d70a')['value'];
-            echo '<br>';
-            echo implode(' ',  wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names']));
-            echo '<br>';
+
+            // Composant photo individuelle
+            get_template_part('template-parts/photo-block');
         }
     }
 

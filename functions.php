@@ -73,10 +73,10 @@ function add_motaphoto_wordpress_features() {
 * MotaPhoto site as Custom Post Type posts.
 */
 function request_motaphoto_photos() {
-    $args = [
+    $args = array(
         'post_type'         => 'photo',
         'posts_per_page'    => 2
-    ];
+    );
     $query = new WP_Query($args);
 
     if ($query->have_posts()) {
