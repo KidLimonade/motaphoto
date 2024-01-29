@@ -7,34 +7,24 @@
 
 get_header();
 
-// Request taxonomes terms
-$taxonomies = get_taxonomies(
-    array('public' => true, '_builtin' => false),
-    'names',
-    'and'
-);
-foreach ($taxonomies as $key => $value) {
-    echo $key . '<br>';
-}
-echo '<br>';
+// Composant photo individuelle
+get_template_part('template-parts/hero-header');
 
-$categories = get_terms( array(
-    'taxonomy' => 'categorie',
-    'hide_empty' => false
-));
-foreach ($categories as $categorie) {
-    echo $categorie->name . '<br>';
+// Request taxonomies names and terms
+$taxonomies = get_object_taxonomies('photo', 'object');
+foreach ($taxonomies as $taxonomy) {
+    echo $taxonomy->labels->singular_name;
+    echo '<br>';
+    $terms = get_terms( array(
+        'taxonomy' => $taxonomy->name,
+        'hide_empty' => false
+    ));
+    foreach ($terms as $term) {
+        echo $term->name;
+        echo '<br>';    
+    }
+    echo "<br>";
 }
-echo '<br>';
-
-$formats = get_terms( array(
-    'taxonomy' => 'format',
-    'hide_empty' => false
-));
-foreach ($formats as $format) {
-    echo $format->name . '<br>';
-}
-echo '<br>';
 
 /* Request photos */
 $args = array(

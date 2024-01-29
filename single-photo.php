@@ -12,9 +12,9 @@ while ( have_posts() ) : the_post();
     echo '<br>';
 
     // La référence photo avec son label custom
-    $field = get_field_object('field_65af94c95d70a');
-    $ref_photo = $field['value'];
-    echo $field['label'];
+    $ref = get_field_object('field_65af94c95d70a');
+    $ref_photo = $ref['value'];
+    echo $ref['label'];
     echo ' : ';
     echo $ref_photo;
     echo '<br>';
@@ -32,13 +32,13 @@ while ( have_posts() ) : the_post();
     <?php
     // Maping taxonomie Catégorie du post dans tableau 
     $categories = wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names']);
-    _e('Catégorie', 'motaphoto');
+    echo get_taxonomy('categorie')->labels->singular_name;
     echo ' : ';
     echo implode(' ',  $categories);
     echo '<br>';
 
     // Maping taxonomie Format du post dans tableau 
-    _e('Format', 'motaphoto');
+    echo get_taxonomy('format')->labels->singular_name;
     echo ' : ';
     echo implode( ', ',  wp_get_post_terms( $post->ID,  'format',  ['fields' => 'names']));
     echo '<br>';
@@ -112,7 +112,6 @@ while ( have_posts() ) : the_post();
             get_template_part('template-parts/photo-block');
         }
     }
-
     wp_reset_postdata();
 
 endwhile; // End of the loop.
