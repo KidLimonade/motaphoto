@@ -30,28 +30,59 @@ foreach ($taxonomies as $taxonomy) {
 $args = array(
     'post_type'         => 'photo',
     'orderby'           => 'date',
-    'order'             => 'ASC',
-    'posts_per_page'    => -1,
+    'order'             => 'DESC',
+    'posts_per_page'    => 3,
+    'paged'             => 1,
 );
 $query = new WP_Query($args);
 
-if ($query->have_posts()) {
-    
-    while ($query->have_posts()) {
-
-        $query->the_post();
-
-        // Composant photo individuelle
+if ($query->have_posts()) :
+    while ($query->have_posts()) : $query->the_post();
         get_template_part('template-parts/photo-block');
-    }
-}
+    endwhile;
+endif;
+wp_reset_postdata();
 ?>
 
-<button id="ajax_call">Ajax</button>
-<div id="ajax_return"><p>Résultat :</p></div>
+<div id="zone-more"></div>
+<button id="load-more"><?php _e('Charger plus', 'motaphoto'); ?></button>
+
+<button id="ajax-call">Ajax</button>
+<div id="ajax-return"></div>
+
+<form 
+    action="<?php echo admin_url('admin-ajax.php'); ?>"
+    method="post"
+    class="ajax-load"
+>
+    <input
+        type="hidden"
+        name="post_type"
+        value="photo"
+    >
+    <input
+        type="hidden"
+        name="Format"
+        value="Portrait"
+    >
+    <input
+        type="hidden"
+        name="nonce"
+        value="<?php echo wp_create_nonce('request_first_photos'); ?>"
+    >
+    <input
+        type="hidden"
+        name="action"
+        value="request_first_photos"
+    >
+    <button>Charger les photos</button>
+</form>
+<div id="ajax-photos"></div>
+
+
+
 
 <?php
-wp_reset_postdata();
     
 get_footer();
     

@@ -84,7 +84,7 @@ while ( have_posts() ) : the_post();
     <?php
 
     // Arguments de la requête "Vous aumerez aussi"
-    $others_args = array(
+    $args = array(
         'post_type' => 'photo',
         'tax_query' => array(
             array(
@@ -99,14 +99,14 @@ while ( have_posts() ) : the_post();
     );
 
     // Requête avec boucle locale
-    $others_query = new WP_Query($others_args);
-    if  ($others_query->have_posts()) {
+    $query = new WP_Query($args);
+    if  ($query->have_posts()) {
 
         _e('Vous aimerez aussi', 'motaphoto');
 
-        while ($others_query->have_posts()) {
+        while ($query->have_posts()) {
 
-            $others_query->the_post();
+            $query->the_post();
 
             // Composant photo individuelle
             get_template_part('template-parts/photo-block');

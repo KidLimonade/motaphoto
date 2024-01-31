@@ -16,7 +16,7 @@ function motaphoto_scripts_styles() {
     wp_enqueue_script(
         'motaphoto-scripts-js',
         get_template_directory_uri() . '/js/scripts.js',
-        array('jquery'),
+        ['jquery'],
         _S_VERSION,
         true
     );
@@ -72,10 +72,12 @@ function add_motaphoto_wordpress_features() {
 * WP query getting photos stored into the
 * MotaPhoto site as Custom Post Type posts.
 */
-function request_motaphoto_photos() {
+function request_first_photos() {
     $args = array(
         'post_type'         => 'photo',
-        'posts_per_page'    => 2
+        'orderby'           => 'date',
+        'order'             => 'DESC',
+        'posts_per_page'    => -1
     );
     $query = new WP_Query($args);
 
@@ -84,9 +86,61 @@ function request_motaphoto_photos() {
     } else {
         $response = false;
     }
+    wp_reset_postdata();    
 
     wp_send_json($response);
     wp_die();
+}
+
+/**
+* WP query getting photos stored into the
+* MotaPhoto site as Custom Post Type posts.
+*/
+function load_first_photos() {
+
+    // Security control
+    if (
+        !isset($_REQUEST['nonce']) or
+        !wp_verify_nonce($_REQUEST['nonce'], 'motaphoto')
+    ) {
+        wp_send_json_error('Action not authorized', 403);
+    }
+}
+
+/**
+* WP query getting photos stored into the
+* MotaPhoto site as Custom Post Type posts.
+*/
+function request_more_photos() {
+    $args = array(
+        'post_type'         => 'photo',
+        'orderby'           => 'date',
+        'order'             => 'DESC',
+        'posts_per_page'    => 3,
+        'paged'             => $_POST['paged'],
+    );
+    $query = new WP_Query($args);
+
+    $response = '';
+    $max_pages = $query->max_num_pages;
+    if ($query->have_posts()) {
+        ob_start();
+        while ($query->have_posts()) {
+            $query->the_post();
+            $response .= get_template_part('template-parts/photo-block');
+        }
+        $output = ob_get_contents();
+        ob_end_clean();
+    }
+    wp_reset_postdata();
+
+    $result = array(
+        'max' => $max_pages,
+        'html' => $output
+    );
+
+    echo json_encode($result);
+    die();
 }
 
 /**
@@ -111,6 +165,10 @@ function add_item_to_motaphoto_menus($items, $args) {
 add_action('wp_enqueue_scripts', 'motaphoto_scripts_styles');
 add_action("after_setup_theme", 'register_motaphoto_menus');
 add_action('after_setup_theme', 'add_motaphoto_wordpress_features');
-add_action('wp_ajax_request_photos', 'request_motaphoto_photos');
-add_action('wp_ajax_nopriv_request_photos', 'request_motaphoto_photos');
+add_action('wp_ajax_request_first_photos', 'request_first_photos');
+add_action('wp_ajax_nopriv_request_first_photos', 'request_first_photos');
+add_action('wp_ajax_load_first_photos', 'load_first_photos');
+add_action('wp_ajax_nopriv_load_first_photos', 'load_first_photos');
+add_action('wp_ajax_request_more_photos', 'request_more_photos');
+add_action('wp_ajax_nopriv_request_more_photos', 'request_more_photos');
 add_filter('wp_nav_menu_items', 'add_item_to_motaphoto_menus', 10, 2);
