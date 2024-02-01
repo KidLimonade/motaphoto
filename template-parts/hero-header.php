@@ -17,7 +17,7 @@
 
         // Une photo de Nathalie Mota
         if (has_post_thumbnail()) {
-            the_post_thumbnail('thumbnail');
+            the_post_thumbnail('large');
         }
         echo '<br>';
         echo "PHOTOGRAPHE EVENT";
