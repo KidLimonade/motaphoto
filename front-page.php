@@ -13,8 +13,7 @@ get_template_part('template-parts/hero-header');
 // 8 photos maximum affichées sans critère ni ordre
 $args = array(
     'post_type'         => 'photo',
-    'posts_per_page'    => 8,
-    'paged'             => 1,
+    'posts_per_page'    => 3,
 );
 $query = new WP_Query($args);
 if ($query->have_posts()) :
@@ -24,6 +23,8 @@ if ($query->have_posts()) :
 endif;
 wp_reset_postdata();
 ?>
+
+<div id="zone-photos"></div>
 
 <!-- Formulaire de sélection et de tri -->
 <form id="filtre-tri-form">
@@ -54,8 +55,7 @@ wp_reset_postdata();
 <!-- Bloc d'affichage des résultats sélecteur/tri -->
 <div id="filtre-tri-result"></div>
 
-<div id="zone-more"></div>
-<button id="load-more"><?php _e('Charger plus', 'motaphoto'); ?></button>
+<button id="load-more-btn"><?php _e('Charger plus', 'motaphoto'); ?></button>
 
 <?php
 

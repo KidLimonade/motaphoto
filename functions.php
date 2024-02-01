@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.9' );
+    define( '_S_VERSION', '1.0.25' );
 }
 
 /**
@@ -45,7 +45,7 @@ function motaphoto_scripts_styles() {
 
 /**
 * Register two theme menus. One for the header
-* navigation bar and one for the footer menu.
+* navigation bar and one for the footer menu
 */
 function register_motaphoto_menus() {
     
@@ -69,8 +69,9 @@ function add_motaphoto_wordpress_features() {
 }
 
 /**
-* WP query getting photos stored into the
-* MotaPhoto site as Custom Post Type posts.
+* WP query getting photos stored into the MotaPhoto site
+* as Custom Post Type posts. Filtering is possible for
+* categories and formats taxonomies. Sorting by date.
 */
 function request_filtered_photos() {
 
@@ -80,11 +81,7 @@ function request_filtered_photos() {
 
     $categorie = $_POST['categorie'];
     if ($categorie === '') {
-        // Voir : get_terms(['taxonomy' => $taxonomy->name])
-        $terms = get_terms( array(
-            'taxonomy' => 'categorie',
-            'hide_empty' => false
-        ));
+        $terms = get_terms( ['taxonomy' => 'categorie', 'hide_empty' => false] );
         $categories = [];
         foreach ($terms as $term) {
             array_push($categories, $term->name);
@@ -95,11 +92,7 @@ function request_filtered_photos() {
 
     $format = $_POST['format'];
     if ($format === '') {
-        // Voir : get_terms(['taxonomy' => $taxonomy->name])
-        $terms = get_terms( array(
-            'taxonomy' => 'format',
-            'hide_empty' => false
-        ));
+        $terms = get_terms( ['taxonomy' => 'format', 'hide_empty' => false] );
         $formats = [];
         foreach ($terms as $term) {
             array_push($formats, $term->name);
@@ -108,13 +101,13 @@ function request_filtered_photos() {
         $formats = [$format];
     }
 
-    $sort_order = $_POST['sort_order'];
-    if ($sort_order === '') {
+    $ordre_tri = $_POST['ordre_tri'];
+    if ($ordre_tri === '') {
         $by = 'none';
         $order = 'DESC';
     } else {
         $by = 'date';
-        $order = $_POST['sort_order'];
+        $order = $_POST['ordre_tri'];
     }
 
     $args = array(
@@ -134,78 +127,27 @@ function request_filtered_photos() {
         ),
         'orderby'           => $by,
         'order'             => $order,
-        'posts_per_page'    => 8,
-        'paged'             => 1
-    );
-
-    // $args = array(
-    //     'post_type'         => 'photo',
-    //     'orderby'           => 'date',
-    //     'order'             => $_POST['sort_order'],
-    //     'posts_per_page'    => 8
-    // );
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()) {
-
-        ob_start();
-
-        $data = '';
-        while ($query->have_posts()) {
-            $query->the_post();
-            $data .= get_template_part('template-parts/photo-block');
-        }
-        $output = ob_get_contents();
-
-        ob_end_clean();
-    }
-
-    $result = array(
-        'max' => 1,
-        'html' => $output
-    );
-
-    echo json_encode($result);
-    die();
-
-    // if ($query->have_posts()) {
-    //     wp_send_json($query);
-    // } else {
-    //     wp_send_json(false);
-    // }
-
-    wp_die();
-}
-
-/**
-* WP query getting photos stored into the
-* MotaPhoto site as Custom Post Type posts.
-*/
-function request_more_photos() {
-    $args = array(
-        'post_type'         => 'photo',
-        'orderby'           => 'date',
-        'order'             => 'DESC',
-        'posts_per_page'    => 8,
+        'posts_per_page'    => 3,
         'paged'             => $_POST['paged'],
     );
     $query = new WP_Query($args);
 
-    $response = '';
-    $max_pages = $query->max_num_pages;
     if ($query->have_posts()) {
+
         ob_start();
+
         while ($query->have_posts()) {
             $query->the_post();
-            $response .= get_template_part('template-parts/photo-block');
+            get_template_part('template-parts/photo-block');
         }
         $output = ob_get_contents();
+
         ob_end_clean();
     }
 
     $result = array(
-        'max' => $max_pages,
-        'html' => $output
+        'max_pages' => $query->max_num_pages,
+        'html'      => $output
     );
 
     echo json_encode($result);
@@ -236,6 +178,4 @@ add_action("after_setup_theme", 'register_motaphoto_menus');
 add_action('after_setup_theme', 'add_motaphoto_wordpress_features');
 add_action('wp_ajax_request_filtered_photos', 'request_filtered_photos');
 add_action('wp_ajax_nopriv_request_filtered_photos', 'request_filtered_photos');
-add_action('wp_ajax_request_more_photos', 'request_more_photos');
-add_action('wp_ajax_nopriv_request_more_photos', 'request_more_photos');
 add_filter('wp_nav_menu_items', 'add_item_to_motaphoto_menus', 10, 2);

@@ -32,14 +32,21 @@ document.addEventListener('DOMContentLoaded', () => {
 * Accès via Ajax à des groupes de photos avec filtrage possible
 * par catégorie et format, et tri par date croissant décroissant
 */
-
 jQuery(document).ready( $ => {
     
-    // A chaque modification effective du formulaire de filtrage / tri
+    // Page courante
+    let current_page = 1;
+
+    /*
+    A chaque modification effective du formulaire de filtrage/tri
+    une requette Ajax est envoyée pour générer le liste des photos
+    */
     $('#filtre-tri-form').on('change', event => {
         
         // Comportement par défaut formulaire annulé
         event.preventDefault();
+
+        current_page = 1;
         
         // Récupération des paramètres depuis le formulaire
         const params = {
@@ -52,10 +59,13 @@ jQuery(document).ready( $ => {
             // Paramètres utilisateur
             categorie: $('#filtre-categorie').val(),
             format: $('#filtre-format').val(),
-            sort_order: $('#ordre-tri').val()
+            ordre_tri: $('#ordre-tri').val(),
+
+            // Page 1
+            paged: current_page
         };
         
-        // Envoi requête POST
+        // Envoi requête POST via url Ajax (wp_localize_script)
         fetch(motaphoto_js.ajax_url, {
             method: 'POST',
             headers: {
@@ -65,56 +75,72 @@ jQuery(document).ready( $ => {
             body: new URLSearchParams(params)
         })
         
-        // Réception réponse serveur
+        // Réception réponse requête
         .then( response => {
-            if (!response.ok) {
+            if ( !response.ok ) {
                 throw new Error('Network response error.');
             }
             return response.json();
         })
         
-        // Réception retour requête
+        // Réception retour data
         .then( data => {
-            
-            console.log(data);
-            
-            $('#zone-more').append(data.html);
-            
-            // body.posts.forEach( post => {
-            //     document.getElementById('filtre-tri-result').insertAdjacentHTML('beforeend',
-            //     '<div>' + post.post_title + '</div>');
-            // });
+
+            // Affiche ou cache le bouton "Charger plus"
+            if (current_page < data.max_pages) {
+                $('#load-more-btn').show();
+            } else {
+                $('#load-more-btn').hide();
+            }
+
+            // Vide puis réinjecte l'espace photos
+            $('#filtre-tri-result').empty().append(data.html);
         })
-        
+
+        // Gestion des exceptions
         .catch( error => {
-            console.error('Problem with the fetch operation.', error);
+            console.error('Problem fetching photo images.', error);
         });
     });
-});
 
-
-/**
-* Load more logic
-*/
-jQuery(document).ready( $ => {
-    
-    let current = 1;
-    $('#load-more').on('click', () => {
-        current++;
+    /*
+    Ub bouton "Charger plus" se trouve au bas de la liste des photos
+    quand des photos restent à présenter et permet de charger la suite
+    */
+    $('#load-more-btn').on('click', () => {
+        
+        current_page++;
+        
         $.ajax({
             type: 'POST',
             url: motaphoto_js.ajax_url,
             dataType: 'json',
+
             data: {
-                action: 'request_more_photos',
-                paged: current
+
+                // Paramètres depuis le formulaire
+                action: $('#filtre-tri-form').find('input[name=action').val(),
+                nonce: $('#filtre-tri-form').find('input[name=nonce').val(),
+                post_type: $('#filtre-tri-form').find('input[name=post_type').val(),
+                categorie: $('#filtre-categorie').val(),
+                format: $('#filtre-format').val(),
+                ordre_tri: $('#ordre-tri').val(),
+
+                // Page courante + 1
+                paged: current_page
             },
+
+            // Réception retour data
             success: (data) => {
-                if (current >= data.max) {
-                    $('#load-more').hide();
+
+                // Bouton disparaît si plus de photos
+                if (current_page >= data.max_pages) {
+                    $('#load-more-btn').hide();
                 }
-                $('#zone-more').append(data.html);
-            }
+
+                // Injecte les nouvelles photos
+                $('#filtre-tri-result').append(data.html);
+            },
         });    
     });
 });
