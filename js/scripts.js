@@ -2,30 +2,28 @@
 * Ouverture / fermeture de la popup madale de contact
 * Utilisation du plugin Contact Form 7 (wpcf7)
 */
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // Ouverture de la popup lors d'un clic sur un nouton contact
-    document.querySelectorAll('.contact-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            document.getElementById('popup-contact').classList.add('open-modal');
-        });
+
+// Ouverture de la popup lors d'un clic sur un nouton contact
+document.querySelectorAll('.contact-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        document.getElementById('popup-contact').classList.add('open-modal');
     });
-    
-    // Fermeture popup lors d'un clic extérieur à la fenêtre principale
-    document.querySelector('.modal').addEventListener('click', event => {
-        const modal = document.getElementById('popup-contact');
-        if (event.target === modal) {
-            modal.classList.remove('open-modal');
-        }
-    });
-    
-    // Fermeture popup contact sur clic sur le bouton d'envoi...
-    // ... et si le formulaire est sans erreur ou vide
-    document.addEventListener("wpcf7submit", event => {
-        if (event.detail.status === 'mail_sent') {
-            document.getElementById('popup-contact').classList.remove('open-modal');
-        }
-    });
+});
+
+// Fermeture popup lors d'un clic extérieur à la fenêtre principale
+document.querySelector('.modal').addEventListener('click', event => {
+    const modal = document.getElementById('popup-contact');
+    if (event.target === modal) {
+        modal.classList.remove('open-modal');
+    }
+});
+
+// Fermeture popup contact sur clic sur le bouton d'envoi...
+// ... et si le formulaire est sans erreur ou vide
+document.addEventListener('wpcf7submit', event => {
+    if (event.detail.status === 'mail_sent') {
+        document.getElementById('popup-contact').classList.remove('open-modal');
+    }
 });
 
 /**
@@ -36,7 +34,7 @@ jQuery(document).ready( $ => {
     
     // Page courante
     let current_page = 1;
-
+    
     /*
     A chaque modification effective du formulaire de filtrage/tri
     une requette Ajax est envoyée pour générer le liste des photos
@@ -45,7 +43,7 @@ jQuery(document).ready( $ => {
         
         // Comportement par défaut formulaire annulé
         event.preventDefault();
-
+        
         current_page = 1;
         
         // Récupération des paramètres depuis le formulaire
@@ -60,7 +58,7 @@ jQuery(document).ready( $ => {
             categorie: $('#filtre-categorie').val(),
             format: $('#filtre-format').val(),
             ordre_tri: $('#ordre-tri').val(),
-
+            
             // Page 1
             paged: current_page
         };
@@ -85,24 +83,24 @@ jQuery(document).ready( $ => {
         
         // Réception retour data
         .then( data => {
-
+            
             // Affiche ou cache le bouton "Charger plus"
             if (current_page < data.max_pages) {
                 $('#load-more-btn').show();
             } else {
                 $('#load-more-btn').hide();
             }
-
+            
             // Vide puis réinjecte l'espace photos
             $('#filtre-tri-result').empty().append(data.html);
         })
-
+        
         // Gestion des exceptions
         .catch( error => {
             console.error('Problem fetching photo images.', error);
         });
     });
-
+    
     /*
     Ub bouton "Charger plus" se trouve au bas de la liste des photos
     quand des photos restent à présenter et permet de charger la suite
@@ -115,9 +113,9 @@ jQuery(document).ready( $ => {
             type: 'POST',
             url: motaphoto_js.ajax_url,
             dataType: 'json',
-
+            
             data: {
-
+                
                 // Paramètres depuis le formulaire
                 action: $('#filtre-tri-form').find('input[name=action').val(),
                 nonce: $('#filtre-tri-form').find('input[name=nonce').val(),
@@ -125,19 +123,19 @@ jQuery(document).ready( $ => {
                 categorie: $('#filtre-categorie').val(),
                 format: $('#filtre-format').val(),
                 ordre_tri: $('#ordre-tri').val(),
-
+                
                 // Page courante + 1
                 paged: current_page
             },
-
+            
             // Réception retour data
             success: (data) => {
-
+                
                 // Bouton disparaît si plus de photos
                 if (current_page >= data.max_pages) {
                     $('#load-more-btn').hide();
                 }
-
+                
                 // Injecte les nouvelles photos
                 $('#filtre-tri-result').append(data.html);
             },

@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.25' );
+    define( '_S_VERSION', '1.0.34' );
 }
 
 /**
@@ -40,6 +40,15 @@ function motaphoto_scripts_styles() {
         get_template_directory_uri() . '/css/motaphoto.css',
         array('motaphoto-fonts-style'),
         _S_VERSION
+    );
+
+    // JavaScript scripts, JQuery dependency and Ajax URL parameter
+    wp_enqueue_script(
+        'motaphoto-lightbox',
+        get_template_directory_uri() . '/js/lightbox.js',
+        array(),
+        _S_VERSION,
+        true
     );
 }
 

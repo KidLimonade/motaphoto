@@ -195,3 +195,78 @@ Popup Contact
 .contact-form .wpcf7-response-output {
     display: none;
 }
+
+/***********************************************************************
+Lightbox
+***********************************************************************/
+
+.lightbox {
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay-bg-color);
+    z-index: 10;
+}
+
+.open-lightbox {
+    visibility: visible;
+}
+
+.lightbox__previous,
+.lightbox__next {
+    border: none;
+    width: 28px;
+    height: 100%;
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: 300ms;
+}
+
+.lightbox__next {
+    left: auto;
+    right: 0;
+}
+
+.lightbox__previous {
+    background: url(../images/left-arrow.svg) center center / 100% 100% no-repeat;    
+}
+
+.lightbox__next {
+    background: url(../images/right-arrow.svg) center center / 100% 100% no-repeat;   
+}
+
+.lightbox__previous:hover,
+.lightbox__next:hover {
+    opacity: 1;
+}
+
+.lightbox__close {
+    border: none;
+    width: 44px;
+    height: 44px;
+    z-index: 30;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    background: url(../images/close-lightbox.svg) center center / 100% 100%;
+}
+
+.lightbox__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50px;    
+    margin-right: 50px;
+}
+
+.lightbox__container img {
+    max-width: 100%;
+    height: auto;
+}
