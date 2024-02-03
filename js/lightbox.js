@@ -1,18 +1,17 @@
 /**
-* Ouverture de la lightbox modale de présentation
-* d'une photo unique, et navigation dans la phototèque
-* vers l'arriàre ou vers l'avant
+* Affiche la photo relative à un post de la phototèque
+* en plein écran, avec la possibilité de naviguer en avant
+* ou en arrière parmi l'ensemble des photos du site MotaPhoto
 */
 
-function bip(button) {
-    console.log('Clic sur bouton lightbox');
-    console.log(button);
-    const postid = button.dataset.postid;
-    console.log(postid);
+function ShowInLightbox(button) {
 
+    // Le post photo dont l'image doit être affichée
+    const postid = button.dataset.postid;
+    if ( !postid ) { return; }
+    
+    // Paramètres de la requête
     const params = {
-            
-        // Paramètres WordPress / Ajax
         action: 'request_photo_by_ID',
         post_type: 'photo',
         post_id: postid
@@ -36,69 +35,66 @@ function bip(button) {
         return response.json();
     })
     
-    // Réception retour data
+    // Réception des data en réponse à la requête
     .then( data => {
-        console.log(data.url_image);
-        console.log(data.reference);
-        console.log(data.categorie);
+
         const photo = document.createElement('img');
         photo.src = data.url_image;
-        photo.alt = data.titre;
         const container = document.querySelector('.lightbox__container');
+
+        // Vide le conteneur de la lightbox puis ajoute l'image
         container.innerHTML = "";
         container.appendChild(photo);
+
+        // Préparation du lightbox bouton "Précédent"
+        const prev_id = data.prev_id;
+        const prev_button = document.getElementById('lightbox__prev');
+        if (prev_id !== null) {
+            prev_button.style.display = "unset";
+            prev_button.dataset.postid = prev_id;
+        } else {
+
+            // Pas de précédent... pas d'affichage du bouton
+            prev_button.style.display = "none";
+            delete prev_button.dataset.postid;
+            }
+        
+        // Préparation du lightbox bouton "Suivant" 
+        const next_id = data.next_id;
+        const next_button = document.getElementById('lightbox__next');
+        if (next_id !== null) {
+            next_button.style.display = "unset";
+            next_button.dataset.postid = next_id;
+        } else {
+
+            // Pas de suivant... pas de bouton !
+            next_button.style.display = "none";
+            delete next_button.dataset.postid;
+            }
     })
     
     // Gestion des exceptions
     .catch( error => {
-        console.error('Problem fetching photo images.', error);
+        console.error('Problem fetching photo image.', error);
     });
-
+    
+    // Si la lightbox n'est pas à l'écran on la fait apparaître
     document.querySelector('.lightbox').classList.add('open-lightbox');
 }
 
-// Ouverture de la lightbox sur clic bouton en haut à droite d'une vignette
-// document.querySelectorAll('.lightbox-btn').forEach(button => {
-//     button.addEventListener('click', (event) => {
+/**
+* Ferme la lightbox sur une clic de la croix de fermeture
+* placée en haut à droite de la fenêtre plein écran, et
+* reinitialise le conteneur et divers éléments de la lightbox 
+*/
 
-//         const params = {
-            
-//             // Paramètres WordPress / Ajax
-//             action: 'request_photo_by_ID',
-//             post_type: 'photo',
-//             post_id: event.target.id
-//         };
-        
-//         // Envoi requête POST via url Ajax (wp_localize_script)
-//         fetch(motaphoto_js.ajax_url, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/x-www-form-urlencoded',
-//                 'Cache-Control': 'no-cache'
-//             },
-//             body: new URLSearchParams(params)
-//         })
-        
-//         // Réception réponse requête
-//         .then( response => {
-//             if ( !response.ok ) {
-//                 throw new Error('Network response error.');
-//             }
-//             return response.json();
-//         })
-        
-//         // Réception retour data
-//         .then( data => {
-//             console.log(data.url_image);
-//             console.log(data.reference);
-//             console.log(data.categorie);
-//         })
-        
-//         // Gestion des exceptions
-//         .catch( error => {
-//             console.error('Problem fetching photo images.', error);
-//         });
-
-//         document.querySelector('.lightbox').classList.add('open-lightbox');
-//     });
-// });
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector('.lightbox__close').addEventListener('click', () => {
+        document.querySelector('.lightbox__container').innerHTML = "";
+        const prev_button = document.getElementById('lightbox__prev');
+        delete prev_button.dataset.postid;
+        const next_button = document.getElementById('lightbox__next');
+        delete next_button.dataset.postid;
+        document.querySelector('.lightbox').classList.remove('open-lightbox');
+    });    
+});

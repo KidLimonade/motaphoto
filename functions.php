@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.39' );
+    define( '_S_VERSION', '1.0.42' );
 }
 
 /**
@@ -90,10 +90,14 @@ function add_motaphoto_wordpress_features() {
 */
 function request_filtered_photos() {
 
+    // Authentification de la requête
     if (!isset( $_REQUEST['nonce'] ) or
         !wp_verify_nonce( $_REQUEST['nonce'], 'request_filtered_photos' )
     ) { wp_send_json_error('Unauthorized operation.', 403);}
 
+    // Récupération des termes de la taxonomie custom 'categorie'
+    // Ici ils proviennent du formulaire, donc une seule au maximum
+    // Attention si zéro... alors on les mets tous pour la requête
     $categorie = $_POST['categorie'];
     if ($categorie === '') {
         $terms = get_terms( ['taxonomy' => 'categorie', 'hide_empty' => false] );
@@ -105,6 +109,9 @@ function request_filtered_photos() {
         $categories = [$categorie];
     }
 
+    // Récupération des termes de la taxonomue custom 'format'
+    // Ici ils proviennent du formulaire, donc un seul au maximym
+    // Attention si zéro... alors on les mets tous pour la requête
     $format = $_POST['format'];
     if ($format === '') {
         $terms = get_terms( ['taxonomy' => 'format', 'hide_empty' => false] );
@@ -116,6 +123,7 @@ function request_filtered_photos() {
         $formats = [$format];
     }
 
+    // Récupération de l'ordre de tri choisi dans le formulaire
     $ordre_tri = $_POST['ordre_tri'];
     if ($ordre_tri === '') {
         $by = 'none';
@@ -125,6 +133,7 @@ function request_filtered_photos() {
         $order = $_POST['ordre_tri'];
     }
 
+    // Arguments de la requête wp_qiery
     $args = array(
         'post_type' => 'photo',
         'tax_query' => array(
@@ -142,67 +151,88 @@ function request_filtered_photos() {
         ),
         'orderby'           => $by,
         'order'             => $order,
-        'posts_per_page'    => 3,
+        'posts_per_page'    => 4,
         'paged'             => $_POST['paged'],
     );
+
+    // Lancement de la requête wp_query
     $query = new WP_Query($args);
 
+    // Boucle éventuelle sur le retour de la requête
     if ($query->have_posts()) {
 
         ob_start();
 
+        // Chaque photo dans son bloc
         while ($query->have_posts()) {
             $query->the_post();
             get_template_part('template-parts/photo-block');
         }
-        $output = ob_get_contents();
+        $html_buffer = ob_get_contents();
 
         ob_end_clean();
+
+        $result = array(
+            'max_pages' => $query->max_num_pages,   // Nombre de pages maximum
+            'html'      => $html_buffer             // Cumul des blocs photos
+        );
+        echo json_encode($result);
+    } else {
+        echo json_encode(false);
     }
 
-    $result = array(
-        'max_pages' => $query->max_num_pages,
-        'html'      => $output
-    );
-
-    echo json_encode($result);
     die();
 }
 
+/**
+* WP query getting one photo stored into the MotaPhoto site
+* as Custom Post Type post referenced by its post id.
+*/
 function request_photo_by_ID() {
 
+    // Vérification de la présence du post id
     if ( !isset($_POST['post_id']) ) {
         wp_send_json_error("Missing photo identifier.", 400);
     }
 
     $post_id = $_POST['post_id'];
 
+    // Vérification que la photo n'est pas en "brouillon"
     if ( get_post_status($post_id) !== 'publish' ) {
         wp_send_json_error("Photo avvess denied.", 403);
     }
 
+    // Arguments de la requête wp_qiery
     $args = array(
         'post_type' => 'photo',
         'p' => $post_id
     );
+
+    // Lancement de la requête wp_query
     $query = new WP_Query($args);
 
+    // Si le retour de le retour de la requête est un succès
     if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post();
-            $url_image = get_the_post_thumbnail_url();
-            $reference = get_field_object('field_65af94c95d70a')['value'];
-            $categorie = implode(' ',  wp_get_post_terms($post_id, 'categorie', ['fields' => 'names']));
-        }
+        $query->the_post();
+        $url_image = get_the_post_thumbnail_url();
+        $reference = get_field_object('field_65af94c95d70a')['value'];
+        $categorie = implode(' ',  wp_get_post_terms($post_id, 'categorie', ['fields' => 'names']));
+        $prev_id = get_previous_post()->ID;
+        $next_id = get_next_post()->ID;
+
+        // Informations sur le post trouvé
+        $result = array(
+            'url_image' => $url_image,  // url de l'image de la photo
+            'reference' => $reference,  // Référence de la photo
+            'categorie' => $categorie,  // Termes de la taxonomie custom 'categorie'
+            'prev_id'   => $prev_id, 
+            'next_id'   => $next_id
+        );
+        echo json_encode($result);
+    } else {
+        echo json_encode(false);
     }
 
-    $result = array(
-        'url_image' => $url_image,
-        'reference' => $reference,
-        'categorie' => $categorie
-    );
-
-    echo json_encode($result);
     die();
 }
 

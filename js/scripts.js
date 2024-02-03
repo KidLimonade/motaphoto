@@ -26,12 +26,6 @@ document.addEventListener('wpcf7submit', event => {
     }
 });
 
-// Fermeture de la lightbox sur clic croix en haut à droite de la lightbox
-document.querySelector('.lightbox__close').addEventListener('click', () => {
-    document.querySelector('.lightbox').classList.remove('open-lightbox');
-    console.log('close');
-});
-
 /**
 * Accès via Ajax à des groupes de photos avec filtrage possible
 * par catégorie et format, et tri par date croissant décroissant

@@ -103,7 +103,7 @@ Popup Contact
     display: flex;
     align-items: center;
     background-color: var(--overlay-bg-color);
-    transition: all 500ms;
+    transition: all 400ms ease-in;
 }
 
 .open-modal {
@@ -211,7 +211,7 @@ Lightbox
     height: 100%;
     overflow: auto;
     background-color: var(--overlay-bg-color);
-    transition: all 500ms;
+    transition: all 400ms ease-in;
 }
 
 .open-lightbox {
@@ -219,54 +219,52 @@ Lightbox
     opacity: 1;
 }
 
-.lightbox__previous,
-.lightbox__next {
-    border: none;
+#lightbox__prev,
+#lightbox__next {
     width: 28px;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--main-bg-color);
     height: 100%;
     z-index: 20;
-    position: fixed;
     top: 0;
-    opacity: 0.5;
-    cursor: pointer;
-    transition: 300ms;
 }
 
-.lightbox__next {
+#lightbox__next {
     left: auto;
     right: 0;
 }
 
-.lightbox__previous {
-    background: url(../images/left-arrow.svg) center center / 100% 100% no-repeat; 
+#lightbox__prev {
+    background: url(../images/left-arrow.svg) center center / 100% 100% no-repeat transparent; 
     text-indent: 50px;   
 }
 
-.lightbox__next {
-    background: url(../images/right-arrow.svg) center center / 100% 100% no-repeat;   
+#lightbox__next {
+    background: url(../images/right-arrow.svg) center center / 100% 100% no-repeat transparent;   
     text-indent: -50px;
 }
 
 .lightbox__close {
-    border: none;
     width: 23px;
     height: 23px;
     z-index: 30;
-    position: fixed;
     top: 20px;
-    right: 20px;
-    opacity: 0.5;
-    cursor: pointer;
-    transition: 300ms;
-    background: url(../images/close-cross.svg) center center / 100% 100% no-repeat;
+    right: 40px;
+    background: url(../images/close-cross.svg) center center / 100% 100% no-repeat transparent;
 }
 
-.lightbox__previous:hover,
-.lightbox__next:hover,
+.lightbox button {
+    position: fixed;
+    cursor: pointer;
+    border: none;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--main-bg-color);
+    opacity: 0.5;
+    transition: opacity 300ms;
+}
+
+#lightbox__prev:hover,
+#lightbox__next:hover,
 .lightbox__close:hover {
     opacity: 1;
     font-weight: 700;
@@ -276,11 +274,18 @@ Lightbox
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 50px;    
-    margin-right: 50px;
+    margin-left: 100px;    
+    margin-right: 100px;
+    min-height: 100vh;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .lightbox__container img {
     max-width: 100%;
     height: auto;
+    animation: fade-in 400ms ease-in;
 }
