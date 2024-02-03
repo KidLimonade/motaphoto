@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.34' );
+    define( '_S_VERSION', '1.0.39' );
 }
 
 /**
@@ -42,14 +42,20 @@ function motaphoto_scripts_styles() {
         _S_VERSION
     );
 
-    // JavaScript scripts, JQuery dependency and Ajax URL parameter
+    // Lightbox JavaScript script and Ajax URL parameter
     wp_enqueue_script(
         'motaphoto-lightbox',
         get_template_directory_uri() . '/js/lightbox.js',
         array(),
-        _S_VERSION,
-        true
+        _S_VERSION
+        // Script loaded in <head>
     );
+    wp_localize_script(
+        'motaphoto-lightbox',
+        'motaphoto_js',
+        array('ajax_url' => admin_url('admin-ajax.php'))
+    );
+
 }
 
 /**
@@ -163,6 +169,43 @@ function request_filtered_photos() {
     die();
 }
 
+function request_photo_by_ID() {
+
+    if ( !isset($_POST['post_id']) ) {
+        wp_send_json_error("Missing photo identifier.", 400);
+    }
+
+    $post_id = $_POST['post_id'];
+
+    if ( get_post_status($post_id) !== 'publish' ) {
+        wp_send_json_error("Photo avvess denied.", 403);
+    }
+
+    $args = array(
+        'post_type' => 'photo',
+        'p' => $post_id
+    );
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $url_image = get_the_post_thumbnail_url();
+            $reference = get_field_object('field_65af94c95d70a')['value'];
+            $categorie = implode(' ',  wp_get_post_terms($post_id, 'categorie', ['fields' => 'names']));
+        }
+    }
+
+    $result = array(
+        'url_image' => $url_image,
+        'reference' => $reference,
+        'categorie' => $categorie
+    );
+
+    echo json_encode($result);
+    die();
+}
+
 /**
 * Add extra menu items at the end of theme menus:
 * - 'Contact' button in header navigation bar.
@@ -187,4 +230,7 @@ add_action("after_setup_theme", 'register_motaphoto_menus');
 add_action('after_setup_theme', 'add_motaphoto_wordpress_features');
 add_action('wp_ajax_request_filtered_photos', 'request_filtered_photos');
 add_action('wp_ajax_nopriv_request_filtered_photos', 'request_filtered_photos');
+add_action('wp_ajax_request_photo_by_ID', 'request_photo_by_ID');
+add_action('wp_ajax_nopriv_request_photo_by_ID', 'request_photo_by_ID');
 add_filter('wp_nav_menu_items', 'add_item_to_motaphoto_menus', 10, 2);
+

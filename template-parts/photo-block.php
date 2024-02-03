@@ -14,7 +14,7 @@ echo ' ';
 <span>
     <a href="<?php echo get_post_permalink(); ?>">Oeil</a>
 </span>
-<button class="lightbox-btn">
+<button onclick="bip(this)" class="lightbox-btn" data-postid="<?php echo get_the_ID(); ?>">
     Lightbox
 </button>
 <?php

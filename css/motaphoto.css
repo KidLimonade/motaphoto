@@ -5,7 +5,7 @@ General settings
 :root {
     --main-color: #000;
     --main-bg-color: #FFF;
-    --overlay-bg-color: rgba(0, 0, 0, 0.6);
+    --overlay-bg-color: rgba(0, 0, 0, 0.85);
     --input-field-border-color: #B8BBC2;
     --primary-red-color: #E00000;
     --secondary-red-color: #FE5858;
@@ -202,23 +202,31 @@ Lightbox
 
 .lightbox {
     visibility: hidden;
+    opacity: 0;
     position: fixed;
+    z-index: 10;
     top: 0;
     right: 0;
     width: 100%;
     height: 100%;
+    overflow: auto;
     background-color: var(--overlay-bg-color);
-    z-index: 10;
+    transition: all 500ms;
 }
 
 .open-lightbox {
     visibility: visible;
+    opacity: 1;
 }
 
 .lightbox__previous,
 .lightbox__next {
     border: none;
     width: 28px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--main-bg-color);
     height: 100%;
     z-index: 20;
     position: fixed;
@@ -234,28 +242,34 @@ Lightbox
 }
 
 .lightbox__previous {
-    background: url(../images/left-arrow.svg) center center / 100% 100% no-repeat;    
+    background: url(../images/left-arrow.svg) center center / 100% 100% no-repeat; 
+    text-indent: 50px;   
 }
 
 .lightbox__next {
     background: url(../images/right-arrow.svg) center center / 100% 100% no-repeat;   
-}
-
-.lightbox__previous:hover,
-.lightbox__next:hover {
-    opacity: 1;
+    text-indent: -50px;
 }
 
 .lightbox__close {
     border: none;
-    width: 44px;
-    height: 44px;
+    width: 23px;
+    height: 23px;
     z-index: 30;
     position: fixed;
     top: 20px;
     right: 20px;
+    opacity: 0.5;
     cursor: pointer;
-    background: url(../images/close-lightbox.svg) center center / 100% 100%;
+    transition: 300ms;
+    background: url(../images/close-cross.svg) center center / 100% 100% no-repeat;
+}
+
+.lightbox__previous:hover,
+.lightbox__next:hover,
+.lightbox__close:hover {
+    opacity: 1;
+    font-weight: 700;
 }
 
 .lightbox__container {

@@ -26,6 +26,12 @@ document.addEventListener('wpcf7submit', event => {
     }
 });
 
+// Fermeture de la lightbox sur clic croix en haut à droite de la lightbox
+document.querySelector('.lightbox__close').addEventListener('click', () => {
+    document.querySelector('.lightbox').classList.remove('open-lightbox');
+    console.log('close');
+});
+
 /**
 * Accès via Ajax à des groupes de photos avec filtrage possible
 * par catégorie et format, et tri par date croissant décroissant
@@ -54,7 +60,7 @@ jQuery(document).ready( $ => {
             nonce: $('#filtre-tri-form').find('input[name=nonce').val(),
             post_type: $('#filtre-tri-form').find('input[name=post_type').val(),
             
-            // Paramètres utilisateur
+            // Paramètres utilisateur filtrage / tri
             categorie: $('#filtre-categorie').val(),
             format: $('#filtre-format').val(),
             ordre_tri: $('#ordre-tri').val(),
