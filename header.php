@@ -1,3 +1,9 @@
+<?php
+/**
+ * MotaPhoto theme header.
+*/
+
+?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -19,4 +25,5 @@
             'theme_location'    => 'mota-header',
             'container'         => 'nav'
         )); ?>
+
     </header>

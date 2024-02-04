@@ -1,12 +1,19 @@
-<footer>
+<?php
+/**
+ * MotaPhoto theme footer.
+*/
 
-<?php get_template_part('template-parts/lightbox'); ?>
+?>
+    <footer>
 
-<?php get_template_part('template-parts/popup-contact'); ?>
+        <?php get_template_part('template-parts/lightbox'); ?>
+        <?php get_template_part('template-parts/popup-contact'); ?>
 
-<?php wp_nav_menu(array('theme_location'  => 'mota-footer')); ?>
+        <?php wp_nav_menu( array(
+            'theme_location'  => 'mota-footer'
+        )); ?>
 
-</footer>
+    </footer>
 
 <?php wp_footer(); ?>
 

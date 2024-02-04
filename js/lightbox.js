@@ -57,7 +57,7 @@ function ShowInLightbox(button) {
             // Pas de précédent... pas d'affichage du bouton
             prev_button.style.display = "none";
             delete prev_button.dataset.postid;
-            }
+        }
         
         // Préparation du lightbox bouton "Suivant" 
         const next_id = data.next_id;
@@ -70,7 +70,7 @@ function ShowInLightbox(button) {
             // Pas de suivant... pas de bouton !
             next_button.style.display = "none";
             delete next_button.dataset.postid;
-            }
+        }
     })
     
     // Gestion des exceptions

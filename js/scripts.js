@@ -92,7 +92,7 @@ jQuery(document).ready( $ => {
             }
             
             // Vide puis réinjecte l'espace photos
-            $('#filtre-tri-result').empty().append(data.html);
+            $('#photos-container').empty().append(data.html);
         })
         
         // Gestion des exceptions
@@ -137,7 +137,7 @@ jQuery(document).ready( $ => {
                 }
                 
                 // Injecte les nouvelles photos
-                $('#filtre-tri-result').append(data.html);
+                $('#photos-container').append(data.html);
             },
         });    
     });
