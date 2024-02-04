@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.48' );
+    define( '_S_VERSION', '1.0.51' );
 }
 
 /**
@@ -126,7 +126,7 @@ function request_filtered_photos() {
     // Récupération de l'ordre de tri choisi dans le formulaire
     $ordre_tri = $_POST['ordre_tri'];
     if ($ordre_tri === '') {
-        $by = 'none';
+        $by = 'date';
         $order = 'DESC';
     } else {
         $by = 'date';

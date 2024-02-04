@@ -1,3 +1,11 @@
+<?php
+/**
+ * Formulaire de filtrage par catégorie et format des photos
+ * Tout changement de valeur provoque une nouvelle requête
+ * Les champ sont aussi utilisés par le bouton "Charger plus"
+*/
+?>
+
 <form id="filtre-tri-form">
 
     <input type="hidden" name="post_type" value="photo">
@@ -7,12 +15,9 @@
     <?php foreach (get_object_taxonomies('photo', 'object') as $tax) : ?>
     <label for="filtre-<?php echo $tax->name ?>"></label>
     <select id="filtre-<?php echo $tax->name ?>" class="taxonomie">
-
         <option value=""><?php echo $tax->labels->singular_name ?></option>
         <?php foreach(get_terms(['taxonomy' => $tax->name]) as $choice) : ?>
-
         <option value="<?php echo $choice->slug ?>"><?php echo $choice->name ?></option>
-        
         <?php endforeach ?>
     </select>
     <?php endforeach ?>

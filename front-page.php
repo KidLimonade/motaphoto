@@ -20,7 +20,7 @@ if ($query->have_posts()) :
     // Hero header photo au hasard
     get_template_part('template-parts/hero-header');
 
-    // Filtre et tri dans la phototèque
+    // Filtre et tri dans la photothèque
     get_template_part('template-parts/filter-sort-form');
 
     // Bloc principal des photos

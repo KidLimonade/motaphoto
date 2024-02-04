@@ -1,5 +1,5 @@
 /**
-* Affiche la photo relative à un post de la phototèque
+* Affiche la photo relative à un post de la photothèque
 * en plein écran, avec la possibilité de naviguer en avant
 * ou en arrière parmi l'ensemble des photos du site MotaPhoto
 */

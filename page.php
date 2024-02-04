@@ -5,7 +5,6 @@
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
 */
 
-die(); 
 get_header();
 
 /* Start the Loop */
