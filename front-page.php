@@ -1,7 +1,6 @@
 <?php
 /**
- * The  MotaPhoto front page
- *
+ * La MotaPhoto front page
 */
 
 get_header();
@@ -15,6 +14,7 @@ $args = array(
 );
 $query = new WP_Query($args);
 
+// La page
 if ($query->have_posts()) :
 
     // Hero header photo au hasard
@@ -23,22 +23,22 @@ if ($query->have_posts()) :
     // Filtre et tri dans la phototèque
     get_template_part('template-parts/filter-sort-form');
 
+    // Bloc principal des photos
     echo '<div id="photos-container">';
 
+    // La boucle principale
     while ($query->have_posts()) : 
         $query->the_post();
         get_template_part('template-parts/photo-block');
-    endwhile;
+    endwhile; // Fin de la oucle principale
 
     echo '</div>';
-
-//wp_reset_postdata();
 ?>
 
 <button id="load-more-btn"><?php _e('Charger plus', 'motaphoto'); ?></button>
 
 <?php
-endif;
+endif; // Fin de la page
 
 get_footer();
     

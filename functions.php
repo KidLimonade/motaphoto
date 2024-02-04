@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.44' );
+    define( '_S_VERSION', '1.0.48' );
 }
 
 /**
@@ -151,7 +151,7 @@ function request_filtered_photos() {
         ),
         'orderby'           => $by,
         'order'             => $order,
-        'posts_per_page'    => 4,
+        'posts_per_page'    => 8,
         'paged'             => $_POST['paged'],
     );
 
@@ -225,8 +225,8 @@ function request_photo_by_ID() {
             'url_image' => $url_image,  // url de l'image de la photo
             'reference' => $reference,  // Référence de la photo
             'categorie' => $categorie,  // Termes de la taxonomie custom 'categorie'
-            'prev_id'   => $prev_id, 
-            'next_id'   => $next_id
+            'prev_id'   => $prev_id,    // Post id photo précédente
+            'next_id'   => $next_id     // Post id photo suivante
         );
         echo json_encode($result);
     } else {
