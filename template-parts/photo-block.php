@@ -1,4 +1,15 @@
+<?php
+/**
+ * Bloc photo 
+ * Le hero header avec une image en haute qualité prise au
+ * hasard parmi celles de la photothèque de Nathalie Mota.
+ * La mention "PHOTOGRAPHE EVENT" en lettres détourées est
+ * superposé au centre via le code CSS pour être responsive.
+*/
+?>
+
 <div>
+</div>
 <?php
 
 if (has_post_thumbnail()) {
@@ -20,4 +31,4 @@ echo ' ';
 <?php
 
 ?>
-</div>
+

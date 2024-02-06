@@ -40,7 +40,7 @@ jQuery(document).ready( $ => {
     une requette Ajax est envoyée pour générer le liste des photos
     */
     $('#filtre-tri-form').on('change', event => {
-        
+
         // Comportement par défaut formulaire annulé
         event.preventDefault();
         

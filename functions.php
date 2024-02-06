@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.51' );
+    define( '_S_VERSION', '1.0.53' );
 }
 
 /**
@@ -55,7 +55,6 @@ function motaphoto_scripts_styles() {
         'motaphoto_js',
         array('ajax_url' => admin_url('admin-ajax.php'))
     );
-
 }
 
 /**
@@ -90,16 +89,16 @@ function add_motaphoto_wordpress_features() {
 */
 function request_filtered_photos() {
 
-    // Authentification de la requête
+    // Authentification de l'origine de la requête
     if (!isset( $_REQUEST['nonce'] ) or
         !wp_verify_nonce( $_REQUEST['nonce'], 'request_filtered_photos' )
     ) { wp_send_json_error('Unauthorized operation.', 403);}
 
-    // Récupération des termes de la taxonomie custom 'categorie'
-    // Ici ils proviennent du formulaire, donc une seule au maximum
-    // Attention si zéro... alors on les mets tous pour la requête
+    // Récupération de la valeur pour la taxonomie custom 'categorie'
+    // Ici elle provient du formulaire, donc une seule valeur reçue
+    // Alors si '*''... on les mets toutes pour la requête
     $categorie = $_POST['categorie'];
-    if ($categorie === '') {
+    if ($categorie === '*') {
         $terms = get_terms( ['taxonomy' => 'categorie', 'hide_empty' => false] );
         $categories = [];
         foreach ($terms as $term) {
@@ -109,11 +108,11 @@ function request_filtered_photos() {
         $categories = [$categorie];
     }
 
-    // Récupération des termes de la taxonomue custom 'format'
-    // Ici ils proviennent du formulaire, donc un seul au maximym
-    // Attention si zéro... alors on les mets tous pour la requête
+    // Récupération de la valeur pour la taxonomue custom 'format'
+    // Ici elle provient du formulaire, donc une seule valeur reçue
+    // Alors si '*''... on les mets tous pour la requête
     $format = $_POST['format'];
-    if ($format === '') {
+    if ($format === '*') {
         $terms = get_terms( ['taxonomy' => 'format', 'hide_empty' => false] );
         $formats = [];
         foreach ($terms as $term) {
@@ -123,15 +122,9 @@ function request_filtered_photos() {
         $formats = [$format];
     }
 
-    // Récupération de l'ordre de tri choisi dans le formulaire
-    $ordre_tri = $_POST['ordre_tri'];
-    if ($ordre_tri === '') {
-        $by = 'date';
-        $order = 'DESC';
-    } else {
-        $by = 'date';
-        $order = $_POST['ordre_tri'];
-    }
+    // Récupération de l'ordre de tri du formulaire
+    // Si aucun choix, les plus récentes en premier
+    $order = $_POST['ordre_tri'] === '' ? 'DESC' : $_POST['ordre_tri'];
 
     // Arguments de la requête wp_qiery
     $args = array(
@@ -149,7 +142,7 @@ function request_filtered_photos() {
                 'terms'     => $formats
             )
         ),
-        'orderby'           => $by,
+        'orderby'           => 'date',
         'order'             => $order,
         'posts_per_page'    => 8,
         'paged'             => $_POST['paged'],

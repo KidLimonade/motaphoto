@@ -3,6 +3,8 @@ General settings
 ***********************************************************************/
 
 :root {
+
+    /* Couleurs charte MotaPhoto */
     --main-color: #000;
     --main-bg-color: #FFF;
     --overlay-bg-color: rgba(0, 0, 0, 0.85);
@@ -26,6 +28,19 @@ body {
     flex-direction: column;
 }
 
+/***********************************************************************
+Composants
+***********************************************************************/
+
+/*======================================================================
+Filtre & tri
+======================================================================*/
+
+select {
+    font-family: 'Poppins', monospace;
+    font-size: 32px;
+    font-weight: 500;
+}
 /***********************************************************************
 Header & footer
 ***********************************************************************/
@@ -96,6 +111,7 @@ Hero header
 .hero-container {
     width: 100%;
     max-height: 962px;
+    position: relative;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -110,12 +126,18 @@ Hero header
 
 .hero-container::after {
     content: '';
-    position: absolute;
-    background-image: url('../images/hero-photo-event-desktop.png');
     width: 100%;
     height: 100%;
+    position: absolute;
+    background-image: url('../images/hero-photo-event-desktop.png');
     background-position: center center;
     background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 720px) {
+    .hero-container::after {
+        background-image: url('../images/hero-photo-event-mobile.png');
+    }
 }
 
 /***********************************************************************
