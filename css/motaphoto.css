@@ -109,7 +109,7 @@ Bloc photo
     width: 34px;
     height: 34px;
     border: none;
-    background-image: url('../images/Icon-fullscreen.svg');
+    background-image: url('../images/icon-fullscreen.svg');
     background-position: center center;
     background-repeat: no-repeat;
     background-color: transparent;
@@ -371,12 +371,12 @@ Lightbox
 }
 
 #lightbox__prev {
-    background: url(../images/left-arrow.svg) center center / 100% 100% no-repeat transparent; 
+    background: url(../images/icon-left-arrow.svg) center center / 100% 100% no-repeat transparent; 
     text-indent: 50px;   
 }
 
 #lightbox__next {
-    background: url(../images/right-arrow.svg) center center / 100% 100% no-repeat transparent;   
+    background: url(../images/icon-right-arrow.svg) center center / 100% 100% no-repeat transparent;   
     text-indent: -50px;
 }
 

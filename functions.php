@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.63' );
+    define( '_S_VERSION', '1.0.69' );
 }
 
 /**
