@@ -41,6 +41,71 @@ select {
     font-size: 32px;
     font-weight: 500;
 }
+
+/*======================================================================
+Bloc photo
+======================================================================*/
+
+.photo-container {
+    position: relative;
+    max-width: 564px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.photo-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--main-bg-color);
+    font-family: 'Poppins', monospace;
+    font-size: 14px;
+    font-weight: 500;
+
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.photo-overlay .reference {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.photo-overlay .categories {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.photo-overlay .single-link {
+    position: absolute;
+    width: 46px;
+    height: 32px;
+    background-image: url('../images/icon-eye.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.photo-overlay .lightbox-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
 /***********************************************************************
 Header & footer
 ***********************************************************************/
