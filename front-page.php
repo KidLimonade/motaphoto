@@ -35,7 +35,7 @@ if ($query->have_posts()) :
     echo '</div>';
 ?>
 
-<button id="load-more-btn"><?php _e('Charger plus', 'motaphoto'); ?></button>
+<button id="load-more-btn" class="motaphoto-button"><?php _e('Charger plus', 'motaphoto'); ?></button>
 
 <?php
 endif; // Fin de la page

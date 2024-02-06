@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.59' );
+    define( '_S_VERSION', '1.0.63' );
 }
 
 /**
@@ -237,9 +237,9 @@ function request_photo_by_ID() {
 function add_item_to_motaphoto_menus($items, $args) {
     
     if ($args->theme_location === 'mota-header') {
-        $items .= '<li><span class="contact-btn popup-link">Contact</span></li>';
+        $items .= '<li><span class="contact-btn popup-link">' . __('Contact', 'motaphoto') . '</span></li>';
     } else if ($args->theme_location === 'mota-footer') {
-        $items .= '<li>Tous droits réservés</li>';
+        $items .= '<li>' . __('Tous droits réservés', 'motaphoto') . '</li>';
     }
     
     return $items;

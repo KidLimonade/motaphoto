@@ -1,8 +1,8 @@
 <?php
 /**
- * Formulaire de filtrage par catégorie et format des photos
- * Tout changement de valeur provoque une nouvelle requête
- * Les champ sont aussi utilisés par le bouton "Charger plus"
+ * Formulaire de filtrage par catégorie et format des photos.
+ * Tout changement de valeur provoque une nouvelle requête.
+ * Les champs sont aussi utilisés par le bouton "Charger plus".
 */
 ?>
 
