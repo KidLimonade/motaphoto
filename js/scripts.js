@@ -45,7 +45,12 @@ jQuery(document).ready( $ => {
         event.preventDefault();
         
         current_page = 1;
-        
+
+        console.log('Trace debug');
+        console.log($('#filtre-categorie').val());
+        console.log($('#filtre-format').val());
+        console.log($('#ordre-tri').val());
+
         // Récupération des paramètres depuis le formulaire
         const params = {
             
@@ -108,7 +113,9 @@ jQuery(document).ready( $ => {
     $('#load-more-btn').on('click', () => {
         
         current_page++;
-        
+
+        console.log('Trace debug');
+
         $.ajax({
             type: 'POST',
             url: motaphoto_js.ajax_url,

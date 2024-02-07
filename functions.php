@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.76' );
+    define( '_S_VERSION', '1.0.80' );
 }
 
 /**
@@ -124,7 +124,11 @@ function request_filtered_photos() {
 
     // Récupération de l'ordre de tri du formulaire
     // Si aucun choix, les plus récentes en premier
-    $order = $_POST['ordre_tri'] === '' ? 'DESC' : $_POST['ordre_tri'];
+    
+    $order = $_POST['ordre_tri'];
+    if ($order !== 'DESC' && $order !== 'ASC') {
+        $order = 'DESC';
+    }
 
     // Arguments de la requête wp_qiery
     $args = array(

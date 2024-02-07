@@ -12,7 +12,7 @@ General settings
     --primary-red-color: #E00000;
     --secondary-red-color: #FE5858;
     --tertiary-red-color: #FFD6D6;
-    --blue-color: #313144;
+    --dark-blue-color: #313144;
     --dark-gray-color: #C4C4C4;
     --medium-gray-color: #D8D8D8;
     --light-gray-color: #E5E5E5;
@@ -65,9 +65,17 @@ Filtre & tri
 ======================================================================*/
 
 select {
+    width: 260px;
+    height: 42px;
+    padding: 11px 12px;
     font-family: 'Poppins', monospace;
-    font-size: 32px;
+    font-size: 12px;
     font-weight: 500;
+    text-transform: uppercase;
+    border: 1.3px solid var(--input-field-border-color);
+    border-radius: 8px;
+    color: var(--dark-blue-color);
+    cursor: pointer;
 }
 
 /*======================================================================
@@ -295,7 +303,7 @@ Popup Contact
     font-size: 12px;
     font-weight: 500;
     text-transform: uppercase;
-    color: var(--blue-color);
+    color: var(--dark-blue-color);
 }
 
 .contact-form input,
