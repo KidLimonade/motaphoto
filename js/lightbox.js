@@ -38,15 +38,22 @@ function ShowInLightbox(button) {
     // Réception des data en réponse à la requête
     .then( data => {
 
+        // Préparation de la lightbox zone image
         const photo = document.createElement('img');
         photo.src = data.url_image;
-        const container = document.querySelector('.lightbox__container');
+        const container_image = document.querySelector('.lightbox__container .image');
 
-        // Vide le conteneur de la lightbox puis ajoute l'image
-        container.innerHTML = "";
-        container.appendChild(photo);
+        // Vide le conteneur image de la lightbox puis ajoute l'image
+        container_image.innerHTML = '';
+        container_image.appendChild(photo);
 
-        // Préparation du lightbox bouton "Précédent"
+        // Alimentation de la lightbox label "reference"
+        document.querySelector('.lightbox__container .reference').innerHTML = data.reference;
+
+        // Alimentation de la lightbox label "categorie"
+        document.querySelector('.lightbox__container .categorie').innerHTML = data.categorie;
+
+        // Préparation de la lightbox bouton "Précédent"
         const prev_id = data.prev_id;
         const prev_button = document.getElementById('lightbox__prev');
         if (prev_id !== null) {
@@ -59,7 +66,7 @@ function ShowInLightbox(button) {
             delete prev_button.dataset.postid;
         }
         
-        // Préparation du lightbox bouton "Suivant" 
+        // Préparation de la lightbox bouton "Suivant" 
         const next_id = data.next_id;
         const next_button = document.getElementById('lightbox__next');
         if (next_id !== null) {
@@ -90,7 +97,9 @@ function ShowInLightbox(button) {
 
 document.addEventListener("DOMContentLoaded", () => {
     document.querySelector('.lightbox__close').addEventListener('click', () => {
-        document.querySelector('.lightbox__container').innerHTML = "";
+        document.querySelector('.lightbox__container .image').innerHTML = '';
+        document.querySelector('.lightbox__container .reference').innerHTML = '';
+        document.querySelector('.lightbox__container .categorie').innerHTML = '';
         const prev_button = document.getElementById('lightbox__prev');
         delete prev_button.dataset.postid;
         const next_button = document.getElementById('lightbox__next');
