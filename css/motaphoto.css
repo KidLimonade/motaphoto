@@ -7,7 +7,7 @@ General settings
     /* Couleurs charte MotaPhoto */
     --main-color: #000;
     --main-bg-color: #FFF;
-    --overlay-bg-color: rgba(0, 0, 0, 0.85);
+    --overlay-bg-color: rgba(0, 0, 0, 0.8); /* Spec. Fonct. */
     --input-field-border-color: #B8BBC2;
     --primary-red-color: #E00000;
     --secondary-red-color: #FE5858;
@@ -359,7 +359,7 @@ Lightbox
 
 #lightbox__prev,
 #lightbox__next {
-    width: 28px;
+    width: 45px;
     height: 100%;
     z-index: 20;
     top: 0;
@@ -371,13 +371,12 @@ Lightbox
 }
 
 #lightbox__prev {
-    background: url(../images/icon-left-arrow.svg) center center / 100% 100% no-repeat transparent; 
-    text-indent: 50px;   
+    background: url(../images/icon-left-arrow.svg) center center / 100% 100% no-repeat yellow; 
+    text-indent: 45px; 
 }
 
 #lightbox__next {
-    background: url(../images/icon-right-arrow.svg) center center / 100% 100% no-repeat transparent;   
-    text-indent: -50px;
+    background: url(../images/icon-right-arrow.svg) center center / 100% 100% no-repeat yellowgreen;   
 }
 
 .lightbox__close {
@@ -397,7 +396,7 @@ Lightbox
     font-family: 'Space Mono', monospace;
     font-size: 12px;
     color: var(--main-bg-color);
-    opacity: 0.5;
+    opacity: 0.8;
     transition: opacity 300ms;
 }
 
@@ -408,13 +407,20 @@ Lightbox
     font-weight: 700;
 }
 
+.lightbox__label {
+    width: 100px;
+    background-color: #FE5858;
+}
+
 .lightbox__container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 100px;    
-    margin-right: 100px;
+    margin-left: 45px;    
+    margin-right: 45px;
     min-height: 100vh;
+
+    background-color: #FFD6D6;
 }
 
 @keyframes fade-in {
@@ -427,3 +433,9 @@ Lightbox
     height: auto;
     animation: fade-in 400ms ease-in;
 }
+
+/***********************************************************************
+Oage single photo
+***********************************************************************/
+
+/* Bloc navigation 118px de haut */

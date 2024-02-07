@@ -60,6 +60,7 @@ while ( have_posts() ) :
     </div>
     <div class="photo-navigation-prev-next">
         <div class="photo-navigation-prev-next-img">
+            <?php echo get_the_post_thumbnail(get_previous_post(), 'thumbnail'); ?>
             <?php echo get_the_post_thumbnail(get_next_post(), 'thumbnail'); ?>
         </div>
         <div class="photo-navigation-prev-next-btns">
