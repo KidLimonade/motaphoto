@@ -8,7 +8,7 @@ General settings
     --main-color: #000;
     --main-bg-color: #FFF;
     --overlay-bg-color: rgba(0, 0, 0, 0.8); /* Spec. Fonct. */
-    --input-field-border-color: #B8BBC2;
+    --blues-gray-color-color: #B8BBC2;
     --primary-red-color: #E00000;
     --secondary-red-color: #FE5858;
     --tertiary-red-color: #FFD6D6;
@@ -66,16 +66,37 @@ Filtre & tri
 
 select {
     width: 260px;
-    height: 42px;
-    padding: 11px 12px;
+    padding: 12px 18px;
+    color: var(--dark-blue-color);
+    background-color: var(--main-bg-color);
+    border: 1.3px solid var(--blues-gray-color-color);
+    border-radius: 8px;
+    cursor: pointer;
     font-family: 'Poppins', monospace;
     font-size: 12px;
     font-weight: 500;
+    line-height: 18px;
     text-transform: uppercase;
-    border: 1.3px solid var(--input-field-border-color);
-    border-radius: 8px;
-    color: var(--dark-blue-color);
-    cursor: pointer;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-image: url('../images/icon-chevron-down.svg');
+    background-position: right 18px center;
+    background-repeat: no-repeat;
+}
+
+select:hover {
+    border: 1.3px solid #215AFF;
+}
+
+select:focus {
+    outline: none;
+}
+
+select:active {
+    background-image: url('../images/icon-chevron-up.svg');
 }
 
 /*======================================================================
@@ -310,7 +331,7 @@ Popup Contact
 .contact-form textarea {
     width: 263px;
     padding: 0 12px;
-    border: 1px solid var(--input-field-border-color);
+    border: 1px solid var(--blues-gray-color-color);
     border-radius: 8px;
     box-sizing: border-box;
 }

@@ -13,7 +13,6 @@
     <input type="hidden" name="action" value="request_filtered_photos">
 
     <?php foreach (get_object_taxonomies('photo', 'object') as $tax) : ?>
-        <label for="filtre-<?php echo $tax->name ?>"></label>
         <select id="filtre-<?php echo $tax->name ?>">
             <option value="*" selected><?php echo $tax->labels->name ?></option>
             <?php foreach(get_terms(['taxonomy' => $tax->name]) as $choice) : ?>
@@ -22,7 +21,6 @@
         </select>
     <?php endforeach ?>
 
-    <label for="ordre-tri"></label>
     <select id="ordre-tri">
         <option disabled selected><?php _e('Trier par', 'motaphoto'); ?></option>
         <option value="DESC"><?php echo _e('À partir des plus récentes'); ?></option>
@@ -30,4 +28,5 @@
     </select>
 
 </form>
+
 
