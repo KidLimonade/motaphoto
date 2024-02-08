@@ -4,7 +4,7 @@
 */
 
 ?>
-    <footer>
+    <footer class="site-footer">
 
         <?php get_template_part('template-parts/lightbox'); ?>
         <?php get_template_part('template-parts/popup-contact'); ?>

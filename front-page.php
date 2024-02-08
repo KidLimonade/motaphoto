@@ -19,23 +19,32 @@ if ($query->have_posts()) :
 
     // Hero header photo au hasard
     get_template_part('template-parts/hero-header');
+    ?>
 
-    // Filtre et tri dans la photothèque
-    get_template_part('template-parts/filter-sort-form');
+    <main class="site-content">
+        <div class="zone-criteres">
 
-    // Bloc principal des photos
-    echo '<div id="photos-container">';
+        <?php // Filtre et tri dans la photothèque
+        get_template_part('template-parts/filter-sort-form');
+        ?>
 
-    // La boucle principale
-    while ($query->have_posts()) : 
-        $query->the_post();
-        get_template_part('template-parts/photo-block');
-    endwhile; // Fin de la oucle principale
+        </div>
+            <div id="photos-container">
 
-    echo '</div>';
-?>
+            <?php
+            // Boucle initiale de recherche de photos
+            while ($query->have_posts()) : 
+                $query->the_post();
+                get_template_part('template-parts/photo-block');
+            endwhile;
+            ?>
 
-<button id="load-more-btn" class="motaphoto-button"><?php _e('Charger plus', 'motaphoto'); ?></button>
+            </div>
+        <div class="zone-more">
+            <button id="load-more-btn" class="motaphoto-button"><?php _e('Charger plus', 'motaphoto'); ?>
+            </button>
+        </div>
+    </main>
 
 <?php
 endif; // Fin de la page

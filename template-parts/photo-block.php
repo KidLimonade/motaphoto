@@ -23,7 +23,7 @@
 
         <a class="single-link" href="<?php echo get_post_permalink(); ?>"></a>
 
-        <span class="titre"> <?php echo get_the_title(); ?> </span>
+        <span class="titre"> <?php echo get_the_title(); ?></span>
 
         <span class="categories"><?php echo implode(' ',  wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names'])); ?></span>
     </div>
