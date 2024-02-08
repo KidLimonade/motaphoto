@@ -1,7 +1,7 @@
 <?php
 /**
  * Le bloc photo utilisé sur la page d'accueil et sur les
- * pages photos indivuelles comporte deux éléments :
+ * pages photos individuelles comporte deux éléments :
  * - L'image de la photo proprement-dite en qualité moyenne
  * - Un overlay ombré visible au survol avec :
  *      - Bouton d'accès à la lightbox
@@ -10,22 +10,22 @@
  */
 ?>
 
-<div class="photo-container">
+<div class="card-container">
 
 <?php 
     if (has_post_thumbnail()) { 
         the_post_thumbnail('medium'); } 
 ?>
 
-    <div class="photo-overlay">
+    <div class="card-overlay">
 
         <button class="lightbox-btn" onclick="ShowInLightbox(this)" data-postid="<?php echo get_the_ID(); ?>"></button>
 
         <a class="single-link" href="<?php echo get_post_permalink(); ?>"></a>
 
-        <div class="titre"> <?php echo get_the_title(); ?> </div>
+        <span class="titre"> <?php echo get_the_title(); ?> </span>
 
-        <div class="categories"><?php echo implode(' ',  wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names'])); ?></div>
+        <span class="categories"><?php echo implode(' ',  wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names'])); ?></span>
     </div>
 </div>
 

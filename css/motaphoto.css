@@ -7,15 +7,20 @@ General settings
     /* Couleurs charte MotaPhoto */
     --main-color: #000;
     --main-bg-color: #FFF;
-    --overlay-bg-color: rgba(0, 0, 0, 0.8); /* Spec. Fonct. */
-    --blues-gray-color-color: #B8BBC2;
+    --blues-grayr-color: #B8BBC2;
+
     --primary-red-color: #E00000;
     --secondary-red-color: #FE5858;
     --tertiary-red-color: #FFD6D6;
+
     --dark-blue-color: #313144;
     --dark-gray-color: #C4C4C4;
     --medium-gray-color: #D8D8D8;
     --light-gray-color: #E5E5E5;
+
+    --overlay-bg-color: rgba(0, 0, 0, 0.8); /* Spec. Fonct. */
+    --overlay-card-color: rgba(0, 0, 0, 0.6); /* Mock. Figma */
+
 }
 
 body {
@@ -69,7 +74,7 @@ select {
     padding: 12px 18px;
     color: var(--dark-blue-color);
     background-color: var(--main-bg-color);
-    border: 1.3px solid var(--blues-gray-color-color);
+    border: 1.3px solid var(--blues-gray-color);
     border-radius: 8px;
     cursor: pointer;
     font-family: 'Poppins', monospace;
@@ -103,21 +108,23 @@ select:active {
 Bloc photo
 ======================================================================*/
 
-.photo-container {
+.card-container {
     position: relative;
-    max-width: 564px;
+    width: 100%;
+    max-height: 495px;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.photo-container img {
+.card-container img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
 }
 
-.photo-overlay {
+.card-overlay {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -128,12 +135,13 @@ Bloc photo
     font-size: 14px;
     font-weight: 400;
     text-transform: uppercase;
-
     z-index: 10;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--overlay-card-color);
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
 }
 
-.photo-overlay .lightbox-btn {
+.card-overlay .lightbox-btn {
     position: absolute;
     width: 34px;
     height: 34px;
@@ -142,12 +150,13 @@ Bloc photo
     background-position: center center;
     background-repeat: no-repeat;
     background-color: transparent;
-    top: 0;
-    right: 0;
+    top: 8px;
+    right: 12px;
     cursor: pointer;
+    opacity: 0.9;
 }
 
-.photo-overlay .single-link {
+.card-overlay .single-link {
     position: absolute;
     width: 46px;
     height: 32px;
@@ -157,18 +166,28 @@ Bloc photo
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    opacity: 0.8
 }
 
-.photo-overlay .titre {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+.card-overlay:hover,
+.card-overlay .lightbox-btn:hover,
+.card-overlay .single-link:hover {
+    opacity: 1;
 }
 
-.photo-overlay .categories {
+.card-overlay .titre {
+    font-family: 'Poppins', monospace;
+    font-size: 14px;
+    font-weight: 500;
     position: absolute;
-    right: 0;
-    bottom: 0;
+    bottom: 12px;
+    left: 8px;
+}
+
+.card-overlay .categories {
+    position: absolute;
+    right: 12px;
+    bottom: 8px;
 }
 
 /***********************************************************************
@@ -331,7 +350,7 @@ Popup Contact
 .contact-form textarea {
     width: 263px;
     padding: 0 12px;
-    border: 1px solid var(--blues-gray-color-color);
+    border: 1px solid var(--blues-gray-color);
     border-radius: 8px;
     box-sizing: border-box;
 }
