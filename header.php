@@ -17,6 +17,8 @@
 <body>
     <header class="site-header">
         
+        <div class="navigation-bar">
+
         <?php if (function_exists('the_custom_logo')) {
             the_custom_logo();
         }?>
@@ -25,5 +27,10 @@
             'theme_location'    => 'mota-header',
             'container'         => 'nav'
         )); ?>
+
+        <div class="mobile-button-container">
+		</div>
+
+        </div>
 
     </header>
