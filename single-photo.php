@@ -10,17 +10,19 @@ while ( have_posts() ) :
     the_post();
 ?>
 
-<main id="site-content">
+<main class="site-content">
 
 <div class="photo-info">
     <div class="photo-info-text">
         <h1><?php the_title() ?></h1>
-        <p><?php
-                // Accès à la référence par l'id ACF plutôt que le slug
-                $ref = get_field_object('field_65af94c95d70a');
-                $ref_photo = $ref['value'];
-                echo $ref['label'] . ' : ' . $ref_photo;
-        ?></p>
+        <p>
+            <?php
+            // Accès à la référence par l'id ACF plutôt que le slug
+            $ref = get_field_object('field_65af94c95d70a');
+            $ref_photo = $ref['value'];
+            echo $ref['label'] . ' : ' . $ref_photo;
+            ?>
+        </p>
         <script>
             // Insertion reference sur input adapté dans CF7
             jQuery( $ => {
@@ -29,19 +31,25 @@ while ( have_posts() ) :
                 });
             });
         </script>
-        <p><?php
-                // categories conservées pour wp_query qui suit
-                $categories = wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names']);
-                echo get_taxonomy('categorie')->labels->singular_name . ' : ' . implode(' ',  $categories);
-        ?></p>
-        <p><?php
-                echo get_taxonomy('format')->labels->singular_name . ' : ' . implode( ', ',  wp_get_post_terms( $post->ID,  'format',  ['fields' => 'names']));
-        ?></p>
-        <p><?php
-                // Accès au type via l'id ACF et double indirection car champ radio bouton
-                $type = get_field_object('field_65afcce1a71e0');
-                echo $type['label'] . ' : ' . $type['value']['value'];
-        ?></p>
+        <p>
+            <?php
+            // categories conservées pour wp_query qui suit
+            $categories = wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names']);
+            echo get_taxonomy('categorie')->labels->singular_name . ' : ' . implode(' ',  $categories);
+            ?>
+        </p>
+        <p>
+            <?php
+            echo get_taxonomy('format')->labels->singular_name . ' : ' . implode( ', ',  wp_get_post_terms( $post->ID,  'format',  ['fields' => 'names']));
+            ?>
+        </p>
+        <p>
+            <?php
+            // Accès au type via l'id ACF et double indirection car champ radio bouton
+            $type = get_field_object('field_65afcce1a71e0');
+            echo $type['label'] . ' : ' . $type['value']['value'];
+            ?>
+        </p>
         <p><?php echo __('Année', 'motaphoto') . ' : ' . get_the_date('Y'); ?></p>
     </div>
     <div class="photo-info-photo">
@@ -53,29 +61,38 @@ while ( have_posts() ) :
 
 <div class="photo-navigation">
     <div class="photo-navigation-contact">
-        <?php _e( 'Cette photo vous intéresse ?', 'motaphoto'); ?>
+        <p><?php _e( 'Cette photo vous intéresse ?', 'motaphoto'); ?></p>
         <button class="contact-btn motaphoto-button">
             <?php _e('Contact', 'motaphoto') ?>
         </button>
     </div>
     <div class="photo-navigation-prev-next">
-        <div class="photo-navigation-prev-next-img">
-            <?php echo get_the_post_thumbnail(get_previous_post(), 'thumbnail'); ?>
-            <?php echo get_the_post_thumbnail(get_next_post(), 'thumbnail'); ?>
+        <div class="featured">
+            <div class="previous">
+                <?php echo get_the_post_thumbnail(get_previous_post(), 'thumbnail'); ?>
+            </div>
+            <div class="current">
+                <?php echo get_the_post_thumbnail(null, 'thumbnail'); ?>
+            </div>
+            <div class="next">
+                <?php echo get_the_post_thumbnail(get_next_post(), 'thumbnail'); ?>
+            </div>
         </div>
         <div class="photo-navigation-prev-next-btns">
-            <?php
-                echo previous_post_link('%link', 'before');
-                echo next_post_link('%link', 'after');
-            ?>
+            <div class="previous">
+                <?php echo previous_post_link('%link', '<-'); ?>
+            </div>
+            <div class="next">
+                <?php echo next_post_link('%link', '->'); ?>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="photo-similaire">
-    <div class="photo-similaire-titre">
-        <?php _e('Vous aimerez aussi', 'motaphoto'); ?>
-    </div>
+
+    <p class="photo-similaire-titre"><?php _e('Vous aimerez aussi', 'motaphoto'); ?></p>
+    
     <div class="photo-similaire-galerie">
         <?php
 
