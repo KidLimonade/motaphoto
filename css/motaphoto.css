@@ -649,23 +649,36 @@ Menu mobile
 
     nav.menu-top-menu-container {
         position: fixed;
-        top: 0;
-        right: 100%;
+        top: 80px;
         width: 100%;
-        height: 100vh;
+        left: 100%;
+        height: calc(100vh - 80px);
         transition: 400ms;
-        background-color: #ad1840;
-        z-index: 10;
+        background-color: var(--primary-red-color);
+        z-index: 1;
+    }
+
+    nav.menu-top-menu-container.expanded {
+        left: 0;
+    }
+
+    nav.menu-top-menu-container.expanded + .mobile-button-container::before {
+        background-image: url('../images/icon-burger-open.svg');
     }
 
     nav.menu-top-menu-container #menu-top-menu {
         flex-direction: column;
         text-align: center;
-        color: #FFF;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+    }
+
+    #menu-top-menu .popup-link,
+    #menu-top-menu a {
+        font-size: 44px;
+        color: var(--main-bg-color);
     }
 }
 

@@ -27,6 +27,22 @@ document.addEventListener('wpcf7submit', event => {
 });
 
 /**
+* Gestion du menu burger sur les mobiles 
+*/
+
+document.querySelector('.mobile-button-container').addEventListener('click', () => {
+    const menu = document.querySelector('nav.menu-top-menu-container');
+    menu.classList.toggle('expanded');
+});
+
+document.querySelectorAll('.menu-top-menu-container li').forEach( link => {
+    link.addEventListener('click', () => {
+        const menu = document.querySelector('nav.menu-top-menu-container');
+        menu.classList.remove('expanded');        
+    });
+});
+
+/**
 * Accès via Ajax à des groupes de photos avec filtrage possible
 * par catégorie et format, et tri par date croissant décroissant
 */

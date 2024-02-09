@@ -16,20 +16,19 @@
 
 <body>
     <header class="site-header">
-        
+
         <div class="navigation-bar">
 
-        <?php if (function_exists('the_custom_logo')) {
-            the_custom_logo();
-        }?>
+            <?php if (function_exists('the_custom_logo')) {
+                the_custom_logo();
+            }?>
 
-        <?php wp_nav_menu( array(
-            'theme_location'    => 'mota-header',
-            'container'         => 'nav'
-        )); ?>
+            <?php wp_nav_menu( array(
+                'theme_location'    => 'mota-header',
+                'container'         => 'nav'
+            )); ?>
 
-        <div class="mobile-button-container">
-		</div>
+            <div class="mobile-button-container"></div>
 
         </div>
 
