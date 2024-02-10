@@ -31,6 +31,30 @@
         </select>
     </div>
 
+    <div class="zone-test">
+
+        <div class="dropdown">
+
+            <div class="dropdown-button" id="select-order">
+                <span class="default-label">
+                    <?php _e('Trier par', 'motaphoto'); ?>
+                </span>
+                <span class="selected-label"></span>
+            </div>
+
+            <div class="dropdown-list collapsed">
+
+                <input class="option" type="radio" id="select-desc" name="order" value="DESC">
+                <label class="dropdown-item" for="select-desc"><?php echo _e('À partir des plus récentes'); ?></label>
+
+                <input class="option" type="radio" id="select-asc" name="order" value="ASC">
+                <label class="dropdown-item" for="select-asc"><?php echo _e('À partir des plus anciennes'); ?></label>
+            </div>
+
+        </div>
+
+    </div>
+
 </form>
 
 

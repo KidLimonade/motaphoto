@@ -29,7 +29,6 @@ document.addEventListener('wpcf7submit', event => {
 /**
 * Gestion du menu burger sur les mobiles 
 */
-
 document.querySelector('.mobile-button-container').addEventListener('click', () => {
     const menu = document.querySelector('nav.menu-top-menu-container');
     menu.classList.toggle('expanded');
@@ -62,10 +61,12 @@ jQuery(document).ready( $ => {
         
         current_page = 1;
 
-        console.log('Trace debug');
+        console.log('-- Trace debug --');
         console.log($('#filtre-categorie').val());
         console.log($('#filtre-format').val());
         console.log($('#ordre-tri').val());
+
+        console.log($('input[name="order"].selected').val());
 
         // Récupération des paramètres depuis le formulaire
         const params = {
@@ -163,5 +164,89 @@ jQuery(document).ready( $ => {
                 $('#photos-container').append(data.html);
             },
         });    
+    });
+});
+
+/**
+ * Gestion des fenêtres dropdown de filtrage et de
+ * tri des photos.
+*/
+
+// Alterne ouverture et fermeture de la dropdown
+function dropdownToggle(dropdown) {
+
+    const default_label = dropdown.querySelector('.default-label');
+    const selected_label = dropdown.querySelector('.selected-label');
+    const dropdown_list = dropdown.querySelector('.dropdown-list');
+
+    dropdown.classList.toggle('open');
+    
+    // Dropdown liste ouverte
+    if (dropdown.classList.contains('open')) {
+
+        // Fait apparaître la dropdown liste
+        dropdown_list.classList.remove('collapsed');
+
+        // On affiche le label par défaut et on cache l'éventuel label courant
+        default_label.classList.remove('hidden');
+        selected_label.classList.add('hidden');
+    } else {
+
+        // Cache la dropdown liste
+        dropdown_list.classList.add('collapsed');
+
+        // On affiche le choix utilisateur ou le titre par défaut
+        if (selected_label.innerText !== '') {
+            default_label.classList.add('hidden');
+            selected_label.classList.remove('hidden');
+        } else {
+            default_label.classList.remove('hidden');
+            selected_label.classList.add('hidden');
+        }
+    }
+}
+
+// Tous les dropdown boutons alternent dropdown ouverte / fermée
+document.querySelectorAll('.dropdown > .dropdown-button').forEach( button => {
+
+    button.addEventListener('click', e => {
+
+        console.log('-------------------', e.target);
+        // La dropdown est mère du bouton
+        const dropdown = e.target.parentNode;
+        dropdownToggle(dropdown);
+    });
+});
+
+// Un clic sur une option affecte le titre du bouton
+document.querySelectorAll('.dropdown').forEach(dropdown => {
+
+    dropdown.querySelectorAll('.option').forEach(option => {
+
+        option.addEventListener('click', e => {
+
+            console.log('option:', option);
+            console.log('option id:', option.id);
+
+            // Marquer checked l'option sélectionnée
+            dropdown.querySelectorAll('input[type="radio"]').forEach(input => {
+                if (input.id === option.id) {
+                    input.classList.add('selected');
+                } else {
+                    input.classList.remove('selected');
+                }
+            });
+            
+            // Recherche du libellé de l'option choisie dans le label
+            const lab = dropdown.querySelector(`label[for="${option.id}"]`);
+            console.log(lab)
+            console.log(lab.innerText);
+
+            // Mise à jour du label du bouton avec l'option choisie
+            dropdown.querySelector('.selected-label').innerText = lab.innerText;
+
+            // Fermeture de la dropdown
+            dropdownToggle(dropdown);
+        });
     });
 });
