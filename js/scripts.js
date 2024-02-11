@@ -59,14 +59,27 @@ jQuery(document).ready( $ => {
         // Comportement par défaut formulaire annulé
         event.preventDefault();
         
+        // Première reqête
         current_page = 1;
 
-        console.log('-- Trace debug --');
-        console.log($('#filtre-categorie').val());
-        console.log($('#filtre-format').val());
-        console.log($('#ordre-tri').val());
+        // Récupération categorie et si non définie alors toutes
+        let categorie = $('#filtre-categorie input[name="categorie"].selected').val();
+        if (categorie == null) { categorie = '*'; }
 
-        console.log($('input[name="order"].selected').val());
+        // Récupération format et si non défini alors tous
+        let format = $('#filtre-format input[name="format"].selected').val();
+        if (format == null) { format = '*'; }
+        
+        // Récupération et vérification-validation ordre de tri
+        let order = $('#select-order input[name="order"].selected').val();
+        if (order !== 'DESC' && order !== 'ASC') {
+            order = 'DESC';
+        }
+
+        console.log('-- Trace debug requête initiale --');
+        console.log(categorie);
+        console.log(format);
+        console.log(order);
 
         // Récupération des paramètres depuis le formulaire
         const params = {
@@ -77,9 +90,12 @@ jQuery(document).ready( $ => {
             post_type: $('#filtre-tri-form').find('input[name=post_type').val(),
             
             // Paramètres utilisateur filtrage / tri
-            categorie: $('#filtre-categorie').val(),
-            format: $('#filtre-format').val(),
-            ordre_tri: $('#ordre-tri').val(),
+            // categorie: $('#filtre-categorie').val(),
+            // format: $('#filtre-format').val(),
+//            ordre_tri: $('#ordre-tri').val(),
+            categorie: categorie,
+            format: format,
+            ordre_tri: order,
             
             // Page 1
             paged: current_page
@@ -129,9 +145,27 @@ jQuery(document).ready( $ => {
     */
     $('#load-more-btn').on('click', () => {
         
+        // Requête complémentaire
         current_page++;
 
-        console.log('Trace debug');
+        // Récupération categorie et si non définie alors toutes
+        let categorie = $('#filtre-categorie input[name="categorie"].selected').val();
+        if (categorie == null) { categorie = '*'; }
+
+        // Récupération format et si non défini alors tous
+        let format = $('#filtre-format input[name="format"].selected').val();
+        if (format == null) { format = '*'; }
+        
+        // Récupération et vérification-validation ordre de tri
+        let order = $('#select-order input[name="order"].selected').val();
+        if (order !== 'DESC' && order !== 'ASC') {
+            order = 'DESC';
+        }
+
+        console.log('-- Trace debug requête complémentaire --');
+        console.log(categorie);
+        console.log(format);
+        console.log(order);
 
         $.ajax({
             type: 'POST',
@@ -144,9 +178,12 @@ jQuery(document).ready( $ => {
                 action: $('#filtre-tri-form').find('input[name=action').val(),
                 nonce: $('#filtre-tri-form').find('input[name=nonce').val(),
                 post_type: $('#filtre-tri-form').find('input[name=post_type').val(),
-                categorie: $('#filtre-categorie').val(),
-                format: $('#filtre-format').val(),
-                ordre_tri: $('#ordre-tri').val(),
+                // categorie: $('#filtre-categorie').val(),
+                // format: $('#filtre-format').val(),
+                // ordre_tri: $('#ordre-tri').val(),
+                categorie: categorie,
+                format: format,
+                ordre_tri: order,    
                 
                 // Page courante + 1
                 paged: current_page
@@ -196,7 +233,8 @@ function dropdownToggle(dropdown) {
         dropdown_list.classList.add('collapsed');
 
         // On affiche le choix utilisateur ou le titre par défaut
-        if (selected_label.innerText !== '') {
+        // &nbsp; (hexa: 0xA0) signifie "tous" ou "Toutes"
+        if (selected_label.innerText !== '' && selected_label.innerText != '\xa0') {
             default_label.classList.add('hidden');
             selected_label.classList.remove('hidden');
         } else {

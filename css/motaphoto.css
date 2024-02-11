@@ -75,45 +75,6 @@ Bouton
 }
 
 /*======================================================================
-Filtre & tri
-======================================================================*/
-
-select {
-    width: 260px;
-    padding: 12px 18px;
-    color: var(--dark-blue-color);
-    background-color: var(--main-bg-color);
-    border: 1.3px solid var(--border-gray-color);
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: 'Poppins', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 18px;
-    text-transform: uppercase;
-
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-
-    background-image: url('../images/icon-chevron-down.svg');
-    background-position: right 18px center;
-    background-repeat: no-repeat;
-}
-
-select:hover {
-    border: 1.3px solid var(--border-blue-color);
-}
-
-select:focus {
-    outline: none;
-}
-
-select:active {
-    background-image: url('../images/icon-chevron-up.svg');
-}
-
-/*======================================================================
 Bloc photo
 ======================================================================*/
 
@@ -322,6 +283,12 @@ Page d'accueil
     height: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.zone-filtre {
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -688,24 +655,12 @@ Menu mobile
 }
 
 /***********************************************************************
-Dropdown
-https://blog.logrocket.com/creating-custom-select-dropdown-css/
+Style d'un dropdown menu permettant de sélectionner une option
+parmi une liste.  Pur style compatible avec l'intégration dans
+une <form> utilisable pour effectuer une requête Ajax wp_query.
 ***********************************************************************/
 
-/* Dropdown remplace select */
-input.option {
-    display: none;
-}
-
-/* Neutraliser events sur des elements */
-.default-label,
-.selected-label {
-    pointer-events: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-}
-
+/* Commun dropdown */
 .dropdown {
     width: 260px;
     font-family: 'Poppins', monospace;
@@ -716,17 +671,24 @@ input.option {
     position: relative;
 }
 
+/* Custom radio dropdown */
+.dropdown input.option {
+    display: none;
+}
+
 .dropdown-button {
     padding: 12px 18px;
     border: 1.3px solid var(--border-gray-color);
     border-radius: 8px;
     cursor: pointer;
     text-transform: uppercase;
+    /* Défaut: chevron vers le bas */
     background-image: url('../images/icon-chevron-down.svg');
     background-position: right 18px center;
     background-repeat: no-repeat;
 }
 
+/* Dropdown ouvert */
 .dropdown.open > .dropdown-button {
     border-radius: 8px 8px 0 0;
     background-image: url('../images/icon-chevron-up.svg');
@@ -740,6 +702,16 @@ input.option {
     outline: none;
 }
 
+/* Neutraliser events sur bouton */
+.dropdown-button .default-label,
+.dropdown-button .selected-label {
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+/* Dropdown liste déployée */
 .dropdown-list {
     border-radius: 0 0 8px 8px;
     width: 100%;
@@ -751,6 +723,7 @@ input.option {
     transition-duration: 400ms;
 }
 
+/* Dropdown liste cachée */
 .dropdown-list.collapsed {
     transform: scaleY(0);
 }
@@ -761,6 +734,11 @@ input.option {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
+}
+
+/* Arrondis au bas du dernier item */
+.dropdown-item:last-child {
+    border-radius: 0 0 8px 8px;
 }
 
 .dropdown-item:hover {
