@@ -89,10 +89,6 @@ jQuery(document).ready( $ => {
             nonce: $('#filtre-tri-form').find('input[name=nonce').val(),
             post_type: $('#filtre-tri-form').find('input[name=post_type').val(),
             
-            // Paramètres utilisateur filtrage / tri
-            // categorie: $('#filtre-categorie').val(),
-            // format: $('#filtre-format').val(),
-//            ordre_tri: $('#ordre-tri').val(),
             categorie: categorie,
             format: format,
             ordre_tri: order,
@@ -178,9 +174,7 @@ jQuery(document).ready( $ => {
                 action: $('#filtre-tri-form').find('input[name=action').val(),
                 nonce: $('#filtre-tri-form').find('input[name=nonce').val(),
                 post_type: $('#filtre-tri-form').find('input[name=post_type').val(),
-                // categorie: $('#filtre-categorie').val(),
-                // format: $('#filtre-format').val(),
-                // ordre_tri: $('#ordre-tri').val(),
+
                 categorie: categorie,
                 format: format,
                 ordre_tri: order,    
@@ -249,14 +243,13 @@ document.querySelectorAll('.dropdown > .dropdown-button').forEach( button => {
 
     button.addEventListener('click', e => {
 
-        console.log('-------------------', e.target);
         // La dropdown est mère du bouton
         const dropdown = e.target.parentNode;
         dropdownToggle(dropdown);
     });
 });
 
-// Un clic sur une option affecte le titre du bouton
+// Un clic sur une option
 document.querySelectorAll('.dropdown').forEach(dropdown => {
 
     dropdown.querySelectorAll('.option').forEach(option => {
@@ -266,7 +259,7 @@ document.querySelectorAll('.dropdown').forEach(dropdown => {
             console.log('option:', option);
             console.log('option id:', option.id);
 
-            // Marquer checked l'option sélectionnée
+            // Marquer 'selected' l'option sélectionnée
             dropdown.querySelectorAll('input[type="radio"]').forEach(input => {
                 if (input.id === option.id) {
                     input.classList.add('selected');
@@ -288,3 +281,4 @@ document.querySelectorAll('.dropdown').forEach(dropdown => {
         });
     });
 });
+

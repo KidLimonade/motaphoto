@@ -22,7 +22,7 @@ if ($query->have_posts()) :
     ?>
 
     <main class="site-content">
-        <div class="zone-criteres">
+        <div class="zone-dropdowns">
 
         <?php // Filtre et tri dans la photothèque
         get_template_part('template-parts/filter-sort-form');

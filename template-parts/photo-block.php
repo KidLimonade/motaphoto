@@ -1,9 +1,10 @@
 <?php
 /**
- * Le bloc photo utilisé sur la page d'accueil et sur les
- * pages photos individuelles comporte deux éléments :
- * - L'image de la photo proprement-dite en qualité moyenne
- * - Un overlay ombré visible au survol avec :
+ * Le bloc photo est utilisé sur la page d'accueil (portfolio de
+ * Nathalie Mota) et sur les pages photos individuelles. Il comporte :
+ * -    L'image de la photo proprement-dite en qualité moyenne embarquée
+ *      dans un lien vers la page individuelle correspondante (mobile)
+ * -    Un overlay ombré visible au survol (desktop) proposant :
  *      - Bouton d'accès à la lightbox
  *      - Lien d'accès à la page individuelle correspondante
  *      - Titre de la photo et catégories de classement
@@ -12,10 +13,11 @@
 
 <div class="card-container">
 
-<?php 
-    if (has_post_thumbnail()) { 
-        the_post_thumbnail('medium'); } 
-?>
+<?php if (has_post_thumbnail()) : ?>
+    <a class="single-link" href="<?php echo get_post_permalink(); ?>">
+    <?php the_post_thumbnail('medium'); ?>
+    </a>
+<?php endif ?>
 
     <div class="card-overlay">
 

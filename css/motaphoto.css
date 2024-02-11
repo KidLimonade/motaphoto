@@ -60,7 +60,7 @@ Bouton
     font-weight: 400;
     color: var(--main-color);
     background-color: var(--medium-gray-color);
-    transition: all 400ms;
+    transition: all 500ms ease-out;
 }
 
 .motaphoto-button {
@@ -81,11 +81,13 @@ Bloc photo
 .card-container {
     position: relative;
     width: 100%;
-    max-height: 495px;
+    height: 495px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background-color: #FFD6D6;
 }
 
 .card-container img {
@@ -160,16 +162,26 @@ Bloc photo
     bottom: 8px;
 }
 
+@media screen and (max-width: 720px) {
+    .card-overlay {
+        display: none;
+    }
+}
+
 /***********************************************************************
 Header & footer
 ***********************************************************************/
 
 .site-header {
-    position: sticky;
-    top: 0;
     width: 100%;
-    z-index: 15;
-    background-color: var(--main-bg-color);
+}
+
+@media screen and (max-width: 720px) {
+    .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
 }
 
 .navigation-bar {
@@ -192,11 +204,12 @@ Header & footer
     width: 100%;
     height: 40px;
     margin-top: auto;
-    margin-bottom: 8px;
+    border-top: 1px solid var(--main-color);
 }
 
 #menu-top-menu,
 #menu-bottom-menu {
+    margin: 0;
     display: flex;
     padding-left: 0;
 }
@@ -206,9 +219,9 @@ Header & footer
 }
 
 #menu-bottom-menu {
+    margin-top: 8px;
     justify-content: center;
     gap: 86px;
-    border-top: 2px solid var(--main-color);
 }
 
 #menu-top-menu li,
@@ -235,9 +248,25 @@ Header & footer
     font-weight: 700;
 }
 
+@media screen and (max-width: 720px) {
+    .site-footer {
+        height: 208px;
+    }
+    #menu-bottom-menu {
+        margin-top: 42px;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+}
+
 /***********************************************************************
-Hero header
+Page d'accueil
 ***********************************************************************/
+
+/*======================================================================
+Hero header
+======================================================================*/
 
 .hero-container {
     width: 100%;
@@ -249,60 +278,193 @@ Hero header
     align-items: center;
 }
 
-.hero-container img {
+.hero-container .hero-image img{
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
 }
 
-.hero-container::after {
-    content: '';
-    width: 100%;
-    height: 100%;
+.hero-container .hero-title {
+    font-size: 96px;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 3px var(--main-bg-color);
     position: absolute;
-    background-image: url('../images/hero-photo-event-desktop.png');
-    background-position: center center;
-    background-repeat: no-repeat;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @media screen and (max-width: 720px) {
-    .hero-container::after {
-        background-image: url('../images/hero-photo-event-mobile.png');
+    .hero-container {
+        max-height: 253px;
+    }
+    .hero-container .hero-title {
+        font-size: 28px;
+        -webkit-text-stroke: 1px var(--main-bg-color);
     }
 }
 
-/***********************************************************************
-Page d'accueil
-***********************************************************************/
+/*======================================================================
+Filtrage et tri
+======================================================================*/
 
-.zone-criteres {
-    height: 162px;
+.zone-dropdowns {
+    margin-top: 48px;
+    height: 114px;
 }
 
-#filtre-tri-form {
+.zone-filtres-tri {
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.zone-filtre {
+.zone-filtres {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    gap: 36px;
 }
+
+@media screen and (max-width: 720px) {
+    .zone-dropdowns {
+        margin-top: 28px;
+        height: 168px;
+    }
+    .zone-filtres-tri {
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .zone-filtres {
+        flex-direction: column-reverse;
+        gap: 6px;
+    }
+}
+
+/*======================================================================
+Porfolio Nathalie Mota
+======================================================================*/
 
 #photos-container {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
 }
+
+@media screen and (max-width: 720px) {
+    #photos-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*======================================================================
+Zone du bouton éventuellement proposé pour charger plus de photos
+======================================================================*/
 
 .zone-more {
     height: 130px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/***********************************************************************
+Page single photo
+***********************************************************************/
+
+.photo-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.photo-info-text {
+    font-size: 14px;
+    border-bottom: 1px solid var(--main-color);
+}
+
+.photo-info-text h1 {
+    font-size: 66px;
+    font-style: italic; 
+    font-weight: 400;
+    line-height: 58px;
+    text-transform: uppercase;
+}
+
+.photo-info-photo {
+    width: 50%;
+}
+
+.photo-info-photo img {
+    width: 100%;
+    height: auto;
+}
+
+.photo-navigation {
+    height: 118px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--main-color);
+}
+
+.photo-navigation-contact {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.photo-navigation-contact p {
+    font-family: 'Poppins', monospace;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.photo-navigation-prev-next .featured {
+    width: 81px;
+    height: 71px;
+    object-fit: cover;
+    overflow: hidden;
+    position: relative;
+}
+
+.photo-navigation-prev-next .featured img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.photo-navigation-prev-next .featured .previous,
+.photo-navigation-prev-next .featured .next {
+    opacity: 0;
+    z-index: 10;
+}
+
+.photo-navigation-prev-next-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.photo-similaire {
+    margin-top: 72px;
+}
+
+.photo-similaire-titre {
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.photo-similaire-galerie {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 /***********************************************************************
@@ -500,99 +662,6 @@ Lightbox
 }
 
 /***********************************************************************
-Page single photo
-***********************************************************************/
-
-.photo-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
-.photo-info-text {
-    font-size: 14px;
-    border-bottom: 1px solid var(--main-color);
-}
-
-.photo-info-text h1 {
-    font-size: 66px;
-    font-style: italic; 
-    font-weight: 400;
-    line-height: 58px;
-    text-transform: uppercase;
-}
-
-.photo-info-photo {
-    width: 50%;
-}
-
-.photo-info-photo img {
-    width: 100%;
-    height: auto;
-}
-
-.photo-navigation {
-    height: 118px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--main-color);
-}
-
-.photo-navigation-contact {
-    width: 50%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.photo-navigation-contact p {
-    font-family: 'Poppins', monospace;
-    font-size: 14px;
-    font-weight: 300;
-}
-
-.photo-navigation-prev-next .featured {
-    width: 81px;
-    height: 71px;
-    object-fit: cover;
-    overflow: hidden;
-    position: relative;
-}
-
-.photo-navigation-prev-next .featured img {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-}
-
-.photo-navigation-prev-next .featured .previous,
-.photo-navigation-prev-next .featured .next {
-    opacity: 0;
-    z-index: 10;
-}
-
-.photo-navigation-prev-next-btns {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.photo-similaire {
-    margin-top: 72px;
-}
-
-.photo-similaire-titre {
-    font-size: 18px;
-    text-transform: uppercase;
-}
-
-.photo-similaire-galerie {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-/***********************************************************************
 Menu mobile
 ***********************************************************************/
 
@@ -669,6 +738,12 @@ une <form> utilisable pour effectuer une requête Ajax wp_query.
     line-height: 18px;
     color: var(--dark-blue-color);
     position: relative;
+}
+
+@media screen and (max-width: 720px) {
+    .dropdown {
+        width: 270px;
+    }
 }
 
 /* Custom radio dropdown */
