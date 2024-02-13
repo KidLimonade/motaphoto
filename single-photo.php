@@ -12,8 +12,8 @@ while ( have_posts() ) :
 
 <main class="site-content">
 
-<div class="photo-info">
-    <div class="photo-info-text">
+<div class="photo-content">
+    <div class="photo-content-text">
         <h1><?php the_title() ?></h1>
         <p>
             <?php
@@ -52,7 +52,7 @@ while ( have_posts() ) :
         </p>
         <p><?php echo __('Année', 'motaphoto') . ' : ' . get_the_date('Y'); ?></p>
     </div>
-    <div class="photo-info-photo">
+    <div class="photo-content-image">
         <?php if (has_post_thumbnail()): ?>
             <?php the_post_thumbnail('large'); ?>
         <?php endif; ?>
@@ -66,7 +66,7 @@ while ( have_posts() ) :
             <?php _e('Contact', 'motaphoto') ?>
         </button>
     </div>
-    <div class="photo-navigation-prev-next">
+    <div class="photo-navigation-step">
         <div class="featured">
             <div class="previous">
                 <?php echo get_the_post_thumbnail(get_previous_post(), 'thumbnail'); ?>
@@ -78,7 +78,7 @@ while ( have_posts() ) :
                 <?php echo get_the_post_thumbnail(get_next_post(), 'thumbnail'); ?>
             </div>
         </div>
-        <div class="photo-navigation-prev-next-btns">
+        <div class="photo-navigation-step-btns">
             <div class="previous">
                 <?php echo previous_post_link('%link', '<-'); ?>
             </div>
@@ -111,11 +111,13 @@ while ( have_posts() ) :
                 'posts_per_page'    => 2,
             );
 
-            // Requête avec boucle locale
+            // Exécution de la requête WordPress
             $query = new WP_Query($args);
             if  ($query->have_posts()) {
                 while ($query->have_posts()) {
                     $query->the_post();
+
+                    // Fabriquation d'un bloc photo avec l'image similaire
                     get_template_part('template-parts/photo-block');
                 }
             }
@@ -126,7 +128,7 @@ while ( have_posts() ) :
 
 <?php endwhile; // Fin de la boucle ?>
 
-</main><!-- #site-content -->
+</main>
 
 <?php
 get_footer();
