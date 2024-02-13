@@ -20,6 +20,10 @@ General settings
     --border-blue-color: #9747FF; /* Mock. Figma */
     --overlay-bg-color: rgba(0, 0, 0, 0.8); /* Spec. Fonct. */
     --overlay-card-color: rgba(0, 0, 0, 0.6); /* Mock. Figma */
+
+    /* Constantes techniques */
+    --mobile-header-height: 72px;
+    --max-inner-width: 1148px;
 }
 
 body {
@@ -35,7 +39,7 @@ body {
 
 .site-content {
     width: 100%;
-    max-width: 1148px; 
+    max-width: var(--max-inner-width); 
 }
 
 .hidden {
@@ -81,7 +85,7 @@ Bloc photo
 .card-container {
     position: relative;
     width: 100%;
-    height: 495px;
+    max-height: 495px;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -92,7 +96,7 @@ Bloc photo
 
 .card-container img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
 }
 
@@ -172,88 +176,144 @@ Bloc photo
 Header & footer
 ***********************************************************************/
 
-.site-header {
-    width: 100%;
+/*======================================================================
+Items des menus header & Footer
+======================================================================*/
+
+.custom-header-menu,
+.custom-footer-menu {
+    font-size: 16px;
+    text-transform: uppercase;
+    list-style: none;
+    padding-left: 0;
 }
 
-@media screen and (max-width: 720px) {
-    .site-header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }
+.custom-header-menu a,
+.custom-footer-menu a {
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+.popup-contact-link {
+    cursor: pointer;
+}
+
+.custom-header-menu a:hover,
+.custom-footer-menu a:hover,
+.popup-contact-link:hover {
+    font-weight: 700;
+}
+
+/*======================================================================
+Site header
+======================================================================*/
+
+.site-header {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-bg-color);
 }
 
 .navigation-bar {
-    height: 80px;
     width: 100%;
-    max-width: 1148px;
-    margin: auto;
+    margin: auto 40px;
+    max-width: var(--max-inner-width);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .custom-logo-link img {
-    display: inline-block;
     width: 216px;
     height: 14px;
 }
 
-.site-footer {
-    width: 100%;
-    height: 40px;
-    margin-top: auto;
-    border-top: 1px solid var(--main-color);
-}
-
-#menu-top-menu,
-#menu-bottom-menu {
-    margin: 0;
+.custom-header-menu {
     display: flex;
-    padding-left: 0;
-}
-
-#menu-top-menu {
+    justify-content: space-between;
     gap: 45px;
 }
 
-#menu-bottom-menu {
-    margin-top: 8px;
+.burger-button {
+    display: none;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+    background-image: url('../images/icon-burger-default.svg');
+    background-position: center center; 
+    background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 720px) {
+    .site-header {
+        height: var(--mobile-header-height);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    .burger-button {
+        display: block;
+    }
+    .custom-nav-menu-container {
+        position: fixed;
+        width: 100%;
+        left: 100%;
+        transition: left 250ms ease-out;
+        top: var(--mobile-header-height);
+        height: calc(100vh - var(--mobile-header-height));
+        background-color: var(--primary-red-color);
+    }
+    .custom-nav-menu-container.expanded {
+        left: 0;
+    }
+    .custom-nav-menu-container.expanded + .burger-button {
+        background-image: url('../images/icon-burger-open.svg');
+    }
+    .custom-header-menu {
+        flex-direction: column;
+        text-align: center;
+        gap: 18px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .custom-header-menu a,
+    .popup-contact-link {
+        font-size: 44px;
+        color: var(--main-bg-color);
+    }
+}
+
+/*======================================================================
+Site footer
+======================================================================*/
+
+.site-footer {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+    background-color: var(--main-bg-color);
+    border-top: 1px solid var(--main-color);
+}
+
+.custom-footer-menu {
+    display: flex;
     justify-content: center;
     gap: 86px;
-}
-
-#menu-top-menu li,
-#menu-bottom-menu li {
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-    font-size: 16px;
-    text-transform: uppercase;
-    list-style: none;
-}
-
-.popup-link,
-#menu-top-menu a,
-#menu-bottom-menu a {
-    color: var(--main-color);
-    text-decoration: none;
-}
-
-.popup-link:hover,
-#menu-top-menu a:hover,
-#menu-bottom-menu a:hover {
-    cursor: pointer;
-    font-weight: 700;
 }
 
 @media screen and (max-width: 720px) {
     .site-footer {
         height: 208px;
     }
-    #menu-bottom-menu {
-        margin-top: 42px;
+    .custom-footer-menu {
         flex-direction: column;
         align-items: center;
         gap: 24px;
@@ -465,6 +525,7 @@ Page single photo
 .photo-similaire-galerie {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
 }
 
 /***********************************************************************
@@ -618,7 +679,6 @@ Lightbox
     position: fixed;
     cursor: pointer;
     border: none;
-    cursor: pointer;
     font-family: 'Space Mono', monospace;
     font-size: 12px;
     color: var(--main-bg-color);
@@ -659,68 +719,6 @@ Lightbox
 .lightbox__container .info-line {
     display: flex;
     justify-content: space-between;
-}
-
-/***********************************************************************
-Menu mobile
-***********************************************************************/
-
-.mobile-button-container {
-    display: none;
-    width: 28px;
-    height: 20px;
-    cursor: pointer;
-    position: relative;
-}
-
-@media screen and (max-width: 720px) {
-    .mobile-button-container {
-        display: block;
-    }
-
-    .mobile-button-container::before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-image: url('../images/icon-burger-default.svg');
-        background-position: center center; 
-        background-repeat: no-repeat;
-    }
-
-    nav.menu-top-menu-container {
-        position: fixed;
-        top: 80px;
-        width: 100%;
-        left: 100%;
-        height: calc(100vh - 80px);
-        transition: 400ms;
-        background-color: var(--primary-red-color);
-        z-index: 1;
-    }
-
-    nav.menu-top-menu-container.expanded {
-        left: 0;
-    }
-
-    nav.menu-top-menu-container.expanded + .mobile-button-container::before {
-        background-image: url('../images/icon-burger-open.svg');
-    }
-
-    nav.menu-top-menu-container #menu-top-menu {
-        flex-direction: column;
-        text-align: center;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    #menu-top-menu .popup-link,
-    #menu-top-menu a {
-        font-size: 44px;
-        color: var(--main-bg-color);
-    }
 }
 
 /***********************************************************************

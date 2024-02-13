@@ -1,27 +1,29 @@
 /**
-* Ouverture / fermeture de la popup madale de contact
-* Utilisation du plugin Contact Form 7 (wpcf7)
+* Ouverture / fermeture de la popup modale de contact.
+* Utilisation du plugin Contact Form 7 (wpcf7) pour le
+* formulaire de saisie des informations.
 */
 
-// Ouverture de la popup lors d'un clic sur un nouton contact
-document.querySelectorAll('.contact-btn').forEach(button => {
+// Ouverture de la popup lors d'un clic sur un bouton contact
+document.querySelectorAll('.contact-button').forEach(button => {
     button.addEventListener('click', () => {
         document.getElementById('popup-contact').classList.add('open-modal');
     });
 });
 
-// Fermeture popup lors d'un clic extérieur à la fenêtre principale
+// Fermeture de la popup lors d'un clic extérieur au formulaire de saisie
 document.querySelector('.modal').addEventListener('click', event => {
-    const modal = document.getElementById('popup-contact');
-    if (event.target === modal) {
-        modal.classList.remove('open-modal');
+    console.log('clic');
+    const popup = document.getElementById('popup-contact');
+    if (event.target === popup) {
+        popup.classList.remove('open-modal');
     }
 });
 
-// Fermeture popup contact sur clic sur le bouton d'envoi...
-// ... et si le formulaire est sans erreur ou vide
-document.addEventListener('wpcf7submit', event => {
-    if (event.detail.status === 'mail_sent') {
+// Fermeture de la popup si clic sur le bouton d'envoi du formulaire 
+// wpcf7, et qu'il n'y a aucune erreur ou champ obligatoire vide
+document.addEventListener('wpcf7submit', e => {
+    if (e.detail.status === 'mail_sent') {
         document.getElementById('popup-contact').classList.remove('open-modal');
     }
 });
@@ -29,14 +31,14 @@ document.addEventListener('wpcf7submit', event => {
 /**
 * Gestion du menu burger sur les mobiles 
 */
-document.querySelector('.mobile-button-container').addEventListener('click', () => {
-    const menu = document.querySelector('nav.menu-top-menu-container');
+document.querySelector('.burger-button').addEventListener('click', () => {
+    const menu = document.querySelector('.custom-nav-menu-container');
     menu.classList.toggle('expanded');
 });
 
-document.querySelectorAll('.menu-top-menu-container li').forEach( link => {
+document.querySelectorAll('.custom-nav-menu-container li').forEach( link => {
     link.addEventListener('click', () => {
-        const menu = document.querySelector('nav.menu-top-menu-container');
+        const menu = document.querySelector('.custom-nav-menu-container');
         menu.classList.remove('expanded');        
     });
 });

@@ -62,7 +62,7 @@ while ( have_posts() ) :
 <div class="photo-navigation">
     <div class="photo-navigation-contact">
         <p><?php _e( 'Cette photo vous intéresse ?', 'motaphoto'); ?></p>
-        <button class="contact-btn motaphoto-button">
+        <button class="contact-button motaphoto-button">
             <?php _e('Contact', 'motaphoto') ?>
         </button>
     </div>

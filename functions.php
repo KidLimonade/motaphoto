@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.114' );
+    define( '_S_VERSION', '1.0.123' );
 }
 
 /**
@@ -226,14 +226,14 @@ function request_photo_by_ID() {
 }
 
 /**
-* Add extra menu items at the end of theme menus:
-* - 'Contact' button in header navigation bar.
-* - 'Tous droits réservés' text in footer menu.
+* Ajoute à la fin de chacun des menus WordPress du thème un item :
+* - Bouton 'Contact' pour la navigation bar dans le header.
+* - La mention 'Tous droits réservés' en fin du menu du footer.
 */
 function add_item_to_motaphoto_menus($items, $args) {
     
     if ($args->theme_location === 'mota-header') {
-        $items .= '<li><span class="contact-btn popup-link">' . __('Contact', 'motaphoto') . '</span></li>';
+        $items .= '<li><span class="contact-button popup-contact-link">' . __('Contact', 'motaphoto') . '</span></li>';
     } else if ($args->theme_location === 'mota-footer') {
         $items .= '<li>' . __('Tous droits réservés', 'motaphoto') . '</li>';
     }
