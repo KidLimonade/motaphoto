@@ -68,21 +68,21 @@ while ( have_posts() ) :
     </div>
     <div class="photo-navigation-step">
         <div class="featured">
-            <div class="previous">
-                <?php echo get_the_post_thumbnail(get_previous_post(), 'thumbnail'); ?>
-            </div>
             <div class="current">
                 <?php echo get_the_post_thumbnail(null, 'thumbnail'); ?>
+            </div>
+            <div class="previous">
+                <?php echo get_the_post_thumbnail(get_previous_post(), 'thumbnail'); ?>
             </div>
             <div class="next">
                 <?php echo get_the_post_thumbnail(get_next_post(), 'thumbnail'); ?>
             </div>
         </div>
         <div class="photo-navigation-step-btns">
-            <div class="previous">
+            <div class="previous hover-detectable">
                 <?php echo previous_post_link('%link', '<-'); ?>
             </div>
-            <div class="next">
+            <div class="next hover-detectable">
                 <?php echo next_post_link('%link', '->'); ?>
             </div>
         </div>

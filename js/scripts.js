@@ -47,6 +47,30 @@ document.querySelectorAll('.custom-nav-menu-container li').forEach( link => {
 });
 
 /**
+ * 
+ */
+function endHover() {
+    const featured = document.querySelector('.photo-navigation-step .featured');
+    featured.querySelector('.previous').classList.remove('displayed');
+    featured.querySelector('.next').classList.remove('displayed');
+}
+
+document.querySelectorAll('.hover-detectable').forEach( detectable => {
+    detectable.addEventListener('mouseover', step => {
+        console.log('hover detected on', step.target.rel);
+        if (step.target.rel === 'prev') {
+            document.querySelector('.photo-navigation-step .featured .previous').classList.add('displayed');
+        } else if (step.target.rel === 'next') {
+            document.querySelector('.photo-navigation-step .featured .next').classList.add('displayed');
+        }
+    });
+    detectable.addEventListener('mouseout', step => {
+        console.log('end of hover on', step.target.rel);
+        endHover();
+    });
+});
+
+/**
 * Accès via Ajax à des groupes de photos avec filtrage possible
 * par catégorie et format, et tri par date croissant décroissant
 */
@@ -131,7 +155,7 @@ jQuery(document).ready( $ => {
             }
             
             // Vide puis réinjecte l'espace photos
-            $('#photos-container').empty().append(data.html);
+            $('#zone-portfolio').empty().append(data.html);
         })
         
         // Gestion des exceptions
@@ -197,7 +221,7 @@ jQuery(document).ready( $ => {
                 }
                 
                 // Injecte les nouvelles photos
-                $('#photos-container').append(data.html);
+                $('#zone-portfolio').append(data.html);
             },
         });    
     });

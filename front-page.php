@@ -29,7 +29,7 @@ if ($query->have_posts()) :
         ?>
 
         </div>
-            <div id="photos-container">
+            <div id="zone-portfolio">
 
             <?php
             // Boucle initiale de recherche de photos

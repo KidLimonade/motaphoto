@@ -426,7 +426,7 @@ Porfolio Nathalie Mota dans une grille de 2 colonnes sur desktop et
 une colonne unique sur mobile
 ======================================================================*/
 
-#photos-container {
+#zone-portfolio {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, minmax(278.8px, 564px));
@@ -434,7 +434,7 @@ une colonne unique sur mobile
 }
 
 @media screen and (max-width: 720px) {
-    #photos-container {
+    #zone-portfolio {
         grid-template-columns: 1fr;
     }
 }
@@ -534,10 +534,19 @@ Zone de prise de contact et de navigation dans les photos
     position: absolute;
 }
 
+.photo-navigation-step .featured .current {
+    opacity: 0.5;
+}
+
 .photo-navigation-step .featured .previous,
 .photo-navigation-step .featured .next {
     opacity: 0;
-    z-index: 10;
+    transition: opacity 250ms ease-in;
+}
+
+.photo-navigation-step .featured .previous.displayed,
+.photo-navigation-step .featured .next.displayed {
+    opacity: 1;
 }
 
 .photo-navigation-step-btns {
@@ -553,7 +562,7 @@ Zone de prise de contact et de navigation dans les photos
     .photo-navigation {
         height: 133px;
         flex-direction: column;
-        
+
     }
     .photo-navigation-contact {
         flex-direction: column;
