@@ -38,8 +38,8 @@ body {
 }
 
 .site-content {
-    width: 100%;
     max-width: var(--max-inner-width); 
+    margin: auto 28px;
 }
 
 .hidden {
@@ -79,24 +79,26 @@ Bouton
 }
 
 /*======================================================================
-Bloc photo
+Bloc photo élastique qui impose seulement le respect de l'aspect ratio
 ======================================================================*/
 
 .card-container {
+    aspect-ratio: 564 / 495;
     position: relative;
-    width: 100%;
-    max-height: 495px;
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+}
 
-    background-color: #FFD6D6;
+.card-container .photo-link {
+    width: 100%;
+    height: 100%;
 }
 
 .card-container img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -106,64 +108,62 @@ Bloc photo
     position: absolute;
     top: 0;
     left: 0;
-    color: var(--main-bg-color);
-    font-family: 'Space Mono', monospace;
-    font-size: 14px;
-    font-weight: 400;
     text-transform: uppercase;
-    z-index: 10;
+    color: var(--main-bg-color);
     background-color: var(--overlay-card-color);
+    z-index: 10;
     opacity: 0;
     transition: opacity 300ms ease-in-out;
 }
 
-.card-overlay .lightbox-btn {
-    position: absolute;
-    width: 34px;
-    height: 34px;
-    border: none;
-    background-image: url('../images/icon-fullscreen.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-color: transparent;
-    top: 8px;
-    right: 12px;
-    cursor: pointer;
-    opacity: 0.9;
-}
-
-.card-overlay .single-link {
-    position: absolute;
-    width: 46px;
-    height: 32px;
-    background-image: url('../images/icon-eye.svg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0.8
-}
-
-.card-overlay:hover,
-.card-overlay .lightbox-btn:hover,
-.card-overlay .single-link:hover {
+.card-overlay:hover {
     opacity: 1;
 }
 
+.card-overlay .lightbox-button {
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    top: 11px;
+    right: 18px;
+    background-image: url('../images/icon-fullscreen.svg');
+    background-size: contain;
+    background-position: center center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.card-overlay .photo-button {
+    width: 46px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url('../images/icon-eye.svg');
+    background-size: contain;
+    background-position: center center;
+}
+
 .card-overlay .titre {
+    position: absolute;
+    bottom: 12px;
+    left: 17px;
     font-family: 'Poppins', monospace;
     font-size: 14px;
     font-weight: 500;
-    position: absolute;
-    bottom: 12px;
-    left: 8px;
+    letter-spacing: 1.4px;
 }
 
 .card-overlay .categories {
     position: absolute;
-    right: 12px;
-    bottom: 8px;
+    right: 23px;
+    bottom: 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1.4px;
 }
 
 @media screen and (max-width: 720px) {
@@ -407,13 +407,14 @@ Filtrage et tri
 }
 
 /*======================================================================
-Porfolio Nathalie Mota
+Porfolio Nathalie Mota dans une grille de 2 colonnes sur desktop et
+une colonne unique sur mobile
 ======================================================================*/
 
 #photos-container {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(278.8px, 564px));
     grid-gap: 20px;
 }
 

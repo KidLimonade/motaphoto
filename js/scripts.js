@@ -29,13 +29,16 @@ document.addEventListener('wpcf7submit', e => {
 });
 
 /**
-* Gestion du menu burger sur les mobiles 
+* Gestion de l'affichage du menu de navigation sur mobile.
 */
+
+// Au clic sur l'icone burger le menu de navigation apparaît
 document.querySelector('.burger-button').addEventListener('click', () => {
     const menu = document.querySelector('.custom-nav-menu-container');
     menu.classList.toggle('expanded');
 });
 
+// Au clic sur un item du menu de navigation le menu disparaît
 document.querySelectorAll('.custom-nav-menu-container li').forEach( link => {
     link.addEventListener('click', () => {
         const menu = document.querySelector('.custom-nav-menu-container');

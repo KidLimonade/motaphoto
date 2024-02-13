@@ -1,29 +1,35 @@
 <?php
 /**
- * Le bloc photo est utilisé sur la page d'accueil (portfolio de
- * Nathalie Mota) et sur les pages photos individuelles. Il comporte :
- * -    L'image de la photo proprement-dite en qualité moyenne embarquée
- *      dans un lien vers la page individuelle correspondante (mobile)
- * -    Un overlay ombré visible au survol (desktop) proposant :
+ * Le bloc photo est utilisé sur la page d'accueil (portfolio)
+ * et sur les posts photo individuelle. Il se compose de :
+ * -    L'image de la photo embarquée dans un lien vers la 
+ *      page individuelle (mobile)
+ * -    Un overlay visible au survol (desktop) proposant :
  *      - Bouton d'accès à la lightbox
- *      - Lien d'accès à la page individuelle correspondante
- *      - Titre de la photo et catégories de classement
+ *      - Lien vers la page individuelle
+ *      - Titre et catégorie de la photo
  */
 ?>
 
 <div class="card-container">
 
 <?php if (has_post_thumbnail()) : ?>
-    <a class="single-link" href="<?php echo get_post_permalink(); ?>">
-    <?php the_post_thumbnail('medium'); ?>
+
+    <a class="photo-link" href="<?php echo get_post_permalink(); ?>">
+
+        <?php    // La photo dans son lien d'accès 
+        the_post_thumbnail('medium');
+        ?>
+
     </a>
+
 <?php endif ?>
 
     <div class="card-overlay">
 
-        <button class="lightbox-btn" onclick="ShowInLightbox(this)" data-postid="<?php echo get_the_ID(); ?>"></button>
+        <button class="lightbox-button" onclick="ShowInLightbox(this)" data-postid="<?php echo get_the_ID(); ?>"></button>
 
-        <a class="single-link" href="<?php echo get_post_permalink(); ?>"></a>
+        <a class="photo-button" href="<?php echo get_post_permalink(); ?>"></a>
 
         <span class="titre"> <?php echo get_the_title(); ?></span>
 
