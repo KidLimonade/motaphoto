@@ -12,8 +12,8 @@ while ( have_posts() ) :
 
 <main class="site-content">
 
-<div class="photo-content">
-    <div class="photo-content-text">
+<div class="photo-detail">
+    <div class="photo-detail-text">
         <h1><?php the_title() ?></h1>
         <p>
             <?php
@@ -23,8 +23,8 @@ while ( have_posts() ) :
             echo $ref['label'] . ' : ' . $ref_photo;
             ?>
         </p>
+        <?php // Insertion reference sur input adapté dans CF7 ?>
         <script>
-            // Insertion reference sur input adapté dans CF7
             jQuery( $ => {
                 $(document).ready( () => {
                     $("#reference-photo").val("<?php echo $ref_photo ?>");
@@ -52,21 +52,21 @@ while ( have_posts() ) :
         </p>
         <p><?php echo __('Année', 'motaphoto') . ' : ' . get_the_date('Y'); ?></p>
     </div>
-    <div class="photo-content-image">
+    <div class="photo-detail-image">
         <?php if (has_post_thumbnail()): ?>
             <?php the_post_thumbnail('large'); ?>
         <?php endif; ?>
     </div>
 </div>
 
-<div class="photo-navigation">
-    <div class="photo-navigation-contact">
+<div class="photo-action">
+    <div class="photo-action-contact">
         <p><?php _e( 'Cette photo vous intéresse ?', 'motaphoto'); ?></p>
         <button class="contact-button motaphoto-button">
             <?php _e('Contact', 'motaphoto') ?>
         </button>
     </div>
-    <div class="photo-navigation-step">
+    <div class="photo-action-navigate">
         <div class="featured">
             <div class="current">
                 <?php echo get_the_post_thumbnail(null, 'thumbnail'); ?>
@@ -78,22 +78,22 @@ while ( have_posts() ) :
                 <?php echo get_the_post_thumbnail(get_next_post(), 'thumbnail'); ?>
             </div>
         </div>
-        <div class="photo-navigation-step-btns">
-            <div class="previous hover-detectable">
-                <?php echo previous_post_link('%link', '<-'); ?>
+        <div class="arrows">
+            <div class="previous detectable">
+                <?php echo previous_post_link('%link', '<div class="arrow-left"></div>'); ?>
             </div>
-            <div class="next hover-detectable">
-                <?php echo next_post_link('%link', '->'); ?>
+            <div class="next detectable">
+                <?php echo next_post_link('%link', '<div class="arrow-right"></div>'); ?>
             </div>
         </div>
     </div>
 </div>
 
-<div class="photo-similaire">
+<div class="photo-like">
 
-    <p class="photo-similaire-titre"><?php _e('Vous aimerez aussi', 'motaphoto'); ?></p>
+    <p class="photo-like-titre"><?php _e('Vous aimerez aussi', 'motaphoto'); ?></p>
     
-    <div class="photo-similaire-galerie">
+    <div class="photo-like-galerie">
         <?php
 
             // Arguments de la requête "Vous aumerez aussi"

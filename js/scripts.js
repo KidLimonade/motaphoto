@@ -47,26 +47,31 @@ document.querySelectorAll('.custom-nav-menu-container li').forEach( link => {
 });
 
 /**
- * 
+ * Montre une vignette de la photo précédente ou suivante de
+ * la phototèque au survol d'un element classé detectable.
  */
-function endHover() {
-    const featured = document.querySelector('.photo-navigation-step .featured');
-    featured.querySelector('.previous').classList.remove('displayed');
-    featured.querySelector('.next').classList.remove('displayed');
-}
 
-document.querySelectorAll('.hover-detectable').forEach( detectable => {
-    detectable.addEventListener('mouseover', step => {
-        console.log('hover detected on', step.target.rel);
-        if (step.target.rel === 'prev') {
-            document.querySelector('.photo-navigation-step .featured .previous').classList.add('displayed');
-        } else if (step.target.rel === 'next') {
-            document.querySelector('.photo-navigation-step .featured .next').classList.add('displayed');
+// Affiche la vignette en fonction du lien détecté
+document.querySelectorAll('.detectable').forEach( detectable => {
+
+    // Au début du survol afficher la vignette adéquate
+    detectable.addEventListener('mouseover', direction => {
+
+        console.log(direction.target, direction.target.parentNode.rel);
+
+        // Détermine la vignette à afficher
+        if (direction.target.parentNode.rel === 'prev') {
+            document.querySelector('.photo-action-navigate .featured .previous').classList.add('displayed');
+        } else if (direction.target.parentNode.rel === 'next') {
+            document.querySelector('.photo-action-navigate .featured .next').classList.add('displayed');
         }
     });
-    detectable.addEventListener('mouseout', step => {
-        console.log('end of hover on', step.target.rel);
-        endHover();
+
+    // En fin de survol d'un lien détectable effacer toute vignette affichée... ou pas
+    detectable.addEventListener('mouseout', () => {
+        const featured = document.querySelector('.photo-action-navigate .featured');
+        featured.querySelector('.previous').classList.remove('displayed');
+        featured.querySelector('.next').classList.remove('displayed');
     });
 });
 

@@ -458,18 +458,18 @@ Page single photo
 Zone contenu de la photo
 ======================================================================*/
 
-.photo-content {
+.photo-detail {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
 }
 
-.photo-content-text {
+.photo-detail-text {
     font-size: 14px;
     border-bottom: 1px solid var(--main-color);
 }
 
-.photo-content-text h1 {
+.photo-detail-text h1 {
     font-size: 66px;
     font-style: italic; 
     font-weight: 400;
@@ -477,17 +477,17 @@ Zone contenu de la photo
     text-transform: uppercase;
 }
 
-.photo-content-image {
+.photo-detail-image {
     width: 50%;
 }
 
-.photo-content-image img {
+.photo-detail-image img {
     width: 100%;
     height: auto;
 }
 
 @media screen and (max-width: 720px) {
-    .photo-content {
+    .photo-detail {
         flex-direction: column-reverse;
     }
 }
@@ -496,7 +496,7 @@ Zone contenu de la photo
 Zone de prise de contact et de navigation dans les photos
 ======================================================================*/
 
-.photo-navigation {
+.photo-action {
     height: 118px;
     display: flex;
     justify-content: space-between;
@@ -504,7 +504,7 @@ Zone de prise de contact et de navigation dans les photos
     border-bottom: 1px solid var(--main-color);
 }
 
-.photo-navigation-contact {
+.photo-action-contact {
     width: 50%;
     display: flex;
     justify-content: space-between;
@@ -512,59 +512,70 @@ Zone de prise de contact et de navigation dans les photos
     flex-wrap: wrap;
 }
 
-.photo-navigation-contact p {
+.photo-action-contact p {
     font-family: 'Poppins', monospace;
     font-size: 14px;
     font-weight: 300;
 }
 
-.photo-navigation-step .featured {
+.photo-action-navigate .featured {
     width: 81px;
     height: 71px;
     object-fit: cover;
     overflow: hidden;
     position: relative;
-
-    flex: 1;
 }
 
-.photo-navigation-step .featured img {
+.photo-action-navigate .featured img {
     width: 100%;
     height: 100%;
     position: absolute;
 }
 
-.photo-navigation-step .featured .current {
+.photo-action-navigate .featured .current {
     opacity: 0.5;
 }
 
-.photo-navigation-step .featured .previous,
-.photo-navigation-step .featured .next {
+.photo-action-navigate .featured .previous,
+.photo-action-navigate .featured .next {
     opacity: 0;
-    transition: opacity 250ms ease-in;
+    transition: opacity 150ms ease-in;
 }
 
-.photo-navigation-step .featured .previous.displayed,
-.photo-navigation-step .featured .next.displayed {
+.photo-action-navigate .featured .previous.displayed,
+.photo-action-navigate .featured .next.displayed {
     opacity: 1;
 }
 
-.photo-navigation-step-btns {
+.photo-action-navigate .arrows {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.photo-action-navigate .arrow-left,
+.photo-action-navigate .arrow-right {
+    width: 25px;
+    height: 40px;
+    background-image: url('../images/icon-arrow.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.photo-action-navigate .arrow-left {
+    transform: rotate(180deg);
+}
+
 @media screen and (max-width: 720px) {
-    .photo-navigation-step {
+    .photo-action-navigate {
         display: none;
     }
-    .photo-navigation {
+    .photo-action {
         height: 133px;
         flex-direction: column;
-
     }
-    .photo-navigation-contact {
+    .photo-action-contact {
         flex-direction: column;
         align-items: flex-start;
         align-content: center;
@@ -575,14 +586,14 @@ Zone de prise de contact et de navigation dans les photos
 Zone de suggestion de photos similaires
 ======================================================================*/
 
-.photo-similaire-titre {
+.photo-like-titre {
     font-size: 18px;
     text-transform: uppercase;
     margin-top:77px;
     margin-bottom: 52px;
 }
 
-.photo-similaire-galerie {
+.photo-like-galerie {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, minmax(278.8px, 564px));
@@ -591,12 +602,12 @@ Zone de suggestion de photos similaires
 }
 
 @media screen and (max-width: 720px) {
-    .photo-similaire-titre {
+    .photo-like-titre {
         text-align: center;
         margin-top: 24px;
         margin-bottom: 20px;
         }
-    .photo-similaire-galerie {
+    .photo-like-galerie {
         grid-template-columns: 1fr;
         margin-bottom: 24px;
     }
@@ -732,17 +743,17 @@ Lightbox
 }
 
 #lightbox__prev {
-    background: url(../images/icon-left-arrow.svg) left center / 45px 20px no-repeat;
+    background: url('../images/icon-left-arrow.svg') left center / 45px 20px no-repeat;
 }
 
 #lightbox__next {
-    background: url(../images/icon-right-arrow.svg) center right / 45px 20px no-repeat;   
+    background: url('../images/icon-right-arrow.svg') center right / 45px 20px no-repeat;   
 }
 
 .lightbox__close {
     width: 23px;
     height: 23px;
-    background: url(../images/icon-close.svg) center center / 100% 100% no-repeat transparent;
+    background: url('../images/icon-close.svg') center center / 100% 100% no-repeat transparent;
     top: 20px;
     right: 40px;
     z-index: 120;
