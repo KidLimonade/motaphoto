@@ -459,13 +459,17 @@ Zone contenu de la photo
 ======================================================================*/
 
 .photo-detail {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    margin-top: 38px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(50%, 1fr));
 }
 
+/* Titre et caractéristiques */
+
 .photo-detail-text {
-    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     border-bottom: 1px solid var(--main-color);
 }
 
@@ -475,10 +479,30 @@ Zone contenu de la photo
     font-weight: 400;
     line-height: 58px;
     text-transform: uppercase;
+    max-width: 420px;
+    margin-bottom: 20px;
 }
 
+.photo-detail-text .photo-data {
+    font-size: 14px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 37px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.photo-detail-text .photo-data p {
+    margin: 0;
+}
+
+/* Image */
+
 .photo-detail-image {
-    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 .photo-detail-image img {
@@ -488,14 +512,16 @@ Zone contenu de la photo
 
 @media screen and (max-width: 720px) {
     .photo-detail {
-        flex-direction: column-reverse;
+        grid-template-columns: 1fr;
+    }
+    .photo-detail-text {
+        order: 2;
     }
 }
 
 /*======================================================================
 Zone de prise de contact et de navigation dans les photos
 ======================================================================*/
-
 .photo-action {
     height: 118px;
     display: flex;
@@ -503,6 +529,8 @@ Zone de prise de contact et de navigation dans les photos
     align-items: center;
     border-bottom: 1px solid var(--main-color);
 }
+
+/* Prise de contact */
 
 .photo-action-contact {
     width: 50%;
@@ -518,6 +546,9 @@ Zone de prise de contact et de navigation dans les photos
     font-weight: 300;
 }
 
+/* Navigation et preview */
+
+/* Preview */
 .photo-action-navigate .featured {
     width: 81px;
     height: 71px;
@@ -533,7 +564,7 @@ Zone de prise de contact et de navigation dans les photos
 }
 
 .photo-action-navigate .featured .current {
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 .photo-action-navigate .featured .previous,
@@ -547,6 +578,7 @@ Zone de prise de contact et de navigation dans les photos
     opacity: 1;
 }
 
+/* ?avigation */
 .photo-action-navigate .arrows {
     display: flex;
     justify-content: space-between;
@@ -556,7 +588,7 @@ Zone de prise de contact et de navigation dans les photos
 .photo-action-navigate .arrow-left,
 .photo-action-navigate .arrow-right {
     width: 25px;
-    height: 40px;
+    height: 32px;
     background-image: url('../images/icon-arrow.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
