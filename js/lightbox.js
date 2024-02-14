@@ -1,7 +1,7 @@
 /**
 * Affiche la photo relative à un post de la photothèque
 * en plein écran, avec la possibilité de naviguer en avant
-* ou en arrière parmi l'ensemble des photos du site MotaPhoto
+* ou en arrière parmi l'ensemble des photos du site MotaPhoto.
 */
 
 function ShowInLightbox(button) {
@@ -41,21 +41,21 @@ function ShowInLightbox(button) {
         // Préparation de la lightbox zone image
         const photo = document.createElement('img');
         photo.src = data.url_image;
-        const container_image = document.querySelector('.lightbox__container .image');
+        const container_image = document.querySelector('.lightbox_container .image');
 
         // Vide le conteneur image de la lightbox puis ajoute l'image
         container_image.innerHTML = '';
         container_image.appendChild(photo);
 
         // Alimentation de la lightbox label "reference"
-        document.querySelector('.lightbox__container .reference').innerHTML = data.reference;
+        document.querySelector('.lightbox_container .reference').innerHTML = data.reference;
 
         // Alimentation de la lightbox label "categorie"
-        document.querySelector('.lightbox__container .categorie').innerHTML = data.categorie;
+        document.querySelector('.lightbox_container .categorie').innerHTML = data.categorie;
 
         // Préparation de la lightbox bouton "Précédent"
         const prev_id = data.prev_id;
-        const prev_button = document.getElementById('lightbox__prev');
+        const prev_button = document.getElementById('lightbox_prev');
         if (prev_id !== null) {
             prev_button.style.display = "unset";
             prev_button.dataset.postid = prev_id;
@@ -68,7 +68,7 @@ function ShowInLightbox(button) {
         
         // Préparation de la lightbox bouton "Suivant" 
         const next_id = data.next_id;
-        const next_button = document.getElementById('lightbox__next');
+        const next_button = document.getElementById('lightbox_next');
         if (next_id !== null) {
             next_button.style.display = "unset";
             next_button.dataset.postid = next_id;
@@ -86,7 +86,7 @@ function ShowInLightbox(button) {
     });
     
     // Si la lightbox n'est pas à l'écran on la fait apparaître
-    document.querySelector('.lightbox').classList.add('open-lightbox');
+    document.querySelector('.lightbox').classList.add('open');
 }
 
 /**
@@ -96,14 +96,14 @@ function ShowInLightbox(button) {
 */
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.querySelector('.lightbox__close').addEventListener('click', () => {
-        document.querySelector('.lightbox__container .image').innerHTML = '';
-        document.querySelector('.lightbox__container .reference').innerHTML = '';
-        document.querySelector('.lightbox__container .categorie').innerHTML = '';
-        const prev_button = document.getElementById('lightbox__prev');
+    document.querySelector('.lightbox_close').addEventListener('click', () => {
+        document.querySelector('.lightbox_container .image').innerHTML = '';
+        document.querySelector('.lightbox_container .reference').innerHTML = '';
+        document.querySelector('.lightbox_container .categorie').innerHTML = '';
+        const prev_button = document.getElementById('lightbox_prev');
         delete prev_button.dataset.postid;
-        const next_button = document.getElementById('lightbox__next');
+        const next_button = document.getElementById('lightbox_next');
         delete next_button.dataset.postid;
-        document.querySelector('.lightbox').classList.remove('open-lightbox');
+        document.querySelector('.lightbox').classList.remove('open');
     });    
 });

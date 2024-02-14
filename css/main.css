@@ -83,7 +83,7 @@ Boutons (bouton standard du thème et bouton de Contact Form 7)
 }
 
 /*======================================================================
-Bloc photo élastique qui impose seulement le respect de ratio d'aspect
+Bloc photo élastique qui impose seulement le respect du ratio d'aspect
 ======================================================================*/
 
 /* Bloc photo de base (desktop et mobile) */
@@ -589,7 +589,7 @@ Zone de prise de contact et de navigation dans les photos
 .photo-action-navigate .arrow-right {
     width: 25px;
     height: 32px;
-    background-image: url('../images/icon-arrow.svg');
+    background-image: url('../images/icon-arrow-black.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -750,66 +750,95 @@ Lightbox
     right: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
     background-color: var(--overlay-bg-color);
     transition: all 400ms ease-in;
 }
 
-.open-lightbox {
+.lightbox.open {
     visibility: visible;
     opacity: 1;
 }
 
-#lightbox__prev,
-#lightbox__next {
-    width: 200px;
-    height: 100%;
-    z-index: 110;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-#lightbox__next {
-    left: auto;
-    right: 0;
-}
-
-#lightbox__prev {
-    background: url('../images/icon-left-arrow.svg') left center / 45px 20px no-repeat;
-}
-
-#lightbox__next {
-    background: url('../images/icon-right-arrow.svg') center right / 45px 20px no-repeat;   
-}
-
-.lightbox__close {
+/* Boutons précédent et suivant */
+.lightbox_close {
+    position: fixed;
+    cursor: pointer;
+    border: none;
     width: 23px;
     height: 23px;
     background: url('../images/icon-close.svg') center center / 100% 100% no-repeat transparent;
     top: 20px;
     right: 40px;
+    opacity: 0.9;
+    transition: opacity 300ms;
     z-index: 120;
 }
 
-.lightbox button {
+#lightbox_prev,
+#lightbox_next {
+    border: none;
     position: fixed;
     cursor: pointer;
-    border: none;
+    z-index: 110;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+}
+
+.bloc-button {
+    display: flex;
+    justify-content: center;
+}
+
+#lightbox_prev .label,
+#lightbox_next .label {
+    display: block;
     font-family: 'Space Mono', monospace;
     font-size: 12px;
     color: var(--main-bg-color);
-    opacity: 0.8;
+    opacity: 0.9;
     transition: opacity 300ms;
 }
 
-#lightbox__prev:hover,
-#lightbox__next:hover,
-.lightbox__close:hover {
+#lightbox_prev {
+    left: 50px;
+}
+
+#lightbox_next {
+    right: 50px;
+}
+
+#lightbox_prev .arrow{
+    position: fixed;
+    width: 45px;
+    height: 20px;
+    left: -40px;
+    background-image: url('../images/icon-arrow-white.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    transform: rotate(180deg);
+}
+
+#lightbox_next .arrow {
+    position: fixed;
+    width: 25px;
+    height: 20px;
+    right: -40px;
+    background-image: url('../images/icon-arrow-white.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+#lightbox_prev:hover,
+#lightbox_next:hover,
+.lightbox_close:hover {
     opacity: 1;
     font-weight: 700;
 }
 
-.lightbox__container {
+.lightbox_container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -825,14 +854,14 @@ Lightbox
     to { opacity: 1; }
 }
 
-.lightbox__container img {
+.lightbox_container img {
     max-width: 100%;
     height: 95vh;
     object-fit: contain;
     animation: fade-in 400ms ease-in;
 }
 
-.lightbox__container .info-line {
+.lightbox_container .info-line {
     display: flex;
     justify-content: space-between;
 }

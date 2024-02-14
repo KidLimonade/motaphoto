@@ -2,9 +2,11 @@
 /**
  * Formulaire de filtrage par catégorie et format des photos.
  * Possibilité de trier les photos par date WordPress des plus
- * técentes au plus anciennes et inversement.
+ * récentes au plus anciennes et inversement.
  * Tout changement de valeur provoque une nouvelle requête.
  * Les champs sont aussi utilisés par le bouton "Charger plus".
+ * La form utilise des label-input-radio pour pouvoir
+ * s'affranchir du style des os et navigateurs.
 */
 ?>
 
@@ -16,7 +18,8 @@
 
     <div class="zone-filtres">
 
-        <?php foreach (get_object_taxonomies('photo', 'object') as $tax) : ?>
+        <?php   // Parcourt des taxonomies pour créer les dropdown buttons
+        foreach (get_object_taxonomies('photo', 'object') as $tax) : ?>
         <div id="filtre-<?php echo $tax->name ?>" class="dropdown">
 
             <div class="dropdown-button">
@@ -39,7 +42,8 @@
                     &nbsp;
                 </label>
 
-                <?php foreach(get_terms(['taxonomy' => $tax->name]) as $choice) : ?>
+                <?php   // Parcourt des termes d'une taxonomie pour créer les items d'une dropdown liste
+                foreach(get_terms(['taxonomy' => $tax->name]) as $choice) : ?>
                 <input 
                     class="option" 
                     type="radio"
