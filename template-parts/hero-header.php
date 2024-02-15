@@ -30,6 +30,6 @@
         ?>
     </div>
 
-    <span class="hero-title">Photographe&nbsp;Event</span>
+    <h1 class="hero-title">Photographe&nbsp;Event</h1>
     
 </div>

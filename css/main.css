@@ -82,6 +82,12 @@ Boutons (bouton standard du thème et bouton de Contact Form 7)
     background-color: var(--main-color);
 }
 
+@media screen and (max-width: 720px) {
+    .contact-form input[type=submit] {
+        width: 190px;
+    }
+}
+
 /*======================================================================
 Bloc photo élastique qui impose seulement le respect du ratio d'aspect
 ======================================================================*/
@@ -366,6 +372,7 @@ Hero header
     text-transform: uppercase;
     color: transparent;
     -webkit-text-stroke: 3px var(--main-bg-color);
+    margin: 0;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -653,8 +660,11 @@ Popup Contact
     visibility: hidden;
     opacity: 0;
     position: fixed;
-    z-index: 10;
-    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: 50;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     overflow: auto;
     display: flex;
     align-items: center;
@@ -712,7 +722,7 @@ Popup Contact
 }
 
 .contact-form p {
-    margin: 0 0 25px 0;
+    margin: 0 0 24px 0;
 }
 
 .contact-form input,
@@ -735,6 +745,33 @@ Popup Contact
 .contact-form .wpcf7-spinner,
 .contact-form .wpcf7-response-output {
     display: none;
+}
+
+@media screen and (max-width: 720px) {
+    .modal-content {
+        width: 286px;
+        height: 583px;
+        border: 3px solid var(--main-color);
+    }    
+    .modal-content::before {
+        width: 459px;
+        height: 55px;
+        background-image: url('../images/contact-head-mobile.png');
+    }
+    .contact-form {
+        margin-top: 87px;
+    }
+    .contact-form p {
+        margin: 0 0 14px 0;
+    }
+    .contact-form input,
+    .contact-form textarea {
+        width: 190px;
+        padding: 0 12px;
+    }
+    .contact-form textarea {
+        height: 149px;   
+    }
 }
 
 /***********************************************************************
