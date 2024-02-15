@@ -15,7 +15,7 @@
 
     <?php // Invoque JavaScript pour requête Ajax et modification de la lightbox ?>
     <button id="lightbox_prev" onclick="ShowInLightbox(this)">
-        <div class="bloc-button">
+        <div class="button-icon">
             <div class="arrow"></div>
             <span class="label"><?php _e('Précédente', 'motaphoto'); ?></span>
         </div>
@@ -23,7 +23,7 @@
 
     <?php // Invoque JavaScript pour requête Ajax et modification de la lightbox ?>
     <button id="lightbox_next" onclick="ShowInLightbox(this)">
-        <div class="bloc-button">
+        <div class="button-icon">
             <span class="label"><?php _e('Suivante', 'motaphoto'); ?></span>
             <div class="arrow"></div>
         </div>
