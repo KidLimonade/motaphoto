@@ -51,7 +51,7 @@ Composants
 ***********************************************************************/
 
 /*======================================================================
-Boutons (bouton standard du thème et bouton de Contact Form 7)
+Boutons (bouton standard du thème et bouton dans Contact Form 7)
 ======================================================================*/
 
 .motaphoto-button,
@@ -85,6 +85,9 @@ Boutons (bouton standard du thème et bouton de Contact Form 7)
 @media screen and (max-width: 720px) {
     .contact-form input[type=submit] {
         width: 190px;
+    }
+    .photo-action-contact .contact-button {
+        width: 263px;
     }
 }
 
@@ -442,7 +445,7 @@ une colonne unique sur mobile
 
 @media screen and (max-width: 720px) {
     #zone-portfolio {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(1, minmax(278.8px, 564px));
     }
 }
 
@@ -519,8 +522,9 @@ Zone contenu de la photo
 
 @media screen and (max-width: 720px) {
     .photo-detail {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(1, minmax(50%, 1fr));
     }
+    /* Inversion de l'ordre text-image sur mobile */
     .photo-detail-text {
         order: 2;
     }
@@ -647,7 +651,7 @@ Zone de suggestion de photos similaires
         margin-bottom: 20px;
         }
     .photo-like-galerie {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(1, minmax(278.8px, 564px));
         margin-bottom: 24px;
     }
 }
