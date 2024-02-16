@@ -1,18 +1,18 @@
 <?php
 
 /**
-* MotaPhoto theme default version number
+* MotaPhoto thème numéro de version par défaut
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.145' );
+    define( '_S_VERSION', '1.0.148' );
 }
 
 /**
-* Enqueue MotaPhoto scripts and styles
+* Enqueue MotaPhoto scripts et styles
 */
 function motaphoto_scripts_styles() {
 
-    // JavaScript scripts, JQuery dependency and Ajax URL parameter
+    // Scripts JavaScript, dépendance JQuery et paramètre URL Ajax
     wp_enqueue_script(
         'motaphoto-scripts-js',
         get_template_directory_uri() . '/js/scripts.js',
@@ -42,7 +42,7 @@ function motaphoto_scripts_styles() {
         _S_VERSION
     );
 
-    // Lightbox JavaScript script and Ajax URL parameter
+    // Sxript JavaScript Lightbox et paramètre URL Ajax
     wp_enqueue_script(
         'motaphoto-lightbox',
         get_template_directory_uri() . '/js/lightbox.js',
@@ -55,6 +55,15 @@ function motaphoto_scripts_styles() {
         'motaphoto_js',
         array('ajax_url' => admin_url('admin-ajax.php'))
     );
+
+    // Sxript JavaScript Dropdown
+    wp_enqueue_script(
+        'motaphoto-dropdown',
+        get_template_directory_uri() . '/js/dropdown.js',
+        array(),
+        _S_VERSION,
+        true
+    );    
 }
 
 /**
