@@ -4,7 +4,7 @@
 * MotaPhoto theme default version number
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.142' );
+    define( '_S_VERSION', '1.0.144' );
 }
 
 /**
@@ -188,7 +188,7 @@ function request_photo_by_ID() {
 
     // Vérification que la photo n'est pas en "brouillon"
     if ( get_post_status($post_id) !== 'publish' ) {
-        wp_send_json_error("Photo avvess denied.", 403);
+        wp_send_json_error("Photo access denied.", 403);
     }
 
     // Arguments de la requête wp_qiery

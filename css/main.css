@@ -935,15 +935,24 @@ parmi une liste.  Pur style compatible avec l'intégration dans
 une <form> utilisable pour effectuer une requête Ajax wp_query.
 ***********************************************************************/
 
-/* Commun dropdown */
+/*======================================================================
+Style général custom dropdown
+======================================================================*/
+
 .dropdown {
     width: 260px;
     font-family: 'Poppins', monospace;
     font-size: 12px;
     font-weight: 500;
     line-height: 18px;
+    letter-spacing: 0.36px;
     color: var(--dark-blue-color);
     position: relative;
+}
+
+/* Radio option input caché */
+.dropdown input.option {
+    display: none;
 }
 
 @media screen and (max-width: 720px) {
@@ -952,28 +961,60 @@ une <form> utilisable pour effectuer une requête Ajax wp_query.
     }
 }
 
-/* Custom radio dropdown */
-.dropdown input.option {
-    display: none;
-}
+/*======================================================================
+Style custom dropdown bouton
+======================================================================*/
 
+/*-------- Dropdown fermé (par défaut) --------*/
+
+/* Bouton et label */
 .dropdown-button {
     padding: 12px 18px;
     border: 1.3px solid var(--border-gray-color);
     border-radius: 8px;
     cursor: pointer;
     text-transform: uppercase;
-    /* Défaut: chevron vers le bas */
-    background-image: url('../images/icon-chevron-down.svg');
-    background-position: right 18px center;
-    background-repeat: no-repeat;
+    position: relative;
 }
 
-/* Dropdown ouvert */
-.dropdown.open > .dropdown-button {
-    border-radius: 8px 8px 0 0;
-    background-image: url('../images/icon-chevron-up.svg');
+/* Chevron (down) */
+.dropdown-button::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    /* centré Y */
+    top: calc(50% - 10px); 
+    right: 18px;
+    background-image: url('../images/icon-chevron-down.svg');
+    background-repeat: no-repeat;
+    transform: scaleY(1);
+    transition: transform 600ms;
 }
+
+/* Neutralise events sur label */
+.dropdown-button .default-label,
+.dropdown-button .selected-label {
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+/*-------- Dropdown ouvert --------*/
+
+/* Coins carrés pour jonction dropdown list */
+.dropdown.open > .dropdown-button {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Symétrie Y animée du chevron */
+.dropdown.open > .dropdown-button::after {
+    transform: scaleY(-1);
+}
+
+/*-------- Au survol du bouton --------*/
 
 .dropdown-button:hover {
     border: 1.3px solid var(--border-blue-color);
@@ -983,14 +1024,9 @@ une <form> utilisable pour effectuer une requête Ajax wp_query.
     outline: none;
 }
 
-/* Neutraliser events sur bouton */
-.dropdown-button .default-label,
-.dropdown-button .selected-label {
-    pointer-events: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-}
+/*======================================================================
+Style custom dropdown liste
+======================================================================*/
 
 /* Dropdown liste déployée */
 .dropdown-list {
