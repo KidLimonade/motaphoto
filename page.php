@@ -1,28 +1,19 @@
 <?php
 /**
- * The template for displaying all single posts
+ * Le template minimal pour afficher un contenu
+ * quelconque associé au custom theme MotaPhoto
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
- *
- * @package WordPress
- * @subpackage Twenty_Twenty_One
- * @since Twenty Twenty-One 1.0
+ * @link https://github.com/KidLimonade/motaphoto.git
  */
 
 get_header();
 
-/* Start the Loop */
+/* Début de la boucle */
 while ( have_posts() ) :
 	the_post();
-	get_template_part( 'template-parts/content/content-page' );
 
-    // Ajouté pour fonctionnalité minimale page 'Vie Privée'
     the_content();
 
-	// If comments are open or there is at least one comment, load up the comment template.
-	if ( comments_open() || get_comments_number() ) {
-		comments_template();
-	}
-endwhile; // End of the loop.
+endwhile; // Fin de la boucle.
 
 get_footer();

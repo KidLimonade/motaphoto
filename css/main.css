@@ -969,7 +969,7 @@ Style custom dropdown bouton
 
 /* Bouton et label */
 .dropdown-button {
-    padding: 12px 18px;
+    padding: 11px 18px;
     border: 1.3px solid var(--border-gray-color);
     border-radius: 8px;
     cursor: pointer;

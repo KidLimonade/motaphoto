@@ -1,9 +1,10 @@
 /***********************************************************************
-Theme fonts are stored locally after being generated with the help of: 
+Les fontes utilisées dans le thème sont stockées localement. Elles ont
+été générées à l'aide des outils et grâce aux liends suivants :
 - https://gwfh.mranftl.com/fonts/space-mono?subsets=latin
 - https://gwfh.mranftl.com/fonts/poppins?subsets=latin
 - https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display
-Compatibility with Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
+Compatibles avec Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
 ***********************************************************************/
 
 /* space-mono-regular - latin */
@@ -14,6 +15,7 @@ Compatibility with Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
     font-weight: 400;
     src: url('../fonts/space-mono-v13-latin-regular.woff2') format('woff2');
 }
+
 /* space-mono-700 - latin */
 @font-face {
     font-display: swap;
@@ -49,6 +51,7 @@ Compatibility with Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
     font-weight: 300;
     src: url('../fonts/poppins-v20-latin-300.woff2') format('woff2');
 }
+
 /* poppins-500 - latin */
 @font-face {
     font-display: swap;
