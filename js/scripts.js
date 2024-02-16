@@ -13,7 +13,6 @@ document.querySelectorAll('.contact-button').forEach(button => {
 
 // Fermeture de la popup lors d'un clic extérieur au formulaire de saisie
 document.querySelector('.modal').addEventListener('click', event => {
-    console.log('clic');
     const popup = document.getElementById('popup-contact');
     if (event.target === popup) {
         popup.classList.remove('open-modal');
@@ -275,10 +274,13 @@ function dropdownToggle(dropdown) {
 // Tous les dropdown boutons alternent dropdown ouverte / fermée
 document.querySelectorAll('.dropdown > .dropdown-button').forEach( button => {
 
-    button.addEventListener('click', e => {
+    button.addEventListener('click', event => {
+
+        // Bouton auto-géré
+        event.preventDefault();
 
         // La dropdown est mère du bouton
-        const dropdown = e.target.parentNode;
+        const dropdown = event.target.parentNode;
         dropdownToggle(dropdown);
     });
 });
@@ -288,7 +290,7 @@ document.querySelectorAll('.dropdown').forEach(dropdown => {
 
     dropdown.querySelectorAll('.option').forEach(option => {
 
-        option.addEventListener('click', e => {
+        option.addEventListener('click', () => {
 
             console.log('option:', option);
             console.log('option id:', option.id);

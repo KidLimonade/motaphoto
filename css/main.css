@@ -17,7 +17,7 @@ General settings
 
     /* Constantes additionnelles */
     --border-gray-color: #B8BBC2; /* Mock. Figma */
-    --border-blue-color: #9747FF; /* Mock. Figma */
+    --border-blue-color: #215AFF; /* Mock. Figma */
     --overlay-bg-color: rgba(0, 0, 0, 0.8); /* Spec. Fonct. */
     --overlay-card-color: rgba(0, 0, 0, 0.6); /* Mock. Figma */
 
@@ -967,14 +967,24 @@ Style custom dropdown bouton
 
 /*-------- Dropdown fermé (par défaut) --------*/
 
-/* Bouton et label */
+/* Bouton */
 .dropdown-button {
     padding: 11px 18px;
     border: 1.3px solid var(--border-gray-color);
     border-radius: 8px;
     cursor: pointer;
-    text-transform: uppercase;
     position: relative;
+    /* Neutralise select */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+/* Label */
+.dropdown-button .default-label,
+.dropdown-button .selected-label {
+    text-transform: uppercase;
+    pointer-events: none;
 }
 
 /* Chevron (down) */
@@ -992,81 +1002,95 @@ Style custom dropdown bouton
     transition: transform 600ms;
 }
 
-/* Neutralise events sur label */
-.dropdown-button .default-label,
-.dropdown-button .selected-label {
-    pointer-events: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-}
-
 /*-------- Dropdown ouvert --------*/
-
-/* Coins carrés pour jonction dropdown list */
-.dropdown.open > .dropdown-button {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-}
 
 /* Symétrie Y animée du chevron */
 .dropdown.open > .dropdown-button::after {
     transform: scaleY(-1);
 }
 
-/*-------- Au survol du bouton --------*/
-
-.dropdown-button:hover {
+/* Coins carrés pour jonction dropdown list */
+.dropdown.open > .dropdown-button {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
     border: 1.3px solid var(--border-blue-color);
 }
 
-.dropdown-button:focus {
-    outline: none;
+/*-------- Dropdown bouton status --------*/
+
+.dropdown-button:active {
+    border: 1.3px solid var(--border-blue-color);
 }
 
 /*======================================================================
 Style custom dropdown liste
 ======================================================================*/
 
-/* Dropdown liste déployée */
+/*-------- Dropdown ouvert liste dépolyée --------*/
+
 .dropdown-list {
-    border-radius: 0 0 8px 8px;
     width: 100%;
     position: absolute;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
     box-sizing: border-box;
     background-color: var(--main-bg-color);
     z-index: 20;
+    /* apparition animée depuis le haut */
     transform: scaleY(1);
-    transition-duration: 400ms;
+    transform-origin: top;
+    transition-duration:  400ms;
 }
 
-/* Dropdown liste cachée */
+/*-------- Dropdown fermé liste cachée --------*/
+
 .dropdown-list.collapsed {
     transform: scaleY(0);
 }
 
+/*======================================================================
+Style custom dropdown item
+======================================================================*/
+
+/*-------- Dropdown item visible --------*/
+
 .dropdown-item {
     display: block;
     padding: 12px 18px;
+    cursor: pointer;
+    /* Neutralise select */
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
 }
 
-/* Arrondis au bas du dernier item */
+/* Dernier item coins arrondis */
 .dropdown-item:last-child {
-    border-radius: 0 0 8px 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
-.dropdown-item:hover {
-    background-color: var(--tertiary-red-color);
-}
+/*-------- Dropdown item status --------*/
 
-.dropdown-item:active {
-    background-color: var(--secondary-red-color);
-}
-
+/* Indique item sélectionné... sauf si item '*' (tous=aucun) */
 .dropdown-list input[type="radio"].selected + .dropdown-item {
     color: var(--main-bg-color);
     background-color: var(--primary-red-color);
+}
+.dropdown-list input[value="*"].selected + .dropdown-item {
+    background-color: var(--main-bg-color);
+}
+
+/* Survol item même si sélectionné... mais pas si '*' (aucun=tous) */
+.dropdown-item:hover {
+    color: var(--dark-blue-color) !important;
+    background-color: var(--tertiary-red-color) !important;
+}
+.dropdown-list input[value="*"]:hover + .dropdown-item {
+    background-color: var(--main-bg-color) !important;
+}
+
+/* Lors de la sélection */
+.dropdown-item:active {
+    background-color: var(--secondary-red-color) !important;
 }
