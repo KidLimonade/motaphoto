@@ -4,15 +4,12 @@
 
 // Alterne l'état ouvert vs fermé d'un dropdown
 function dropdownToggle(dropdown) {
-
     dropdown.classList.toggle('open');
     
     if (dropdown.classList.contains('open')) {
-
         /**
          * Le dropdown s'ouvre
          */
-
         dropdown.querySelector('.dropdown-list').classList.remove('collapsed');
 
         // Le titre du bouton prend sa valeur par défaut
@@ -21,16 +18,13 @@ function dropdownToggle(dropdown) {
         // Le choix courant éventuel est caché
         dropdown.querySelector('.selected-label').classList.add('hidden');
     } else {
-
         /**
          * Le dropdown se referme
          */
-
         dropdown.querySelector('.dropdown-list').classList.add('collapsed');
 
         // Récupération du nouveau choix courant
         const selected_label = dropdown.querySelector('.selected-label');
-
         if (selected_label.innerText !== '' && selected_label.innerText !== '\xa0') {
 
             // Remplace le titre du bouton par le label associé au choix
@@ -45,7 +39,7 @@ function dropdownToggle(dropdown) {
     }
 }
 
-// Au clic sur un dropdown boutons on alterne l'état ouvert vs fermé du dropdown
+// Au clic sur un dropdown bouton on alterne l'état ouvert vs fermé du dropdown
 document.querySelectorAll('.dropdown > .dropdown-button').forEach( button => {
     button.addEventListener('click', () => {
 
@@ -54,7 +48,7 @@ document.querySelectorAll('.dropdown > .dropdown-button').forEach( button => {
     });
 });
 
-// Au clic sur un item d'un dropdown on gère le dropdown en fonction du choix utilisateur
+// Au clic sur un item d'un dropdown ouvert on gère le dropdown en fonction du choix utilisateur
 document.querySelectorAll('.dropdown').forEach(dropdown => {
     dropdown.querySelectorAll('.option').forEach(option => {
         option.addEventListener('click', () => {
@@ -74,8 +68,18 @@ document.querySelectorAll('.dropdown').forEach(dropdown => {
             // Mise à jour du label sélectionné avec le label de l'option choisie
             dropdown.querySelector('.selected-label').innerText = label_option.innerText;
 
-            // Fermeture de la dropdown
             dropdownToggle(dropdown);
         });
     });
+});
+
+// Au clic en dehors de tout dropdown on ferme le ou les dropdown(s) éventuellement ouvert(s)
+document.addEventListener('click', event => {
+    if (event.target.closest('.dropdown') === null) {
+
+        // Ferme tous les dropdowns ouverts
+        document.querySelectorAll('.dropdown.open').forEach(dropdown => {
+            dropdownToggle(dropdown);
+        });
+    } 
 });
