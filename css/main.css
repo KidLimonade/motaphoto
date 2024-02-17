@@ -441,7 +441,7 @@ Porfolio Nathalie Mota dans une grille de 2 colonnes sur desktop et
 une colonne unique sur mobile
 ======================================================================*/
 
-#zone-portfolio {
+#portfolio {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, minmax(278.8px, 564px));
@@ -449,7 +449,7 @@ une colonne unique sur mobile
 }
 
 @media screen and (max-width: 720px) {
-    #zone-portfolio {
+    #portfolio {
         grid-template-columns: repeat(1, minmax(278.8px, 564px));
     }
 }

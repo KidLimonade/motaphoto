@@ -17,7 +17,7 @@ while ( have_posts() ) :
 
 <main class="site-content">
 
-<div class="photo-detail">
+<section class="photo-detail">
 
     <div class="photo-detail-text">
 
@@ -70,9 +70,9 @@ while ( have_posts() ) :
             <?php the_post_thumbnail('large'); ?>
         <?php endif; ?>
     </div>
-</div>
+</section>
 
-<div class="photo-action">
+<section class="photo-action">
 
     <div class="photo-action-contact">
         <p>
@@ -114,9 +114,9 @@ while ( have_posts() ) :
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="photo-like">
+<section class="photo-like">
 
     <p class="photo-like-titre"><?php _e('Vous aimerez aussi', 'motaphoto'); ?></p>
     
@@ -151,7 +151,7 @@ while ( have_posts() ) :
             wp_reset_postdata();
         ?>
     </div>
-</div>
+</section>
 
 <?php endwhile; // Fin de la boucle ?>
 

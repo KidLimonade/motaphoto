@@ -17,31 +17,30 @@ $query = new WP_Query($args);
 // La page
 if ($query->have_posts()) :
 
-    // Hero header photo au hasard
+    // Hero header avec photo au hasard
     get_template_part('template-parts/hero-header');
     ?>
 
     <main class="site-content">
-        <div class="zone-dropdowns">
 
-        <?php // Filtre et tri dans la photothèque
-        get_template_part('template-parts/filter-sort-form');
-        ?>
+        <section class="zone-dropdowns">
+            <?php   // Filtre et tri dans la photothèque
+            get_template_part('template-parts/filter-sort-form');
+            ?>
+        </section>
 
-        </div>
-            <div id="zone-portfolio">
-
-            <?php
-            // Boucle initiale de recherche de photos
+        <section id="portfolio">
+            <?php   // Boucle initiale de recherche de photos
             while ($query->have_posts()) : 
                 $query->the_post();
                 get_template_part('template-parts/photo-block');
             endwhile;
             ?>
+        </section>
 
-            </div>
         <div class="zone-more">
-            <button id="load-more-btn" class="motaphoto-button"><?php _e('Charger plus', 'motaphoto'); ?>
+            <button id="load-more-btn" class="motaphoto-button">
+                <?php _e('Charger plus', 'motaphoto'); ?>
             </button>
         </div>
     </main>

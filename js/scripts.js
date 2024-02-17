@@ -150,8 +150,8 @@ jQuery( $ => {
                 $("#load-more-btn").hide();
             }
             
-            // Vide puis réinjecte l'espace photos
-            $("#zone-portfolio").empty().append(data.html);
+            // Vide puis réinjecte le nouveau portfolio
+            $("#portfolio").empty().append(data.html);
         })
         
         // Gestion des exceptions
@@ -213,7 +213,7 @@ jQuery( $ => {
                 }
                 
                 // Injecte les nouvelles photos
-                $("#zone-portfolio").append(data.html);
+                $("#portfolio").append(data.html);
             },
         });
     });

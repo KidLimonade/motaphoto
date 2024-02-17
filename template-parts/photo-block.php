@@ -11,7 +11,7 @@
  */
 ?>
 
-<div class="card-container">
+<article class="card-container">
 
 <?php if (has_post_thumbnail()) : ?>
 
@@ -35,5 +35,5 @@
 
         <span class="categories"><?php echo implode(' ',  wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names'])); ?></span>
     </div>
-</div>
+</article>
 
