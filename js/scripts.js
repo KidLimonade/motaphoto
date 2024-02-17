@@ -89,6 +89,8 @@ jQuery(document).ready( $ => {
     */
     $('#filtre-tri-form').on('change', event => {
 
+        console.log('Form modifiée');
+        
         // Comportement par défaut formulaire annulé
         event.preventDefault();
         

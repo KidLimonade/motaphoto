@@ -4,7 +4,7 @@
 * MotaPhoto thème numéro de version par défaut
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.148' );
+    define( '_S_VERSION', '1.0.151' );
 }
 
 /**
@@ -47,8 +47,8 @@ function motaphoto_scripts_styles() {
         'motaphoto-lightbox',
         get_template_directory_uri() . '/js/lightbox.js',
         array(),
-        _S_VERSION
-        // Script loaded in <head>
+        _S_VERSION,
+        true
     );
     wp_localize_script(
         'motaphoto-lightbox',
@@ -212,7 +212,7 @@ function request_photo_by_ID() {
     // Si le retour de le retour de la requête est un succès
     if ($query->have_posts()) {
         $query->the_post();
-        $url_image = get_the_post_thumbnail_url(null, 'large');
+        $url_image = get_the_post_thumbnail_url(null, 'full');
         $reference = get_field_object('field_65af94c95d70a')['value'];
         $categorie = implode(' ',  wp_get_post_terms($post_id, 'categorie', ['fields' => 'names']));
         $prev_id = get_previous_post()->ID;
