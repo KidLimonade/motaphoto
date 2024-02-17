@@ -77,10 +77,10 @@
 
             <div class="dropdown-list collapsed">
 
-                <input class="option" type="radio" id="select-desc" name="order" value="DESC">
+                <input class="option" type="radio" id="select-desc" name="order" value="DESC" autocomplete="off">
                 <label class="dropdown-item" for="select-desc"><?php echo _e('À partir des plus récentes'); ?></label>
 
-                <input class="option" type="radio" id="select-asc" name="order" value="ASC">
+                <input class="option" type="radio" id="select-asc" name="order" value="ASC" autocomplete="off">
                 <label class="dropdown-item" for="select-asc"><?php echo _e('À partir des plus anciennes'); ?></label>
             </div>
         </div>
