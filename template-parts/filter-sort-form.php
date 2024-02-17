@@ -34,7 +34,9 @@
                     type="radio" 
                     id="filtre-all-<?php echo $tax->name ?>" 
                     name="<?php echo $tax->name ?>" 
-                    value="*">
+                    value="*"
+                    autocomplete="off"
+                >
                 <label 
                     class="dropdown-item" 
                     for="filtre-all-<?php echo $tax->name ?>"
@@ -50,6 +52,7 @@
                     id="filtre-<?php echo $tax->name ?>-<?php echo $choice->slug ?>"
                     name="<?php echo $tax->name ?>"
                     value="<?php echo $choice->slug ?>"
+                    autocomplete="off"
                 >
                 <label 
                     class="dropdown-item" 

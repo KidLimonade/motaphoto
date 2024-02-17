@@ -78,7 +78,7 @@ document.querySelectorAll('.detectable').forEach( detectable => {
 * Accès via Ajax à des groupes de photos avec filtrage possible
 * par catégorie et format, et tri par date croissant décroissant
 */
-jQuery(document).ready( $ => {
+jQuery( $ => {
     
     // Page courante
     let current_page = 1;
