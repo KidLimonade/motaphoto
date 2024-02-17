@@ -18,8 +18,8 @@ General settings
     /* Constantes additionnelles */
     --border-gray-color: #B8BBC2; /* Mock. Figma */
     --border-blue-color: #215AFF; /* Mock. Figma */
-    --overlay-bg-color: rgba(0, 0, 0, 0.8); /* Spec. Fonct. */
-    --overlay-card-color: rgba(0, 0, 0, 0.6); /* Mock. Figma */
+    --overlay-bg-color: rgba(0, 0, 0, 80%); /* Spec. Fonct. */
+    --overlay-card-color: rgba(0, 0, 0, 60%); /* Mock. Figma */
 
     /* Constantes techniques */
     --mobile-header-height: 72px;
@@ -35,6 +35,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: auto;
+}
+
+/* Scroll bars désactivée */
+body.hide-scroll {
+    overflow: hidden;
 }
 
 .site-content {
@@ -919,14 +925,14 @@ Style custom boutons lightbox
 
 .lightbox_container img {
     max-width: 100%;
-    max-height: 95vh;
+    max-height: calc(100vh - 40px);
     object-fit: contain;
     animation: fade-in 400ms ease-in;
 }
 
 .lightbox_container .description {
     margin: 0;
-    margin-top: 19px;
+    margin-top: 18px;
     display: flex;
     justify-content: space-between;
     font-family: 'Space Mono', monospace;

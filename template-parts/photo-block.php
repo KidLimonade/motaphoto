@@ -27,7 +27,7 @@
 
     <div class="card-overlay">
 
-        <button class="lightbox-button" onclick="ShowInLightbox(this)" data-postid="<?php echo get_the_ID(); ?>"></button>
+        <button class="lightbox-button" onclick="showInLightbox(this)" data-postid="<?php echo get_the_ID(); ?>"></button>
 
         <a class="photo-button" href="<?php echo get_post_permalink(); ?>"></a>
 

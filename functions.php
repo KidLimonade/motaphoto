@@ -4,7 +4,7 @@
 * MotaPhoto thème numéro de version par défaut
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.152' );
+    define( '_S_VERSION', '1.0.153' );
 }
 
 /**

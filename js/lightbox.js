@@ -4,7 +4,7 @@
 * ou en arrière parmi l'ensemble des photos du site MotaPhoto.
 */
 
-function ShowInLightbox(button) {
+function showInLightbox(button) {
 
     // Le post photo dont l'image doit être affichée
     const postID = button.dataset.postid;
@@ -87,6 +87,7 @@ function ShowInLightbox(button) {
     
     // Si la lightbox n'est pas à l'écran on la fait apparaître
     document.querySelector(".lightbox").classList.add("open");
+    document.querySelector("body").classList.add("hide-scroll");
 }
 
 /**
@@ -103,4 +104,6 @@ document.querySelector(".lightbox_close").addEventListener( 'click', () => {
     const nextButton = document.getElementById("lightbox_next");
     delete nextButton.dataset.postid;
     document.querySelector(".lightbox").classList.remove("open");
+    document.querySelector("body").classList.remove("hide-scroll");
+
 });    
