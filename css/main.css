@@ -30,6 +30,7 @@ body {
     margin: auto;
     max-width: 1440px;
     min-width: 320px;
+    /* Repousse footer si page vide */
     min-height: 100vh;
     font-family: 'Space Mono', monospace;    
     display: flex;
@@ -38,7 +39,7 @@ body {
     overflow: auto;
 }
 
-/* Scroll bars désactivée */
+/* Scroll bars désactivée (lightbox) */
 body.hide-scroll {
     overflow: hidden;
 }
@@ -98,8 +99,10 @@ Boutons (bouton standard du thème et bouton dans Contact Form 7)
 }
 
 /*======================================================================
-Bloc photo élastique qui impose seulement le respect du ratio d'aspect
+Bloc photo flexible qui impose seulement le respect du ratio d'aspect
 ======================================================================*/
+
+/*-------- Bloc photo de base --------*/
 
 /* Bloc photo de base (desktop et mobile) */
 .card-container {
@@ -116,6 +119,7 @@ Bloc photo élastique qui impose seulement le respect du ratio d'aspect
     user-select: none;
 }
 
+/* Bouton d'accès à la page single-photo (mobile) */
 .card-container .photo-link {
     width: 100%;
     height: 100%;
@@ -127,7 +131,8 @@ Bloc photo élastique qui impose seulement le respect du ratio d'aspect
     object-fit: cover;
 }
 
-/* Overlay sur bloc de base (desktop) */
+/*-------- Overlay spécial desktop --------*/
+
 .card-overlay {
     width: 100%;
     height: 100%;
@@ -146,6 +151,7 @@ Bloc photo élastique qui impose seulement le respect du ratio d'aspect
     opacity: 1;
 }
 
+/* Bouton d'accès à la lightbox */
 .card-overlay .lightbox-button {
     width: 34px;
     height: 34px;
@@ -160,6 +166,7 @@ Bloc photo élastique qui impose seulement le respect du ratio d'aspect
     cursor: pointer;
 }
 
+/* Bouton d'accès à la page single-photo (desktop) */
 .card-overlay .photo-button {
     width: 46px;
     height: 32px;
@@ -171,7 +178,7 @@ Bloc photo élastique qui impose seulement le respect du ratio d'aspect
     background-size: contain;
     background-position: center center;
 }
-
+/* Informations textuelles */
 .card-overlay .titre {
     position: absolute;
     bottom: 12px;
@@ -181,7 +188,6 @@ Bloc photo élastique qui impose seulement le respect du ratio d'aspect
     font-weight: 500;
     letter-spacing: 1.4px;
 }
-
 .card-overlay .categories {
     position: absolute;
     right: 23px;
@@ -244,6 +250,8 @@ Site header
     background-color: var(--main-bg-color);
 }
 
+/*-------- Header et menu navigation sur desktop --------*/
+
 .navigation-bar {
     width: 100%;
     margin: auto 40px;
@@ -274,6 +282,8 @@ Site header
     background-position: center center; 
     background-repeat: no-repeat;
 }
+
+/*-------- Header et menu navigation sur mobile --------*/
 
 @media screen and (max-width: 720px) {
 
@@ -485,7 +495,7 @@ Zone contenu de la photo
     grid-template-columns: repeat(2, minmax(50%, 1fr));
 }
 
-/* Titre et caractéristiques */
+/*-------- Description photo présentée --------*/
 
 .photo-detail-text {
     display: flex;
@@ -518,7 +528,7 @@ Zone contenu de la photo
     margin: 0;
 }
 
-/* Image */
+/*-------- Photo complète --------*/
 
 .photo-detail-image {
     display: flex;
@@ -544,15 +554,17 @@ Zone contenu de la photo
 /*======================================================================
 Zone de prise de contact et de navigation dans les photos
 ======================================================================*/
+
 .photo-action {
     height: 118px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--main-color);
+
+    background-color: yellow;
 }
 
-/* Prise de contact */
+/*-------- CTA contact sur photo présentée --------*/
 
 .photo-action-contact {
     width: 50%;
@@ -560,6 +572,8 @@ Zone de prise de contact et de navigation dans les photos
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+
+    background-color: #FFD6D6;
 }
 
 .photo-action-contact p {
@@ -568,9 +582,12 @@ Zone de prise de contact et de navigation dans les photos
     font-weight: 300;
 }
 
-/* Navigation et preview */
+/*-------- Vignette navigation --------*/
 
-/* Preview */
+.photo-action-navigate {
+    background-color: orange;
+}
+
 .photo-action-navigate .featured {
     width: 81px;
     height: 71px;
@@ -600,7 +617,8 @@ Zone de prise de contact et de navigation dans les photos
     opacity: 1;
 }
 
-/* ?avigation */
+/*-------- Navigation avec les flèches --------*/
+
 .photo-action-navigate .arrows {
     display: flex;
     justify-content: space-between;
@@ -640,10 +658,14 @@ Zone de prise de contact et de navigation dans les photos
 Zone de suggestion de photos similaires
 ======================================================================*/
 
+.photo-like {
+    padding-top:77px;
+    border-top: 1px solid var(--main-color);
+}
+
 .photo-like-titre {
     font-size: 18px;
     text-transform: uppercase;
-    margin-top:77px;
     margin-bottom: 52px;
 }
 
@@ -691,6 +713,8 @@ Popup Contact
     visibility: visible;
     opacity: 1;
 }
+
+/*-------- Formulaire sur desktop --------*/
 
 .modal-content {
     margin: auto;
@@ -761,6 +785,8 @@ Popup Contact
 .contact-form .wpcf7-response-output {
     display: none;
 }
+
+/*-------- Formulaire sur mobile --------*/
 
 @media screen and (max-width: 720px) {
     .modal-content {

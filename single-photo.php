@@ -20,9 +20,7 @@ while ( have_posts() ) :
 <section class="photo-detail">
 
     <div class="photo-detail-text">
-
         <h1><?php the_title() ?></h1>
-
         <div class="photo-data">
             <p>
                 <?php
@@ -32,7 +30,6 @@ while ( have_posts() ) :
                 echo $ref['label'] . ' : ' . $ref_photo;
                 ?>
             </p>
-
             <?php // Insertion référence dans input CF7 ?>
             <script>
                 jQuery( $ => {
@@ -41,7 +38,6 @@ while ( have_posts() ) :
                     });
                 });
             </script>
-
             <p>
                 <?php
                 // categories conservées pour wp_query qui suit
@@ -100,13 +96,11 @@ while ( have_posts() ) :
         </div>
 
         <div class="arrows">
-
             <div class="previous detectable">
                 <?php   // Le lien sur la photo précédente et la flèche vers l'arrière
                 echo previous_post_link('%link', '<div class="arrow-left"></div>'); 
                 ?>
             </div>
-
             <div class="next detectable">
                 <?php   // Le lien sur la photo suivante et la flèche vers l'arrière
                  echo next_post_link('%link', '<div class="arrow-right"></div>'); 
@@ -116,42 +110,45 @@ while ( have_posts() ) :
     </div>
 </section>
 
-<section class="photo-like">
+<?php   // Arguments de la requête "Vous aumerez aussi"
+$args = array(
+    'post_type' => 'photo',
+    'tax_query' => array(
+        array(
+            'taxonomy'  => 'categorie',
+            'field'     => 'slug',
+            'terms'     => $categories
+        )
+    ),
+    'post__not_in'      => [$post->ID],
+    'orderby'           => 'rand',
+    'posts_per_page'    => 2,
+);
 
-    <p class="photo-like-titre"><?php _e('Vous aimerez aussi', 'motaphoto'); ?></p>
-    
-    <div class="photo-like-galerie">
-        <?php
+// Exécution de la requête WordPress
+$query = new WP_Query($args);
+if  ($query->have_posts()) {
 
-            // Arguments de la requête "Vous aumerez aussi"
-            $args = array(
-                'post_type' => 'photo',
-                'tax_query' => array(
-                    array(
-                        'taxonomy'  => 'categorie',
-                        'field'     => 'slug',
-                        'terms'     => $categories
-                    )
-                ),
-                'post__not_in'      => [$post->ID],
-                'orderby'           => 'rand',
-                'posts_per_page'    => 2,
-            );
+    // Section présente si au moins une photo similaire
+    ?>
+    <section class="photo-like">
+        <p class="photo-like-titre"><?php _e('Vous aimerez aussi', 'motaphoto'); ?></p>
+        <div class="photo-like-galerie">
 
-            // Exécution de la requête WordPress
-            $query = new WP_Query($args);
-            if  ($query->have_posts()) {
-                while ($query->have_posts()) {
-                    $query->the_post();
+            <?php
+            while ($query->have_posts()) {
+                $query->the_post();
 
-                    // Fabriquation d'un bloc photo avec l'image similaire
-                    get_template_part('template-parts/photo-block');
-                }
+                // Fabriquation d'un bloc photo avec l'image similaire
+                get_template_part('template-parts/photo-block');
             }
-            wp_reset_postdata();
-        ?>
-    </div>
-</section>
+            ?>
+        </div>
+    </section>
+    <?php
+}
+wp_reset_postdata();
+?>
 
 <?php endwhile; // Fin de la boucle ?>
 

@@ -4,14 +4,14 @@
 * MotaPhoto thème numéro de version par défaut
 */
 if ( !defined( '_S_VERSION' ) ) {
-    define( '_S_VERSION', '1.0.153' );
+    define( '_S_VERSION', '1.0.154' );
 }
 
 /**
 * Enqueue MotaPhoto scripts et styles
 */
 function motaphoto_scripts_styles() {
-
+    
     // Scripts JavaScript, dépendance JQuery et paramètre URL Ajax
     wp_enqueue_script(
         'motaphoto-scripts-js',
@@ -25,7 +25,7 @@ function motaphoto_scripts_styles() {
         'motaphoto_js',
         array('ajax_url' => admin_url('admin-ajax.php'))
     );
-
+    
     // @font-face css style file for locally loaded font files
     wp_enqueue_style(
         'motaphoto-fonts-style',
@@ -33,7 +33,7 @@ function motaphoto_scripts_styles() {
         array(),
         _S_VERSION
     );
-
+    
     // Main MotaPhoto css style file
     wp_enqueue_style(
         'motaphoto-main-style',
@@ -41,7 +41,7 @@ function motaphoto_scripts_styles() {
         array('motaphoto-fonts-style'),
         _S_VERSION
     );
-
+    
     // Sxript JavaScript Lightbox et paramètre URL Ajax
     wp_enqueue_script(
         'motaphoto-lightbox',
@@ -55,7 +55,7 @@ function motaphoto_scripts_styles() {
         'motaphoto_js',
         array('ajax_url' => admin_url('admin-ajax.php'))
     );
-
+    
     // Sxript JavaScript Dropdown
     wp_enqueue_script(
         'motaphoto-dropdown',
@@ -67,8 +67,8 @@ function motaphoto_scripts_styles() {
 }
 
 /**
-* Register two theme menus. One for the header
-* navigation bar and one for the footer menu
+* Enregistre les deux menus du thème : un pour
+* le header et un autre pour le footer
 */
 function register_motaphoto_menus() {
     
@@ -79,7 +79,7 @@ function register_motaphoto_menus() {
 }
 
 /**
-* Add 'custom-logo' feature to WordPress MotaPhoto theme
+* Ajoute le 'custom-logo' au WordPress MotaPhoto theme
 */
 function add_motaphoto_wordpress_features() {
     
@@ -92,17 +92,17 @@ function add_motaphoto_wordpress_features() {
 }
 
 /**
-* WP query getting photos stored into the MotaPhoto site
-* as Custom Post Type posts. Filtering is possible for
-* categories and formats taxonomies. Sorting by date.
+* WordPress query pour retouver dans la phototèque les
+* photos correspondant aux critères et à l'ordre de tri
+* définis dans le formulaire HTML.
 */
 function request_filtered_photos() {
-
+    
     // Authentification de l'origine de la requête
     if (!isset( $_REQUEST['nonce'] ) or
-        !wp_verify_nonce( $_REQUEST['nonce'], 'request_filtered_photos' )
+    !wp_verify_nonce( $_REQUEST['nonce'], 'request_filtered_photos' )
     ) { wp_send_json_error('Unauthorized operation.', 403);}
-
+    
     // Récupération de la valeur pour la taxonomie custom 'categorie'
     // Ici elle provient du formulaire, donc une seule valeur reçue
     // Alors si '*''... on les mets toutes pour la requête
@@ -116,7 +116,7 @@ function request_filtered_photos() {
     } else {
         $categories = [$categorie];
     }
-
+    
     // Récupération de la valeur pour la taxonomue custom 'format'
     // Ici elle provient du formulaire, donc une seule valeur reçue
     // Alors si '*''... on les mets tous pour la requête
@@ -130,7 +130,7 @@ function request_filtered_photos() {
     } else {
         $formats = [$format];
     }
-
+    
     // Arguments de la requête wp_qiery
     $args = array(
         'post_type' => 'photo',
@@ -145,120 +145,123 @@ function request_filtered_photos() {
                 'taxonomy'  => 'format',
                 'field'     => 'slug',
                 'terms'     => $formats
-            )
-        ),
-        'orderby'           => 'date',
-        'order'             => $_POST['ordre_tri'],
-        'posts_per_page'    => 8,
-        'paged'             => $_POST['paged'],
-    );
-
-    // Lancement de la requête wp_query
-    $query = new WP_Query($args);
-
-    // Boucle éventuelle sur le retour de la requête
-    if ($query->have_posts()) {
-
-        ob_start();
-
-        // Chaque photo dans son bloc
-        while ($query->have_posts()) {
-            $query->the_post();
-            get_template_part('template-parts/photo-block');
+                )
+            ),
+            'orderby'           => 'date',
+            'order'             => $_POST['ordre_tri'],
+            'posts_per_page'    => 8,
+            'paged'             => $_POST['paged'],
+        );
+        
+        // Lancement de la requête wp_query
+        $query = new WP_Query($args);
+        
+        // Boucle éventuelle sur le retour de la requête
+        if ($query->have_posts()) {
+            
+            ob_start();
+            
+            // Chaque photo dans son bloc
+            while ($query->have_posts()) {
+                $query->the_post();
+                get_template_part('template-parts/photo-block');
+            }
+            $html_buffer = ob_get_contents();
+            
+            ob_end_clean();
+            
+            // Retour du résulat de la requête
+            $result = array(
+                'max_pages' => $query->max_num_pages,   // Nombre de pages maximum
+                'html'      => $html_buffer             // Cumul des blocs photos
+            );
+            echo json_encode($result);
+        } else {
+            echo json_encode(false);
         }
-        $html_buffer = ob_get_contents();
-
-        ob_end_clean();
-
-        $result = array(
-            'max_pages' => $query->max_num_pages,   // Nombre de pages maximum
-            'html'      => $html_buffer             // Cumul des blocs photos
-        );
-        echo json_encode($result);
-    } else {
-        echo json_encode(false);
-    }
-
-    die();
-}
-
-/**
-* WP query getting one photo stored into the MotaPhoto site
-* as Custom Post Type post referenced by its post id.
-*/
-function request_photo_by_ID() {
-
-    // Vérification de la présence du post id
-    if ( !isset($_POST['post_id']) ) {
-        wp_send_json_error("Missing photo identifier.", 400);
-    }
-
-    $post_id = $_POST['post_id'];
-
-    // Vérification que la photo n'est pas en "brouillon"
-    if ( get_post_status($post_id) !== 'publish' ) {
-        wp_send_json_error("Photo access denied.", 403);
-    }
-
-    // Arguments de la requête wp_qiery
-    $args = array(
-        'post_type' => 'photo',
-        'p' => $post_id
-    );
-
-    // Lancement de la requête wp_query
-    $query = new WP_Query($args);
-
-    // Si le retour de le retour de la requête est un succès
-    if ($query->have_posts()) {
-        $query->the_post();
-        $url_image = get_the_post_thumbnail_url(null, 'full');
-        $reference = get_field_object('field_65af94c95d70a')['value'];
-        $categorie = implode(' ',  wp_get_post_terms($post_id, 'categorie', ['fields' => 'names']));
-        $prev_id = get_previous_post()->ID;
-        $next_id = get_next_post()->ID;
-
-        // Informations sur le post trouvé
-        $result = array(
-            'url_image' => $url_image,  // url de l'image de la photo
-            'reference' => $reference,  // Référence de la photo
-            'categorie' => $categorie,  // Termes de la taxonomie custom 'categorie'
-            'prev_id'   => $prev_id,    // Post id photo précédente
-            'next_id'   => $next_id     // Post id photo suivante
-        );
-        echo json_encode($result);
-    } else {
-        echo json_encode(false);
-    }
-
-    die();
-}
-
-/**
-* Ajoute à la fin de chacun des menus WordPress du thème un item :
-* - Bouton 'Contact' pour la navigation bar dans le header.
-* - La mention 'Tous droits réservés' en fin du menu du footer.
-*/
-function add_item_to_motaphoto_menus($items, $args) {
-    
-    if ($args->theme_location === 'mota-header') {
-        $items .= '<li><span class="contact-button popup-contact-link">' . __('Contact', 'motaphoto') . '</span></li>';
-    } else if ($args->theme_location === 'mota-footer') {
-        $items .= '<li>' . __('Tous droits réservés', 'motaphoto') . '</li>';
+        
+        die();
     }
     
-    return $items;
-}
-
-/**
- * Actions and filters
- */
-add_action('wp_enqueue_scripts', 'motaphoto_scripts_styles');
-add_action("after_setup_theme", 'register_motaphoto_menus');
-add_action('after_setup_theme', 'add_motaphoto_wordpress_features');
-add_action('wp_ajax_request_filtered_photos', 'request_filtered_photos');
-add_action('wp_ajax_nopriv_request_filtered_photos', 'request_filtered_photos');
-add_action('wp_ajax_request_photo_by_ID', 'request_photo_by_ID');
-add_action('wp_ajax_nopriv_request_photo_by_ID', 'request_photo_by_ID');
-add_filter('wp_nav_menu_items', 'add_item_to_motaphoto_menus', 10, 2);
-
+    
+    /**
+    * WordPress query pour retouver dans la phototèque une
+    * photo spécifique définie par son post ID.
+    */
+    function request_photo_by_ID() {
+        
+        // Vérification de la présence du post id
+        if ( !isset($_POST['post_id']) ) {
+            wp_send_json_error("Missing photo identifier.", 400);
+        }
+        
+        $post_id = $_POST['post_id'];
+        
+        // Vérification que la photo n'est pas en "brouillon"
+        if ( get_post_status($post_id) !== 'publish' ) {
+            wp_send_json_error("Photo access denied.", 403);
+        }
+        
+        // Arguments de la requête wp_qiery
+        $args = array(
+            'post_type' => 'photo',
+            'p' => $post_id
+        );
+        
+        // Lancement de la requête wp_query
+        $query = new WP_Query($args);
+        
+        // Si le retour de la requête est un succès
+        if ($query->have_posts()) {
+            $query->the_post();
+            $url_image = get_the_post_thumbnail_url(null, 'full');
+            $reference = get_field_object('field_65af94c95d70a')['value'];
+            $categorie = implode(' ',  wp_get_post_terms($post_id, 'categorie', ['fields' => 'names']));
+            $prev_id = get_previous_post()->ID;
+            $next_id = get_next_post()->ID;
+            
+            // Retour du résulat de la requête
+            $result = array(
+                'url_image' => $url_image,  // url de l'image de la photo
+                'reference' => $reference,  // Référence de la photo
+                'categorie' => $categorie,  // Termes de la taxonomie custom 'categorie'
+                'prev_id'   => $prev_id,    // Post id photo précédente
+                'next_id'   => $next_id     // Post id photo suivante
+            );
+            echo json_encode($result);
+        } else {
+            echo json_encode(false);
+        }
+        
+        die();
+    }
+    
+    /**
+    * Ajoute à la fin de chacun des menus WordPress du thème un item :
+    * - Bouton 'Contact' pour la navigation bar dans le header.
+    * - La mention 'Tous droits réservés' en fin du menu du footer.
+    */
+    function add_item_to_motaphoto_menus($items, $args) {
+        
+        if ($args->theme_location === 'mota-header') {
+            $items .= '<li><span class="contact-button popup-contact-link">' . __('Contact', 'motaphoto') . '</span></li>';
+        } else if ($args->theme_location === 'mota-footer') {
+            $items .= '<li>' . __('Tous droits réservés', 'motaphoto') . '</li>';
+        }
+        
+        return $items;
+    }
+    
+    /**
+    * Actions et filters
+    */
+    add_action('wp_enqueue_scripts', 'motaphoto_scripts_styles');
+    add_action("after_setup_theme", 'register_motaphoto_menus');
+    add_action('after_setup_theme', 'add_motaphoto_wordpress_features');
+    add_action('wp_ajax_request_filtered_photos', 'request_filtered_photos');
+    add_action('wp_ajax_nopriv_request_filtered_photos', 'request_filtered_photos');
+    add_action('wp_ajax_request_photo_by_ID', 'request_photo_by_ID');
+    add_action('wp_ajax_nopriv_request_photo_by_ID', 'request_photo_by_ID');
+    add_filter('wp_nav_menu_items', 'add_item_to_motaphoto_menus', 10, 2);
+    
+    

@@ -75,7 +75,7 @@ document.querySelectorAll(".dropdown").forEach( dropdown => {
 
 // Au clic en dehors de tout dropdown on ferme le(s) dropdown(s) ouvert(s)
 document.addEventListener('click', event => {
-    if (event.target.closest(".dropdown") === null) {
+    if (event.target.closest(".dropdown") == null) {
 
         // Ferme tous les dropdowns ouverts
         document.querySelectorAll(".dropdown.open").forEach( dropdown => {
