@@ -11,9 +11,11 @@ get_header();
 /* Début de la boucle */
 while ( have_posts() ) :
 	the_post();
+    ?>
 
-    the_content();
+    <main class="site-content"><?php the_content(); ?></main>
 
+    <?php
 endwhile; // Fin de la boucle.
 
 get_footer();

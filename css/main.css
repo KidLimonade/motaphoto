@@ -404,9 +404,15 @@ Hero header
     transform: translate(-50%, -50%);
 }
 
+@media screen and (max-width: 1148px) {
+    .hero-container .hero-title {
+        /* Fonte proportionnelle X */
+        font-size: 8.3vw;
+    }
+}
 @media screen and (max-width: 800px) {
     .hero-container {
-        max-height: 253px;
+        max-height: 250px;
     }
     .hero-container .hero-title {
         font-size: 28px;
@@ -419,8 +425,8 @@ Filtrage et tri
 ======================================================================*/
 
 .zone-dropdowns {
-    margin-top: 48px;
-    height: 114px;
+    margin-top: 42px;
+    height: 120px;
 }
 
 .zone-filtres-tri {
@@ -437,6 +443,11 @@ Filtrage et tri
     gap: 36px;
 }
 
+@media screen and (max-width: 1148px) {
+    .zone-filtres {
+        gap: 0;
+    }
+}
 @media screen and (max-width: 800px) {
     .zone-dropdowns {
         margin-top: 28px;
@@ -445,11 +456,11 @@ Filtrage et tri
     .zone-filtres-tri {
         justify-content: flex-start;
         flex-direction: column;
-        gap: 6px;
+        gap: 8px;
     }
     .zone-filtres {
         flex-direction: column-reverse;
-        gap: 6px;
+        gap: 8px;
     }
 }
 
