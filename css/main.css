@@ -89,7 +89,7 @@ Boutons (bouton standard du thème et bouton dans Contact Form 7)
     background-color: var(--main-color);
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
     .contact-form input[type=submit] {
         width: 190px;
     }
@@ -199,7 +199,7 @@ Bloc photo flexible qui impose seulement le respect du ratio d'aspect
 }
 
 /* Pas d'overlay sur mobile */
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
     .card-overlay {
         display: none;
     }
@@ -285,13 +285,14 @@ Site header
 
 /*-------- Header et menu navigation sur mobile --------*/
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
 
-    /* Header permanent avec burger icon visible */
+    /* Header permanent ombré avec burger icon visible */
     .site-header {
         height: var(--mobile-header-height);
         position: sticky;
         top: 0;
+        box-shadow: 8px 1px 3px 2px rgba(0, 0, 0, 15%);
         z-index: 10;
     }
     .burger-button {
@@ -354,7 +355,7 @@ Site footer
 }
 
 /* Menu footer vertical et accessible sur mobile */
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
     .site-footer {
         height: 208px;
     }
@@ -403,7 +404,7 @@ Hero header
     transform: translate(-50%, -50%);
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
     .hero-container {
         max-height: 253px;
     }
@@ -436,7 +437,7 @@ Filtrage et tri
     gap: 36px;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
     .zone-dropdowns {
         margin-top: 28px;
         height: 168px;
@@ -464,9 +465,10 @@ une colonne unique sur mobile
     grid-gap: 20px;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
     #portfolio {
         grid-template-columns: repeat(1, minmax(278.8px, 564px));
+        justify-content: center;
     }
 }
 
@@ -541,7 +543,7 @@ Zone contenu de la photo
     height: auto;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
     .photo-detail {
         grid-template-columns: repeat(1, minmax(50%, 1fr));
     }
@@ -639,10 +641,7 @@ Zone de prise de contact et de navigation dans les photos
     transform: rotate(180deg);
 }
 
-@media screen and (max-width: 720px) {
-    .photo-action-navigate {
-        display: none;
-    }
+@media screen and (max-width: 800px) {
     .photo-action {
         height: 133px;
         flex-direction: column;
@@ -651,6 +650,9 @@ Zone de prise de contact et de navigation dans les photos
         flex-direction: column;
         align-items: flex-start;
         align-content: center;
+    }
+    .photo-action-navigate {
+        display: none;
     }
 }
 
@@ -664,7 +666,9 @@ Zone de suggestion de photos similaires
 }
 
 .photo-like-titre {
+    margin: 0;
     font-size: 18px;
+    letter-spacing: 1.8px;
     text-transform: uppercase;
     margin-bottom: 52px;
 }
@@ -677,14 +681,17 @@ Zone de suggestion de photos similaires
     margin-bottom: 109px;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
+    .photo-like {
+        padding-top: 24px;
+    }
     .photo-like-titre {
         text-align: center;
-        margin-top: 24px;
         margin-bottom: 20px;
-        }
+    }
     .photo-like-galerie {
         grid-template-columns: repeat(1, minmax(278.8px, 564px));
+        justify-content: center;
         margin-bottom: 24px;
     }
 }
@@ -788,7 +795,7 @@ Popup Contact
 
 /*-------- Formulaire sur mobile --------*/
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
     .modal-content {
         width: 286px;
         height: 583px;
@@ -997,7 +1004,7 @@ Style général custom dropdown
     display: none;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 800px) {
     .dropdown {
         width: 270px;
     }
