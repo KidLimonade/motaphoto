@@ -304,7 +304,7 @@ Site header
         position: fixed;
         width: 100%;
         left: 100%;
-        transition: left 250ms ease-out;
+        transition: left 300ms ease-out;
         top: var(--mobile-header-height);
         height: calc(100vh - var(--mobile-header-height));
         background-color: var(--primary-red-color);
@@ -503,7 +503,8 @@ Zone contenu de la photo
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    border-bottom: 1px solid var(--main-color);
+    gap: 20px;
+    margin-bottom: 37px;
 }
 
 .photo-detail-text h1 {
@@ -513,20 +514,13 @@ Zone contenu de la photo
     line-height: 58px;
     text-transform: uppercase;
     max-width: 420px;
-    margin-bottom: 20px;
+    margin: 0;
 }
 
-.photo-detail-text .photo-data {
+.photo-detail-text p {
     font-size: 14px;
     letter-spacing: 1.4px;
     text-transform: uppercase;
-    margin-bottom: 37px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.photo-detail-text .photo-data p {
     margin: 0;
 }
 
@@ -545,8 +539,13 @@ Zone contenu de la photo
 
 @media screen and (max-width: 800px) {
     .photo-detail {
+        margin-top: 20px;
         grid-template-columns: repeat(1, minmax(50%, 1fr));
     }
+    .photo-detail-text {
+        margin-top: 20px;
+    }
+    
     /* Inversion de l'ordre text-image sur mobile */
     .photo-detail-text {
         order: 2;
@@ -558,62 +557,81 @@ Zone de prise de contact et de navigation dans les photos
 ======================================================================*/
 
 .photo-action {
-    height: 118px;
+    height: 118px;  /* Spec. Fonct. */
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
 
-    background-color: yellow;
+@media screen and (max-width: 800px) {
+    .photo-action {
+        height: 133px;  /* Mock. Figma */
+        border-top: 1px solid var(--main-color);
+    }
 }
 
 /*-------- CTA contact sur photo présentée --------*/
 
 .photo-action-contact {
-    width: 50%;
+    width: 49%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-
-    background-color: #FFD6D6;
+    border-top: 1px solid var(--main-color);
 }
 
 .photo-action-contact p {
+    margin: 0;
     font-family: 'Poppins', monospace;
     font-size: 14px;
     font-weight: 300;
 }
 
-/*-------- Vignette navigation --------*/
-
-.photo-action-navigate {
-    background-color: orange;
+@media screen and (max-width: 800px) {
+    .photo-action-contact {
+        width: 100%;
+        border-top: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        align-content: center;
+        gap: 15px;
+    }
 }
+
+/*-------- Vignette navigation --------*/
 
 .photo-action-navigate .featured {
     width: 81px;
     height: 71px;
+    margin-top: 8px;
     object-fit: cover;
     overflow: hidden;
     position: relative;
 }
 
+/* 3 images superposées */
 .photo-action-navigate .featured img {
     width: 100%;
     height: 100%;
     position: absolute;
 }
 
+/* Courante estompée */
 .photo-action-navigate .featured .current {
-    opacity: 0.6;
+    opacity: 0.66;
 }
 
+/* Précédente et suivante invisible */
 .photo-action-navigate .featured .previous,
 .photo-action-navigate .featured .next {
     opacity: 0;
-    transition: opacity 150ms ease-in;
+    transition: opacity 200ms ease-in;
 }
 
+/* Précédente ou suivante apparâit */
 .photo-action-navigate .featured .previous.displayed,
 .photo-action-navigate .featured .next.displayed {
     opacity: 1;
@@ -630,7 +648,7 @@ Zone de prise de contact et de navigation dans les photos
 .photo-action-navigate .arrow-left,
 .photo-action-navigate .arrow-right {
     width: 25px;
-    height: 32px;
+    height: 36px;
     background-image: url('../images/icon-arrow-black.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -642,15 +660,7 @@ Zone de prise de contact et de navigation dans les photos
 }
 
 @media screen and (max-width: 800px) {
-    .photo-action {
-        height: 133px;
-        flex-direction: column;
-    }
-    .photo-action-contact {
-        flex-direction: column;
-        align-items: flex-start;
-        align-content: center;
-    }
+    /* Pad de navigation ni de vignette sur mobile */
     .photo-action-navigate {
         display: none;
     }
@@ -661,7 +671,7 @@ Zone de suggestion de photos similaires
 ======================================================================*/
 
 .photo-like {
-    padding-top:77px;
+    padding-top: 77px;
     border-top: 1px solid var(--main-color);
 }
 

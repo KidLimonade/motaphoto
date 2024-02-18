@@ -20,45 +20,39 @@ while ( have_posts() ) :
 <section class="photo-detail">
 
     <div class="photo-detail-text">
+
         <h1><?php the_title() ?></h1>
-        <div class="photo-data">
-            <p>
-                <?php
-                // Accès à la référence par l'id ACF plutôt que le slug
-                $ref = get_field_object('field_65af94c95d70a');
-                $ref_photo = $ref['value'];
-                echo $ref['label'] . ' : ' . $ref_photo;
-                ?>
-            </p>
-            <?php // Insertion référence dans input CF7 ?>
-            <script>
-                jQuery( $ => {
-                    $(document).ready( () => {
-                        $("#reference-photo").val("<?php echo $ref_photo ?>");
-                    });
+
+        <p><?php    // Accès à la référence par l'id ACF plutôt que le slug
+            $ref = get_field_object('field_65af94c95d70a');
+            $ref_photo = $ref['value'];
+            echo $ref['label'] . ' : ' . $ref_photo;
+        ?></p>
+
+        <?php   // Insertion référence dans input CF7 ?>
+        <script>
+            jQuery( $ => {
+                $(document).ready( () => {
+                    $("#reference-photo").val("<?php echo $ref_photo ?>");
                 });
-            </script>
-            <p>
-                <?php
-                // categories conservées pour wp_query qui suit
-                $categories = wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names']);
-                echo get_taxonomy('categorie')->labels->singular_name . ' : ' . implode(' ',  $categories);
-                ?>
-            </p>
-            <p>
-                <?php
-                echo get_taxonomy('format')->labels->singular_name . ' : ' . implode( ', ',  wp_get_post_terms( $post->ID,  'format',  ['fields' => 'names']));
-                ?>
-            </p>
-            <p>
-                <?php
-                // Accès au type via l'id ACF et double indirection car champ radio bouton
-                $type = get_field_object('field_65afcce1a71e0');
-                echo $type['label'] . ' : ' . $type['value']['value'];
-                ?>
-            </p>
-            <p><?php echo __('Année', 'motaphoto') . ' : ' . get_the_date('Y'); ?></p>
-        </div>
+            });
+        </script>
+
+        <p><?php    // categories conservées pour wp_query qui suit
+            $categories = wp_get_post_terms($post->ID, 'categorie', ['fields' => 'names']);
+            echo get_taxonomy('categorie')->labels->singular_name . ' : ' . implode(' ',  $categories);
+        ?></p>
+
+        <p><?php
+            echo get_taxonomy('format')->labels->singular_name . ' : ' . implode( ', ',  wp_get_post_terms( $post->ID,  'format',  ['fields' => 'names']));
+        ?></p>
+
+        <p><?php    // Accès au type via l'id ACF et double indirection car champ radio bouton
+            $type = get_field_object('field_65afcce1a71e0');
+            echo $type['label'] . ' : ' . $type['value']['value'];
+        ?></p>
+        
+        <p><?php echo __('Année', 'motaphoto') . ' : ' . get_the_date('Y'); ?></p>
     </div>
 
     <div class="photo-detail-image">
