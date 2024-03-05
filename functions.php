@@ -214,7 +214,7 @@ function request_filtered_photos() {
         // Si le retour de la requête est un succès
         if ($query->have_posts()) {
             $query->the_post();
-            $url_image = get_the_post_thumbnail_url(null, 'full');
+            $url_image = get_the_post_thumbnail_url(null, 'large');
             $reference = get_field_object('field_65af94c95d70a')['value'];
             $categorie = implode(' ',  wp_get_post_terms($post_id, 'categorie', ['fields' => 'names']));
             $prev_id = get_previous_post()->ID;
