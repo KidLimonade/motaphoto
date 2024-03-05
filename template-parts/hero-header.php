@@ -23,7 +23,7 @@
 
             if (has_post_thumbnail()) {
             ?>
-                <div class="hero-image"><?php the_post_thumbnail('large'); ?></div>
+                <div class="hero-image"><?php the_post_thumbnail('full'); ?></div>
             <?php
             }
         }
